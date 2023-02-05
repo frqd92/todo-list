@@ -1,0 +1,22 @@
+.dark-theme{
+    --color-bg: #1e6acd;
+    --color-1: #fbfbfe;
+    --color-2: #fd6f53;
+    --color-3: #fd6f53;
+    --color-4: #fd6f53;
+    --font-1: white;
+    --font-2: white;
+}
+
+.light-theme{
+
+}
+
+
+.glass-theme{
+
+}
+body{
+   
+}
+

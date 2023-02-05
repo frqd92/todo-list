@@ -1,0 +1,110 @@
+.body-login{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    user-select: none;
+}
+.login-main-div{
+    border: 1px solid black;
+    width: 100%;
+    height: 180px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid black;
+    gap: 20px;
+
+}
+.login-google-div{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1px 10px 1px 1px;
+    border-radius: 3px;
+    background-color: #4285F4;
+    cursor: pointer;
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+}
+.login-google-text{
+    margin-left: 20px;
+    font-family: open;
+    font-weight: 500;
+    color: white;
+    text-shadow: 0px 0px 3px rgba(0, 0, 0, 0.496);
+
+}
+.login-google-logo-div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 3px;
+    background-color: white;
+    box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.253);
+
+}
+.login-google-img{
+    width: 30px;
+    filter: contrast(1.2);
+}
+.login-or{
+    font-family: sofia;
+    font-size: 1.5rem;
+}
+
+.login-guest-div{
+    display: flex;
+    align-items: center;
+    gap: 4px;
+
+}
+.login-guest{
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: 0.1s linear color;
+    font-family: sofia;
+    text-decoration: underline;
+}
+.login-guest:hover{
+    color: #4285F4;
+    text-decoration: underline #4285F4;
+    cursor: pointer;
+}
+.login-i-div{
+    position: relative;
+}
+.login-i-img{
+    align-self: self-start;
+    width: 14px;
+}
+
+.i-div{
+    position: absolute;
+    border: 1px solid rgba(0, 0, 0, 0.28);
+    top: -58px;
+    left: 13px;
+    width: 200px;
+    border-radius: 15px 15px 15px 0px;
+    font-family: roboto-light;
+    padding: 6px;
+    text-align: center;
+    font-size: 0.8rem;
+    opacity: 0;
+    transition: opacity ease-in-out 0.2s;
+}
+
+@font-face {
+    font-family: "open";
+    src: url(/src/assets/fonts/OpenSans-medium.ttf);
+}
+@font-face {
+    font-family: "sofia";
+    src: url(/src/assets/fonts/sofia.ttf);
+}
+@font-face {
+    font-family: "roboto-light";
+    src: url(/src/assets/fonts/Roboto-Light.ttf);
+}
