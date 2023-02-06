@@ -16,12 +16,13 @@ export function loginCreate(){
     
     const loginGuestDiv = elementCreator("div", ["class","login-guest-div"], false, mainDiv);
     
-    elementCreator("p", ["class", "login-guest"], "Login as a guest", loginGuestDiv);
+    const loginGuest = elementCreator("p", ["class", "login-guest"], "Login as a guest", loginGuestDiv);
     const iconDiv = elementCreator("div", ["class", "login-i-div"], false, loginGuestDiv);
     const icon = imageCreator(iOutline, ["class", "login-i-img"], iconDiv);
     iconFunctionality(icon);
 
     document.body.appendChild(mainDiv);
+    return [googleDiv,loginGuest];
 }
 
 function iconFunctionality(icon){
@@ -34,7 +35,4 @@ function iconFunctionality(icon){
     icon.addEventListener("mouseleave", ()=>{
         div.style.opacity = "0";
     })
-
-
-
 }
