@@ -10,6 +10,16 @@ nav{
     grid-template-columns: 100%;
     transition: 0.1s width ease-in;
 }
+.hidden-nav-items{
+    display: none;
+}
+.hidden-nav{
+    width: 15px;
+    cursor: pointer;
+}
+.hidden-nav:hover{
+    width: 35px;
+}
 .nav-title{
     font-family: berkshire;
     align-self: center;
@@ -23,9 +33,9 @@ nav{
     flex-direction: column;
     justify-content: center;
     gap: 40px;
+ 
 }
 .nav-item{
-    transition: 0.1s linear margin;
 
     display: flex;
     align-items: center;
@@ -87,10 +97,13 @@ nav{
     filter: hue-rotate(130deg);
     transform: rotate(180deg);
     cursor: default;
+
     transition: transform 0.1s linear;
+
+
 }
 .arrow-rotate{
-    transform: rotate(90deg);
+    transform: rotate(-90deg);
 }
 
 .nav-settings{
@@ -115,15 +128,6 @@ nav{
 
 
 
-
-@media only screen and (max-height: 340px){
-    .nav-items{
-        gap: 8vh;
-       
-    
-    }
-
-}
 
 
 

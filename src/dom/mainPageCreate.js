@@ -5,7 +5,7 @@ import tasksPng from '/src/assets/images/tasks.png';
 import arrowCircle from '/src/assets/images/arrow-circle.png';
 import gearPng from '/src/assets/images/gear.png';
 import { loggedIn } from "../state";
-
+import { hideMenFunc } from "../nav/hideMenu";
 
 
 import '/src/styles/nav.css'
@@ -21,6 +21,7 @@ function createNav(){
     makeNavItems(navItems);
     const gitLogo = imageCreator(githubImg,["class", "nav-github"], nav);
     const hideNavBtn = elementCreator("p", ["class", "nav-hide-btn"],"Hide Menu", nav);
+    hideMenFunc(hideNavBtn, nav);
 }
 
 function makeNavItems(div){
@@ -36,12 +37,8 @@ function makeNavItems(div){
     const tasksSubDiv = elementCreator("div", ["class", "nav-tasks-sub"], false, div);
     const ul = elementCreator("ul", false, false, tasksSubDiv);
 
-    elementCreator("li", false, "farts", ul);
-    elementCreator("li", false, "farts", ul);
-    elementCreator("li", false, "farts", ul);
-    elementCreator("li", false, "farts", ul);
-    elementCreator("li", false, "farts", ul);
-    elementCreator("li", false, "farts", ul);
+    elementCreator("li", false, "items", ul);
+
     const settingsDivBtn = elementCreator("div", ["class", "nav-item"], false, div);
     const settingsIcon = imageCreator(gearPng, ["class", "nav-icon", "nav-icon-settings"], settingsDivBtn);
     const settingsText = elementCreator("p", false, "Settings", settingsDivBtn)

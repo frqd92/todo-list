@@ -2,18 +2,19 @@
 
 @media (max-device-width: 420px ) {
     nav{
+        bottom:0;
         width: 100%; 
-        height: 130px;
+        height: 150px;
         display:  flex;
         grid-template-rows: none;
         grid-template-columns: none;
-       
+     
         
     }
     .nav-items{
         width: 100%;
         flex-direction: row;
-        gap: 250px;
+        gap: 230px;
         border: 1px solid black;
         
     }
@@ -22,14 +23,22 @@
     }
 
     .nav-icon{
-        width: 80px;
+        width: 100px;
     }
 
     .tasks-arrow{
         width: 45px;
+        transform: none;
     }
+    .arrow-rotate{
+        transform: rotate(-90deg);
 
-
+    }
+    .nav-tasks-sub{
+        position: absolute;
+        top: -100px;
+        
+    }
 
     .nav-title, .nav-github, .nav-hide-btn, .nav-item p{
         display: none;
@@ -44,18 +53,17 @@
         width: clamp(100px, 20%, 120px); 
     }
     .nav-items{
-        width: 100%;
+        margin-right: 8px;
         align-items: center;
+   
         gap: calc(50px + 4vw);
-
-        
+      
     }
     .nav-item:nth-child(2){
         margin-left: 23px;
 
     }
     .nav-item{
-    transition: 0.1s linear margin;
 
     }
     .nav-item p{
@@ -86,13 +94,12 @@
     
 }
 
-@font-face {
-    font-family: "berkshire";
-    src: url(/src/assets/fonts/BerkshireSwash.ttf);
+
+@media only screen and (max-height: 340px){
+    .nav-items{
+        gap: 8vh;
+       
+    
+    }
+
 }
-
-
-
-
-
-
