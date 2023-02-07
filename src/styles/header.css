@@ -1,20 +1,21 @@
 header{
-
     width: 100%;
     height: 50px;
     user-select: none;
-    display: grid;
-    grid-template-columns: 3fr 1fr;
+    display: flex;
     align-items: center;
-    padding: 0px 5px;
+    justify-content: space-between;
+    padding: 0px 10px;
 }
 
 .searchbar-div{
-
     display: grid;
-    grid-template-columns: 1fr;
-    width: 100%;
+    grid-template-columns: 100%;
+    width:calc(470px - 6vw);
+
     height: 100%;
+    margin: 0 15px;
+    
     align-items: center;
     position: relative;
 }
@@ -26,7 +27,6 @@ header{
     margin-left: 7px;
 }
 #header-input{
-
     font-family: "roboto";
     font-size: 1.4rem;
     height: 60%;
@@ -40,21 +40,26 @@ header{
 
 }
 .header-options-div{
-
     height: 100%;
     display: grid;
-    grid-template-columns: 1fr 3fr 1fr;
+    grid-template-columns: 3fr 1fr 1fr;
     align-items: center;
-    justify-items:center;
+    justify-items:end;
+
 }
 .header-options-middle{
     display: flex;
     justify-content: space-evenly;
     align-items: center;
-    padding: 0px 5px;
-    gap: 10px;
-    border-left: 1px solid rgba(0, 0, 0, 0.196);
-    border-right: 1px solid rgba(0, 0, 0, 0.196);
+    padding: 0px 10px;
+    gap: 20px;
+    width: 100%;
+    height: 90%;
+    border-left: 1px solid rgba(255, 255, 255, 0.196);
+    border-right: 1px solid rgba(254, 254, 254, 0.196);
+    background-color: rgba(107, 104, 104, 0.285);
+    border-radius: 10px;
+
 
 }
 .bulb-div{
@@ -64,6 +69,7 @@ header{
     justify-content: center;
     align-items: center;
     position: relative;
+    margin-left: 25px;
 }
 .bulb-brightness{
     top: 10px;
@@ -81,19 +87,84 @@ header{
 
 }
 
-
 .bulb-img, .header-overview-btn, .header-profile, .header-add-btn{
     width: 25px;
-}
-.header-overview-btn{
-
+    cursor: pointer;
 }
 
-.header-add-btn{
-
-
-}
 .header-profile{
+    margin-left: 25px;
+
+}
 
 
+/* when header gets small */
+.header-options-div-small{
+    justify-self: end;
+    position: relative;
+    display: flex;
+    width: fit-content;
+    justify-content: center;
+    gap: 20px;
+    padding-right: 10px;
+}
+.menu-icon{
+    width: 27px;
+
+}
+.header-options-div-small img{
+    cursor: pointer;
+}
+.mobile-menu-div{
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    justify-content: center;
+    background-color: rgba(217, 217, 217, 0.261);
+    width: fit-content;
+    top:34px;
+    right: -2px;
+    position: absolute;
+    border-radius: 3px;
+    transition: 0.1s ease-in-out opacity;
+    opacity: 0;
+
+}
+.mobile-menu-div-show{
+opacity: 1;
+
+}
+
+
+
+
+
+.header-options-middle-mobile{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.181);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.181);
+    padding: 13px 0px;
+
+
+}
+.header-overview-btn-mobile, .header-add-btn-mobile{
+    width: 27px;
+}
+.header-profile-mobile{
+    width: 30px;
+
+}
+.github-mobile{
+
+    width: 23px;
+}
+.header-add-btn-mobile{
+
+}
+.header-overview-btn-mobile{
+    margin-left: 2px;
 }

@@ -17,6 +17,19 @@ nav{
 }
 .hidden-nav:hover{
     width: 35px;
+    animation: hoverNav infinite 1.5s ease-in-out;
+    box-shadow: 0px 1px 7px rgba(255, 255, 255, 0.198);
+}
+@keyframes hoverNav {
+    0%{
+        transform: scaleX(1);
+    }
+    50%{
+        transform: scaleX(1.2);
+    }
+    100%{
+        transform: scaleX(1);
+    }
 }
 .nav-title{
     font-family: berkshire;
@@ -24,7 +37,6 @@ nav{
     margin-top: 3px;
     justify-self: center;
     font-size: 2rem;
-    text-shadow: 2px 0px 10px rgba(14, 114, 245, 0.634);
 
 }
 .nav-items{
@@ -61,7 +73,7 @@ nav{
     margin-right: 2px;
 }
 .nav-icon-settings-margin{
-
+    
 }
 .nav-item p{
     margin-left: 10px;

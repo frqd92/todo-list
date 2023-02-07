@@ -1,22 +1,38 @@
 .dark-theme{
     --color-bg: linear-gradient(30deg, #2f2d2d 0%, black 100%);
-    --color-header: rgb(0, 0, 0);
-    --bg-backfilter: contrast(1.1);
+    --nav-bg: rgba(255, 255, 255, 0.203);
+    --bg-backfilter: contrast(1.2);
     --header-backfilter: contrast(1);
     --color-nav: rgba(163, 163, 163, 0.462);
     --font-1: rgba(255, 255, 255, 0.802);
     --font-2: rgba(155, 154, 162, 0.93);
-    --border-color: rgba(255, 255, 255, 0.142);
-    --add-btn:hue-rotate(25deg);
+    --title-shadow: 2px 0px 10px rgba(14, 114, 245, 0.634);
+    --add-btn:hue-rotate(20deg);
     --loupe: invert(100%);
     --input-bg: rgb(73, 69, 69);
     --github: invert(70%);
     --hide-btn-hover: rgba(101, 131, 216, 0.507);
-
+    --menu-icon: invert(70%);
+    --profile-icon: invert(100%);
+    --nav-box:  rgba(144, 148, 152, 0.2) 0px 0px 0px 1px, rgba(142, 142, 142, 0.65) 0px 4px 6px -1px, rgba(114, 99, 99, 0.08) 0px 1px 0px inset;
 }
 
 .light-theme{
-    --color-bg: #faf9f9;
+    --color-bg:  linear-gradient(30deg, #727281, #ffffff);
+    --nav-bg: rgba(0, 0, 0, 0.386);
+    --bg-backfilter: contrast(1.5);
+    --color-nav: rgba(163, 163, 163, 0.462);
+    --font-1: rgba(15, 15, 15, 0.802);
+    --font-2: rgba(8, 3, 45, 0.93);
+    --title-shadow: 2px 0px 6px rgba(174, 198, 247, 0.627);
+    --add-btn:hue-rotate(0deg);
+    --loupe: invert(0%);
+    --input-bg: rgba(163, 163, 163, 0.6);
+    --github: invert(0%);
+    --hide-btn-hover: rgba(141, 159, 206, 0.507);
+    --menu-icon: invert(40%);
+    --profile-icon: invert(0%);
+    --nav-box:  rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
 }
 
 body{
@@ -25,16 +41,20 @@ body{
 
 /* Nav */
 nav{
-    background:none;
+    background: var(--nav-bg);
     backdrop-filter: var(--bg-backfilter);
+    box-shadow: var(--nav-box);
+
 }
 nav .nav-title, .nav-item p{
     color: var(--font-1);
 }
+.nav-title{
+    text-shadow: var(--title-shadow);
+}
 
 .li-title{
     color: var(--font-2);
-
 }
 .nav-github{
     filter: var(--github);
@@ -68,3 +88,10 @@ header{
     background: var(--input-bg);
 }
 
+.header-profile{
+    filter:var(--profile-icon);
+}
+
+.menu-icon{
+    filter: var(--menu-icon);
+}
