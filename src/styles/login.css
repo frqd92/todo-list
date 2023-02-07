@@ -104,18 +104,7 @@
     color: rgba(0, 0, 0, 0.736);
 }
 
-@font-face {
-    font-family: "open";
-    src: url(/src/assets/fonts/OpenSans-medium.ttf);
-}
-@font-face {
-    font-family: "sofia";
-    src: url(/src/assets/fonts/sofia.ttf);
-}
-@font-face {
-    font-family: "roboto";
-    src: url(/src/assets/fonts/Roboto-Light.ttf);
-}
+
 @media only screen and (max-width:820px) {}
 @media only screen and (max-height:350px) and (min-width: 500px ) {}
 @media  (max-device-width: 415px) and (max-device-height: 920px){

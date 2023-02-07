@@ -1,0 +1,5 @@
+@media (max-device-width: 420px ) {
+    header{
+        height: 150px;
+    }
+}
