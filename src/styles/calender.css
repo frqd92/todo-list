@@ -1,7 +1,8 @@
+/* calender icon */
 .header-calender-div{
     position: relative;
-    width: 30px;
-    height: 32px;
+    width: 28px;
+    height: 30px;
     border-radius: 6px;
     display: grid;
     grid-template-rows: 1fr 8fr;

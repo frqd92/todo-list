@@ -1,22 +1,70 @@
 .dark-theme{
-    --color-bg: #1e6acd;
-    --color-1: #fbfbfe;
-    --color-2: #fd6f53;
-    --color-3: #fd6f53;
-    --color-4: #fd6f53;
-    --font-1: white;
-    --font-2: white;
+    --color-bg: linear-gradient(30deg, #2f2d2d 0%, black 100%);
+    --color-header: rgb(0, 0, 0);
+    --bg-backfilter: contrast(1.1);
+    --header-backfilter: contrast(1);
+    --color-nav: rgba(163, 163, 163, 0.462);
+    --font-1: rgba(255, 255, 255, 0.802);
+    --font-2: rgba(155, 154, 162, 0.93);
+    --border-color: rgba(255, 255, 255, 0.142);
+    --add-btn:hue-rotate(25deg);
+    --loupe: invert(100%);
+    --input-bg: rgb(73, 69, 69);
+    --github: invert(70%);
+    --hide-btn-hover: rgba(101, 131, 216, 0.507);
+
 }
 
 .light-theme{
-
+    --color-bg: #faf9f9;
 }
 
-
-.glass-theme{
-
-}
 body{
-   
+   background: var(--color-bg);
+}
+
+/* Nav */
+nav{
+    background:none;
+    backdrop-filter: var(--bg-backfilter);
+}
+nav .nav-title, .nav-item p{
+    color: var(--font-1);
+}
+
+.li-title{
+    color: var(--font-2);
+
+}
+.nav-github{
+    filter: var(--github);
+}
+.nav-hide-btn{
+    border-top: 1px solid rgba(255, 255, 255, 0.071);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.071);
+    color: var(--font-1);
+}
+.nav-hide-btn:hover{
+    background-color: var(--hide-btn-hover);
+}
+
+
+
+/* Header */
+header{
+    background:none;
+    backdrop-filter: var(--header-backfilter);
+
+}
+
+.header-add-btn{
+    filter: var(--add-btn);
+}
+.header-search-img{
+    filter:var(--loupe);
+}
+#header-input{
+    color: var(--font-1);
+    background: var(--input-bg);
 }
 

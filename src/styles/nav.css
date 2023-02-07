@@ -1,7 +1,6 @@
 nav{
     width: calc(130px + 2.3vw);
     height: 100vh;
-    border: 1px solid black;
     user-select: none;
     display: grid;
     justify-items: center;
@@ -21,9 +20,12 @@ nav{
 }
 .nav-title{
     font-family: berkshire;
-    align-self: center;
+    align-self: self-start;
+    margin-top: 3px;
     justify-self: center;
     font-size: 2rem;
+    text-shadow: 2px 0px 10px rgba(14, 114, 245, 0.634);
+
 }
 .nav-items{
     justify-self: center;
@@ -35,7 +37,6 @@ nav{
  
 }
 .nav-item{
-
     display: flex;
     align-items: center;
     justify-content: start;
@@ -71,14 +72,18 @@ nav{
 
 .nav-github{
     width: 40px;
-    align-self: end;
+
     justify-self: center;
     cursor: pointer;
 }
 
 .nav-hide-btn{
+    align-self: center;
+    width: 100%;
+    text-align: center;
     cursor: pointer;
-    align-self: end;
+    font-family: "roboto-medium";
+    transition: 0.2s background-color linear;
 }
 
 
