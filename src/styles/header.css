@@ -7,26 +7,24 @@ header{
     justify-content: space-between;
     padding: 0px 10px;
 }
-
-.searchbar-div{
-    display: grid;
-    grid-template-columns: 100%;
-    width:calc(470px - 6vw);
-
-    height: 100%;
-    margin: 0 15px;
-    
-    align-items: center;
-    position: relative;
-}
-
-
 .header-search-img{
     position: absolute;
     width: 18px;
     margin-left: 7px;
 }
+.searchbar-div{
+    display: grid;
+    grid-template-columns: 100%;
+    width:100%;
+    height: 100%;
+    margin: 0 15px;
+    align-items: center;
+
+    position: relative;
+}
+
 #header-input{
+    width: 30px;
     font-family: "roboto";
     font-size: 1.4rem;
     height: 60%;
@@ -34,6 +32,9 @@ header{
     padding-left: 35px;
     border: none;
     outline: none;
+    transition: width .15s linear;
+    box-shadow: 0px 0px 5px rgba(150, 150, 152, 0.3);
+
 }
 #header-input:focus{
     box-shadow: 0px 0px 4px rgb(9, 138, 230, 0.4);
@@ -59,7 +60,6 @@ header{
     border-right: 1px solid rgba(254, 254, 254, 0.196);
     background-color: rgba(107, 104, 104, 0.285);
     border-radius: 10px;
-
 
 }
 .bulb-div{

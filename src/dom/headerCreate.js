@@ -7,7 +7,7 @@ import { createCalIcon } from "./calender";
 import addPng from '/src/assets/images/plus.png';
 import profilePng from '/src/assets/images/empty-user.png';
 import menuPng from '/src/assets/images/menu-line.png';
-import { searchLoupe } from "../header/searchLogic";
+import { searchLoupe, importBehaviour, inputBehaviour } from "../header/searchLogic";
 import githubPng from '/src/assets/images/github.png'
 import { menuButtonFunc } from "../header/menuBtnMobile";
 import { loggedIn } from "../state";
@@ -24,9 +24,9 @@ export default function createHeader(){
     const loupeImg= imageCreator(searchPng, ["class", "header-search-img"], searchDiv);
     const input = elementCreator("input", ["id", "header-input"], false, searchDiv);
     searchLoupe(loupeImg, input);
-
+    inputBehaviour(input)
     const headerOptionsDiv = elementCreator("div", false, false, header);
-    window.innerWidth>1000?headerOptions():headerOptionsMobile();
+    window.innerWidth>650?headerOptions():headerOptionsMobile();
 
     window.addEventListener("resize", ()=>{
         window.innerWidth>650?headerOptions():headerOptionsMobile();
@@ -44,8 +44,8 @@ export default function createHeader(){
             imageCreator(addPng, ["class", "header-add-btn"], optionsMiddle)
             createCalIcon(optionsMiddle); 
             imageCreator(overviewPng, ["class", "header-overview-btn"], optionsMiddle);
-            const bulb = createBulb(headerOptionsDiv);
-            imageCreator(profilePng, ["class", "header-profile"], headerOptionsDiv)
+            imageCreator(profilePng, ["class", "header-profile"], headerOptionsDiv);
+            createBulb(headerOptionsDiv);
         }
     }
 
@@ -54,7 +54,7 @@ export default function createHeader(){
         if(document.querySelector(".header-options-div-small")===null){
             headerOptionsDiv.innerHTML="";
             headerOptionsDiv.classList.add("header-options-div-small");
-            const bulb = createBulb(headerOptionsDiv);
+            createBulb(headerOptionsDiv);
             const menuBtn = imageCreator(menuPng, ["class", "menu-icon"], headerOptionsDiv);
             const menuDiv = elementCreator("div", ["class", "mobile-menu-div"], false, headerOptionsDiv);
             imageCreator(profilePng, ["class", "header-profile-mobile"], menuDiv);
@@ -68,9 +68,6 @@ export default function createHeader(){
     }
 
 
-    //window.addEventListener("resize", ()=>{window.innerWidth<420?headerOptionsMobile():headerOptions();})
-
-
 }
 
 function createBulb(div){
@@ -80,3 +77,4 @@ function createBulb(div){
     bulbFunc(bulbDiv);
     return bulbDiv;
 }
+
