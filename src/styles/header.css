@@ -1,6 +1,5 @@
 header{
-    width: 100%;
-    height: 50px;
+
     user-select: none;
     display: flex;
     align-items: center;
@@ -60,7 +59,7 @@ header{
     border-right: 1px solid rgba(254, 254, 254, 0.196);
     background-color: rgba(107, 104, 104, 0.285);
     border-radius: 10px;
-
+    position: relative;
 }
 .bulb-div{
     cursor: pointer;
@@ -90,6 +89,7 @@ header{
 .bulb-img, .header-overview-btn, .header-profile, .header-add-btn{
     width: 25px;
     cursor: pointer;
+    z-index: 10;
 }
 
 .header-profile{
@@ -168,3 +168,8 @@ opacity: 1;
 .header-overview-btn-mobile{
     margin-left: 2px;
 }
+
+
+
+
+

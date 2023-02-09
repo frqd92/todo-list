@@ -1,18 +1,19 @@
 nav{
-    width: calc(130px + 2.3vw);
-    height: 100vh;
     user-select: none;
     display: grid;
     justify-items: center;
     grid-template-rows: 1fr 10fr 1fr 1fr;
     grid-template-columns: 100%;
-    transition: 0.1s width ease-in;
+    transition: 0.1 all ease-in;
 }
 .hidden-nav-items{
     display: none;
 }
+
+.hidden-nav-body{ /* main.css */
+    grid-template-columns: 15px 1fr;
+}
 .hidden-nav{
-    width: 15px;
     cursor: pointer;
 }
 .hidden-nav:hover{
@@ -77,7 +78,7 @@ nav{
 }
 .nav-item p{
     margin-left: 10px;
-    font-size: calc(0.8rem + 0.8vw);
+    font-size: calc(0.9rem + 0.3vw);
     font-family: roboto-medium;
     transition: 0.1s font-size linear;
 }

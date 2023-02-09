@@ -39,22 +39,9 @@ export function bulbFunc(bulb){
         if(!loggedIn){
             localStorage.setItem('theme', theme); //add later for firebase
         }
-        document.documentElement.className = theme
+        document.documentElement.className = theme;
     }
 
 };
 
 
-
-
-
-/*
-    function bulbOff(theme){
-        brightness.style.opacity="0";
-        img.classList.remove("bulb-on")
-        themeFunc(theme);
-        setTheme(theme);
-    }
-    
-
-*/

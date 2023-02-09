@@ -1,0 +1,7 @@
+import { elementCreator } from "../utilities/elementCreator";
+import { isHomeFunc } from '../state';
+
+export default function taskPage(main){
+    isHomeFunc(false);
+    main.innerHTML="";
+}

@@ -1,12 +1,13 @@
 import { elementCreator, imageCreator } from "../utilities/elementCreator";
 import googleLogo from "/src/assets/images/google-logo.png";
 import iOutline from "/src/assets/images/i-outline.png";
+import '/src/styles/themes.css'
 import '/src/styles/login.css'
 
 export function loginCreate(){
-    document.body.classList.add("body-login")
+    document.body.classList.add("body-login");
     const mainDiv = elementCreator("div", ["class", "login-main-div"], false, document.body);
-
+    setLoginTheme();
     const googleDiv = elementCreator("div", ["class", "login-google-div"], false, mainDiv);
     const logoDiv = elementCreator("div", ["class", "login-google-logo-div"], false,googleDiv);
     imageCreator(googleLogo, ["class", "login-google-img"], logoDiv);
@@ -21,7 +22,6 @@ export function loginCreate(){
     const icon = imageCreator(iOutline, ["class", "login-i-img"], iconDiv);
     iconFunctionality(icon);
 
-    document.body.appendChild(mainDiv);
     return [googleDiv,loginGuest];
 }
 
@@ -35,4 +35,12 @@ function iconFunctionality(icon){
     icon.addEventListener("mouseleave", ()=>{
         div.style.opacity = "0";
     })
+}
+
+function setLoginTheme(){
+    if(localStorage.getItem("theme")!==null){
+        const theme = localStorage.getItem("theme");
+        document.documentElement.className = theme;
+    }
+
 }

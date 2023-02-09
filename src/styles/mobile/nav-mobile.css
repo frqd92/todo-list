@@ -50,9 +50,7 @@
 
 
 @media (max-width:900px) {
-    nav{
-        width: clamp(100px, 20%, 120px); 
-    }
+
     .nav-items{
         margin-right: 8px;
         align-items: center;

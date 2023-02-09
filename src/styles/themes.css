@@ -38,7 +38,9 @@
 body{
    background: var(--color-bg);
 }
-
+.body-login{
+    background: var(--color-bg);
+}
 /* Nav */
 nav{
     background: var(--nav-bg);

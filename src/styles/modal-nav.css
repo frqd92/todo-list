@@ -1,0 +1,80 @@
+
+.modal-div{
+    position: absolute;
+    top: 67px;
+    right:-34px;
+    display: none;
+    transition: width 0.2s ease-in;
+}
+
+.modal-div-show-add{
+    transform: translateX(0px);
+    width: 300px;
+  
+}
+
+.modal-div-show-calender{
+
+    width: 500px;
+
+}
+.modal-div-show-overview{
+
+    width: 200px;
+}
+
+
+.triangle{
+    top: -40px;
+
+    transition: left 0.2s ease-in;
+}
+.triangle-add{
+    left: 131px;
+
+
+}
+.triangle-calender{
+
+    left: 376px;
+
+}
+.triangle-overview{
+
+    left: 120px;
+}
+
+
+
+
+
+
+
+.add-modal-content{
+
+    border-radius: 10px;
+    width: 100%;
+    min-height: 400px;
+ 
+}
+.triangle{
+    position: absolute;
+    border-left: 20px solid transparent;
+    border-right: 20px solid transparent;
+    border-bottom: 20px solid rgba(255, 255, 255, 0.234);
+    border-top: 20px solid transparent;
+    height: 0px;
+    width: 0px;
+    z-index: 5 ;
+}
+
+.add-modal-content, .add-modal-arrowThing{
+    background-color: rgba(255, 255, 255, 0.234);
+}
+
+.modal-div-show-add, .modal-div-show-calender,.modal-div-show-overview{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+

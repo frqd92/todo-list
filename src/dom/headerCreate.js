@@ -10,10 +10,12 @@ import menuPng from '/src/assets/images/menu-line.png';
 import { searchLoupe, importBehaviour, inputBehaviour } from "../header/searchLogic";
 import githubPng from '/src/assets/images/github.png'
 import { menuButtonFunc } from "../header/menuBtnMobile";
+import { makeModal } from "./modal";
 import { loggedIn } from "../state";
 import '/src/styles/header.css'
 import '/src/styles/mobile/header-mobile.css'
 import '/src/styles/calender.css'
+
 
 
 export default function createHeader(){
@@ -41,11 +43,13 @@ export default function createHeader(){
             headerOptionsDiv.innerHTML="";
             headerOptionsDiv.classList.add("header-options-div");
             const optionsMiddle = elementCreator("div",["class", "header-options-middle"], false, headerOptionsDiv)
-            imageCreator(addPng, ["class", "header-add-btn"], optionsMiddle)
-            createCalIcon(optionsMiddle); 
-            imageCreator(overviewPng, ["class", "header-overview-btn"], optionsMiddle);
+            const addBtn = imageCreator(addPng, ["class", "header-add-btn"], optionsMiddle)
+            const calBtn = createCalIcon(optionsMiddle); 
+            const overviewBtn = imageCreator(overviewPng, ["class", "header-overview-btn"], optionsMiddle);
             imageCreator(profilePng, ["class", "header-profile"], headerOptionsDiv);
             createBulb(headerOptionsDiv);
+            makeModal([addBtn, calBtn, overviewBtn]);
+
         }
     }
 
@@ -59,7 +63,7 @@ export default function createHeader(){
             const menuDiv = elementCreator("div", ["class", "mobile-menu-div"], false, headerOptionsDiv);
             imageCreator(profilePng, ["class", "header-profile-mobile"], menuDiv);
             const optionsMiddle = elementCreator("div",["class", "header-options-middle-mobile"], false, menuDiv)
-            imageCreator(addPng, ["class", "header-add-btn-mobile"], optionsMiddle)
+            const addBtn = imageCreator(addPng, ["class", "header-add-btn-mobile"], optionsMiddle)
             createCalIcon(optionsMiddle); 
             imageCreator(overviewPng, ["class", "header-overview-btn-mobile"], optionsMiddle);
             imageCreator(githubPng, ["class", "github-mobile"], menuDiv);
@@ -77,4 +81,3 @@ function createBulb(div){
     bulbFunc(bulbDiv);
     return bulbDiv;
 }
-

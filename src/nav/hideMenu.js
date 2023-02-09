@@ -9,6 +9,7 @@ export function hideMenFunc(btn, nav){
         });
         document.querySelector(".nav-github").style.display="none";
         nav.classList.add("hidden-nav");
+        document.body.classList.add("hidden-nav-body");
         e.stopPropagation();
 
         document.querySelector(".hidden-nav").addEventListener("click", show);
@@ -23,6 +24,8 @@ export function hideMenFunc(btn, nav){
             document.querySelector(".nav-github").style.display="block";
         }, 100)
         nav.classList.remove("hidden-nav");
+        document.body.classList.remove("hidden-nav-body");
+
         e.stopPropagation();
     }
 
