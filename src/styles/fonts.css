@@ -22,3 +22,11 @@
     font-family: "playfair";
     src: url(/src/assets/fonts/PlayfairDisplay.ttf);
 }
+@font-face {
+    font-family: "oxygen";
+    src: url(/src/assets/fonts/Oxygen.ttf);
+}
+@font-face {
+    font-family: "ptserif";
+    src: url(/src/assets/fonts/PTSerif.ttf);
+}

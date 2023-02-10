@@ -7,26 +7,8 @@
     transition: width 0.2s ease-in;
 }
 
-.modal-div-show-add{
-    transform: translateX(0px);
-    width: 300px;
-  
-}
-
-.modal-div-show-calender{
-
-    width: 500px;
-
-}
-.modal-div-show-overview{
-
-    width: 200px;
-}
-
-
 .triangle{
     top: -40px;
-
     transition: left 0.2s ease-in;
 }
 .triangle-add{
@@ -46,17 +28,6 @@
 
 
 
-
-
-
-
-.add-modal-content{
-
-    border-radius: 10px;
-    width: 100%;
-    min-height: 400px;
- 
-}
 .triangle{
     position: absolute;
     border-left: 20px solid transparent;
@@ -68,13 +39,163 @@
     z-index: 5 ;
 }
 
-.add-modal-content, .add-modal-arrowThing{
+.modal-content, .add-modal-arrowThing{
     background-color: rgba(255, 255, 255, 0.234);
 }
 
 .modal-div-show-add, .modal-div-show-calender,.modal-div-show-overview{
+    opacity: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
+.modal-opacity{
+    opacity: 0;
+    transition: opacity 0.18s ease-out;
+}
+/* How div morphs for each element */
+
+.modal-div-show-add{
+    width: 300px;
+}
+
+.modal-div-show-calender{
+    width: 500px;
+
+}
+.modal-div-show-overview{
+    width: 200px;
+}
+
+
+
+
+
+.modal-content{ 
+    border-radius: 10px;
+    width: 100%;
+    transition: height 0.2s ease-in;
+    height: 300px;
+   
+}
+
+.content-add{
+    height: fit-content;
+}
+
+.content-calender{
+  
+
+}
+
+.content-overview{
+
+}
+
+
+
+/* -------------------------------Add Form-----------------------------*/
+
+.content-add form{
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.form-input-div{
+    width: 100%;
+    position: relative;
+    border-bottom: 1px solid rgba(185, 185, 185, 0.299); 
+    color: rgba(0, 0, 0, 0.914); /*theme*/
+    text-shadow: 0px 1px 1px rgba(0, 5, 40, 0.349);/*theme*/
+    padding: 0px 3px;
+}
+.form-placeholder{
+    z-index:-1;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    font-size: 1.3rem;
+    font-family: roboto-medium;
+    color: rgba(240, 248, 255, 0.404);
+    text-shadow: 0px 0px 2px rgba(133, 131, 131, 0.319);/*theme*/
+
+}
+
+.form-title-input, .form-description-input{
+    z-index: 10;
+    border: none;
+    outline: none;
+    width: 100%;
+    font-size: 1.3rem;
+    font-family: roboto;
+    letter-spacing: 0.08rem;
+}
+
+
+.overflown-input{
+    max-height: 100px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.modal-invalid-input{
+    border-bottom: 1px solid rgba(198, 5, 5, 0.398); 
+    color: rgba(148, 125, 125, 0.898);
+    text-shadow: none;
+}
+.outer-form-input-div{
+    position: relative;
+}
+.form-invalid-length-msg{
+    position: absolute;
+    bottom: -15px;
+    width: 100%;
+    display: none;
+    text-align: center;
+    font-size: 0.70rem;
+    font-family: open;
+}
+.form-invalid-over{
+    color: rgba(212, 127, 127, 0.651);
+}
+.form-input-div::-webkit-scrollbar {
+    width: 5px;
+}
+.form-input-div::-webkit-scrollbar-track {/*theme*/
+    border-radius: 10px;
+    background: #f1f1f1a9;
+}
+.form-input-div::-webkit-scrollbar-thumb {/*theme*/
+    border-radius: 10px;
+    background: #060606c2;
+}
+  
+
+.modal-due-div{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    font-size: 1.1rem;
+    border-bottom: 1px solid rgba(185, 185, 185, 0.299); 
+
+}
+.modal-due-text{
+    white-space: nowrap;
+    font-family: oxygen;
+    color: rgba(240, 248, 255, 0.404);/*theme*/
+    text-shadow: 0px 0px 2px rgba(133, 131, 131, 0.319);/*theme*/
+
+}
+.modal-due-btn{
+    font-family: roboto-medium;
+    border-radius: 20px;
+    text-align: center;
+    color: rgba(32, 57, 141, 0.671);/*theme*/
+    cursor: pointer;
+    background-color: rgba(255, 255, 255, 0.561);
+    text-shadow: 0px 0px 0px rgba(0, 0, 0, 0.274);/*theme*/
+
+}
