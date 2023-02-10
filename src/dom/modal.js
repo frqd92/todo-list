@@ -42,25 +42,12 @@ function addModal(content){
         const errorMsg = elementCreator("p", ["class", `form-invalid-length-msg`], false, div);
 
         function formInputLogic(){
-            if(this.innerText.length>0){
-                placeholder.innerText= "";
-            }
-            else{
-                placeholder.innerText=type;
-            }
-            if(inputDiv.offsetHeight>97){
-                inputDiv.classList.add("overflown-input");
-            }
-            else{
-                inputDiv.classList.remove("overflown-input");
-            }
-            if(type==="Title"){
-                invalidInput(invalidLength);
-    
-            }
-            else if(type==="Description"){
-                invalidInput(invalidLength);
-            }
+            this.innerText.length>0?placeholder.innerText="":placeholder.innerText=type;
+            inputDiv.offsetHeight>97?inputDiv.classList.add("overflown-input"):inputDiv.classList.remove("overflown-input");
+
+            if(type==="Title")invalidInput(invalidLength);
+            else if(type==="Description")invalidInput(invalidLength);
+
             function invalidInput(num){
                 if(input.innerText.length>0){
                     errorMsg.style.display="block";
@@ -76,25 +63,59 @@ function addModal(content){
                 else{
                     inputDiv.classList.remove("modal-invalid-input");
                     errorMsg.classList.remove("form-invalid-over");
-
                 }
             }
-
         }
-        
         return Object.assign({}, inputDiv)
     }
-
     const titleInput = inputFactory("Title");
     const descInput = inputFactory("Description");
 
     const dueDateDiv = elementCreator("div", ["class", "modal-due-div"], false, form);
     
-    const dueDateText = elementCreator("p", ["class", "modal-due-text"], "Due date ", dueDateDiv);
+    const dueDateText = elementCreator("p", ["class", "modal-due-text"], "Due date", dueDateDiv);
     const dueBtn = elementCreator("div", ["class", "modal-due-btn"], "Today", dueDateDiv);
+
+    const datePickerDiv = elementCreator("div", ["class", "date-picker-div"],false, dueDateDiv);
+
+
+    //input to enter a date-------------------------------------------
+    const enterDateDiv = elementCreator("div", ["class", "enter-date-div"], false, datePickerDiv);
+    const enterDateInput = elementCreator("input", ["class", "enter-date-input"], false, enterDateDiv);
+    
+
+
+
+    // buttons where you quick add a due date-------------------------
+    const dateBtnsDiv = elementCreator("div", ["class", "date-picker-btn-div"], false,datePickerDiv);
+    const btnArray = [
+        {none:"None"}, {today:"Today"}, {tomorrow:"Tomorrow"}, 
+        {afterTomorrow:"After Tomorrow"},{week:"Next week"}, {month:"Next month"}
+    ]
+    btnArray.forEach((elem)=>{   
+        for(const key in elem){
+            if (elem.hasOwnProperty(key)) {
+                const value = elem[key];
+                elementCreator("div", ["class", "due-btn", `due-btn-${key}`],value, dateBtnsDiv);
+              }
+        }
+    })
+
+
+
+
+
+
+
+
 
 
 }
+
+
+
+
+
 
 
 function calenderModal(div, arrow, content){

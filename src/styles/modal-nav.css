@@ -12,7 +12,7 @@
     transition: left 0.2s ease-in;
 }
 .triangle-add{
-    left: 131px;
+    left:230px;
 
 
 }
@@ -57,19 +57,15 @@
 /* How div morphs for each element */
 
 .modal-div-show-add{
-    width: 300px;
+    width: 400px;
 }
 
 .modal-div-show-calender{
     width: 500px;
-
 }
 .modal-div-show-overview{
     width: 200px;
 }
-
-
-
 
 
 .modal-content{ 
@@ -157,6 +153,7 @@
     text-align: center;
     font-size: 0.70rem;
     font-family: open;
+    color: rgba(170, 170, 174, 0.785);
 }
 .form-invalid-over{
     color: rgba(212, 127, 127, 0.651);
@@ -176,26 +173,79 @@
 
 .modal-due-div{
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 2fr;
     align-items: center;
     font-size: 1.1rem;
-    border-bottom: 1px solid rgba(185, 185, 185, 0.299); 
+    row-gap: 8px;
 
 }
+
+
 .modal-due-text{
+    grid-column: 1 / 2;
+    grid-row: 1 / 2;
     white-space: nowrap;
     font-family: oxygen;
     color: rgba(240, 248, 255, 0.404);/*theme*/
-    text-shadow: 0px 0px 2px rgba(133, 131, 131, 0.319);/*theme*/
-
+    text-shadow: 0px 0px 2px rgba(133, 131, 131, 0.497);/*theme*/
 }
 .modal-due-btn{
+    grid-column: 2 / 3;
+    grid-row: 1 / 2;
     font-family: roboto-medium;
     border-radius: 20px;
     text-align: center;
-    color: rgba(32, 57, 141, 0.671);/*theme*/
+    color: rgba(1, 16, 63, 0.79);/*theme*/
     cursor: pointer;
-    background-color: rgba(255, 255, 255, 0.561);
+    background-color: rgba(122, 118, 118, 0.675);
     text-shadow: 0px 0px 0px rgba(0, 0, 0, 0.274);/*theme*/
 
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 10px, rgba(0, 0, 0, 0.22) 0px 3px 3px;
+    transition: transform linear 0.1s;
+
+}
+.modal-due-btn:hover{
+    background-color: rgba(56, 107, 249, 0.287);
+    color: rgba(255, 255, 255, 0.563);
+    transform: scale(1.05);
+
+}
+.modal-due-btn:active{
+    transform: scale(1);
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+}
+
+.date-picker-div{
+    grid-column: 1 / 3;
+    grid-row: 2 / 3;
+    padding: 5px;
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+
+
+}
+.date-picker-btn-div{
+    display: grid;
+    grid-template-columns: repeat(3, calc(100% / 3));
+    grid-template-rows: 20px 20px;
+    gap: 1px;
+}
+.due-btn{
+    border: 1px solid rgba(0, 0, 0, 0.248);
+    background-color: rgba(11, 92, 105, 0.142);
+    color: rgba(2, 2, 2, 0.776);
+    border-radius: 20px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 75%;
+    font-family: "sofia";
+    white-space: nowrap;
+    transition: color, background-color 0.2s linear;
+}
+
+.due-btn:hover{
+    color: rgba(253, 253, 253, 0.455);
+    background-color:  rgba(24, 127, 142, 0.342);
 }
