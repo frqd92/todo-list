@@ -1,5 +1,8 @@
 import { elementCreator } from "../utilities/elementCreator";
+import {createIcon} from "/src/utilities/iconCreate";
+import { modalDateInputFunc } from "../header/modalDateInput";
 import '/src/styles/modal-nav.css';
+
 export function makeModal(btnArr){
     const outerDiv = elementCreator("div", ["class", "modal-div"], false,btnArr[0].parentElement)
     const arrow = elementCreator("div", ["class", "triangle"], false, outerDiv);
@@ -27,7 +30,7 @@ export function makeModal(btnArr){
 
 //create each modal in the DOM
 function addModal(content){
-    const form = elementCreator("form", false, false, content);
+    const form = elementCreator("div", ["id", "form"], false, content);
 
     const inputFactory = (type)=>{
         const div = elementCreator("div", ["class", "outer-form-input-div"],false, form)
@@ -82,8 +85,10 @@ function addModal(content){
     //input to enter a date-------------------------------------------
     const enterDateDiv = elementCreator("div", ["class", "enter-date-div"], false, datePickerDiv);
     const enterDateInput = elementCreator("input", ["class", "enter-date-input"], false, enterDateDiv);
-    
-
+    enterDateInput.placeholder="Enter your date";
+    modalDateInputFunc(enterDateInput);
+    const iconDiv = elementCreator("div", ["class", "modal-icon-div"], false, enterDateDiv )
+    createIcon(iconDiv, "Hello", ["modal-i-div","modal-i-img", "modal-i-img-div"]);
 
 
     // buttons where you quick add a due date-------------------------

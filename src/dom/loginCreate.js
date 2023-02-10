@@ -1,6 +1,7 @@
 import { elementCreator, imageCreator } from "../utilities/elementCreator";
 import googleLogo from "/src/assets/images/google-logo.png";
 import iOutline from "/src/assets/images/i-outline.png";
+import {createIcon} from "../utilities/iconCreate";
 import '/src/styles/themes.css'
 import '/src/styles/login.css'
 
@@ -18,24 +19,13 @@ export function loginCreate(){
     const loginGuestDiv = elementCreator("div", ["class","login-guest-div"], false, mainDiv);
     
     const loginGuest = elementCreator("p", ["class", "login-guest"], "Login as a guest", loginGuestDiv);
-    const iconDiv = elementCreator("div", ["class", "login-i-div"], false, loginGuestDiv);
-    const icon = imageCreator(iOutline, ["class", "login-i-img"], iconDiv);
-    iconFunctionality(icon);
+
+    createIcon(loginGuestDiv, "Data saved in local storage.\nLogin with button above to safely store your data.", ["login-i-div","i-img", "i-div"]);
 
     return [googleDiv,loginGuest];
 }
 
-function iconFunctionality(icon){
-    const div = elementCreator("div", ["class", "i-div"], false, icon.parentElement);
-    elementCreator("p", false, "Data saved in local storage.\nLogin with button above to safely store your data.", div);
-    icon.addEventListener("mouseover", ()=>{
-        div.style.opacity = "1";
 
-    })
-    icon.addEventListener("mouseleave", ()=>{
-        div.style.opacity = "0";
-    })
-}
 
 function setLoginTheme(){
     if(localStorage.getItem("theme")!==null){

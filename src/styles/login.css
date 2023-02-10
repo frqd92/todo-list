@@ -79,13 +79,12 @@
 .login-i-div{
     position: relative;
     align-self: self-start;
-    
 
 }
-.login-i-img{
+.i-img{
     width: 14px;
 }
-.login-i-img:hover {
+.i-img:hover {
     filter: contrast(0.5);
 }
 
