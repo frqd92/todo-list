@@ -1,4 +1,4 @@
-const compareArr = ["ja","f" ,"mar", "ap", "may", "jun", "jul", "au", "s", "oc", "n", "d"];
+const compareArr = ["ja","fe" ,"mar", "ap", "may", "jun", "jul", "au", "se", "oc", "no", "de"];
 const autoArr = ["January", "February", "March","April","May", "June", "July", "August", "September", "October", "November", "December"];
 const date = new Date();
 
@@ -13,21 +13,26 @@ function clickEnter(input){
     input.addEventListener("keydown", renderDate);
 
     function renderDate(e){
-        let getYear = date.getFullYear();
         if(e.key==="Enter"){
             const inputArr = this.value.split(" ");
+
+
+
+
+            if(inputArr[inputArr.length-1]===""){
+                inputArr.pop()
+            }
             let formatObj = [];
             inputArr.forEach((elem)=>{
                 const word = elem.split("");
-                if(elem==="of"){return}; 
-                let bool = checkForOrdinal(elem); //ex. 12th of january
+                let bool = checkForOrdinal(elem,formatObj); //ex. 12th of january
                 if(!bool){
                     if(!isNaN(elem) && (elem>0 && elem<32)){
                         let day = checkDay(elem);
                         formatObj.day = day;
                     }
                 };
-                if(/^[,;.-]+/.test(word[word.length-1])){
+                if(/^[,;.-\s]+/.test(word[word.length-1])){
                     word.pop();
                 }
                 let wordTest = word.every((elem)=>/[a-zA-Z]/.test(elem));
@@ -39,55 +44,65 @@ function clickEnter(input){
                         formatObj.month = monthInNum; 
                     }
                 }
-                if(!/[^\d{4}$]/.test(elem)){ //year check
-                        console.log(elem)
+                if(/^\d{4}$/.test(elem)){ //year check
                         formatObj.year = Number(elem);            
                 }
             });
 
-
-
             if(formatObj.year===undefined){
-                formatObj.year=getYear;
+                formatObj.year=date.getFullYear();
+                if(!checkIfValid(formatObj)){
+                    formatObj.year=date.getFullYear() + 1;
+                }
+
             }
-
-            //let checkValidity = checkIfValid(formatObj);
-
-            console.log(formatObj)
-
-
-            function checkForOrdinal(val){
-                let bool = false;
-                let ordinal = ["th", "rd", "st", "nd"];
-                ordinal.forEach(elem=>{
-                    if(val.includes(elem)){
-                        let num = val.replace(elem, "");
-                        const dayFormat = checkDay(num);
-                        if(dayFormat!==undefined){
-                            formatObj.day = Number(dayFormat);
-                            bool = true;
-                        }
-                    }
-                })
-                return bool;
+            let checkValidity = checkIfValid(formatObj);
+            if(checkValidity){
+                processDate(formatObj);
             }
-
         }
     }
 
 }
 
+function processDate(obj){ //if it passes all the checks
+    console.log(obj);
+}
+function errorMsg(value){ //move to dom folder after
+
+}
+
+
 
 function checkIfValid(obj){
-    let getDay = date.getDay();
-    let getMonth = date.getMonth();
+    let getDay = date.getDate();
+    let getMonth = date.getMonth() + 1;
     let getYear = date.getFullYear();
-    let validDay = true;
-    let validMonth = true;
-    let validYear = true;
-    console.log(getDay, getMonth, getYear)       
-    console.log(obj)     
-}
+
+    if(obj.year < getYear){
+        errorMsg("Check year");
+        return false;
+    };
+    if(getYear===obj.year){
+        if(obj.month < getMonth){
+            errorMsg("Check month");
+            return false;
+        }
+        if(obj.month ===getMonth){
+            if(obj.day < getDay){
+            errorMsg("Check day");
+            return false;
+            }
+        }
+    }
+    return true;
+
+};
+
+
+
+
+
 
 
 function checkDay(num){
@@ -100,8 +115,21 @@ function checkDay(num){
 }
 
 
-
-
+function checkForOrdinal(val, obj){
+    let bool = false;
+    let ordinal = ["th", "rd", "st", "nd"];
+    ordinal.forEach(elem=>{
+        if(val.includes(elem)){
+            let num = val.replace(elem, "");
+            const dayFormat = checkDay(num);
+            if(dayFormat!==undefined){
+                obj.day = Number(dayFormat);
+                bool = true;
+            }
+        }
+    })
+    return bool;
+}
 
 
 function autoCompleteMonth(input){
