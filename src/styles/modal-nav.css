@@ -269,11 +269,12 @@
     outline: none;
     border: 1px solid rgba(0, 0, 0, 0.306);
     box-shadow: 0px 0px 5px rgba(147, 147, 241, 0.647);
-    padding: 3px 15px;
+    padding: 3px 30px 3px 15px;
     font-size: 1.2rem;
     font-family: roboto-medium;
     letter-spacing: 0.05rem;
     color: rgba(2, 0, 31, 0.823);
+    
 }
 .enter-date-input::placeholder{
     font-family: oxygen;
