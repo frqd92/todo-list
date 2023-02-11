@@ -85,7 +85,7 @@ function addModal(content){
     //input to enter a date-------------------------------------------
     const enterDateDiv = elementCreator("div", ["class", "enter-date-div"], false, datePickerDiv);
     const enterDateInput = elementCreator("input", ["class", "enter-date-input"], false, enterDateDiv);
-    enterDateInput.placeholder="Enter your date";
+    enterDateInput.placeholder="Write your date & press enter";
     modalDateInputFunc(enterDateInput);
     const iconDiv = elementCreator("div", ["class", "modal-icon-div"], false, enterDateDiv )
     createIcon(iconDiv, "Hello", ["modal-i-div","modal-i-img", "modal-i-img-div"]);
