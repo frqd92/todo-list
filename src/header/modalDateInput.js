@@ -12,31 +12,42 @@ export function modalDateInputFunc(input){
 
 function clickEnter(input){
     input.addEventListener("keydown", renderDate);
-
+    let formatObj = {};
     function renderDate(e){
         if(e.key==="Enter"){
-            const isDateNum = formatDateNum(this);
-        
-        if(isDateNum){ //if date is in number format
-            const [day,month,year] = isDateNum;
-            console.log(day,month,year);
-        }
-        else{   //if date is in text format
-            formatDateText(this);
-        }
+            let invalid=false;
+            formatObj.day="";
+            formatObj.month="";
+            formatObj.year="";
+            const isDateNum = formatDateNum(this, formatObj);
+
+            if(!isDateNum){ //if date is in number format
+                let isDateText = formatDateText(this, formatObj);
+                if(!isDateText){
+                    invalid=true;
+                }
+            }
+            if(!invalid){
+                console.log("works")
+                console.log(formatObj)
+            }
+            else{
+                console.log("Error in Formatting")
+            }
         }
     }
 }
 
+
 function processDate(obj){ //if it passes all the checks
-    console.log(obj);
+
 }
 function errorMsg(value){ //move to dom folder after
     console.log(value)
 }
 
 
-function formatDateNum(input){
+function formatDateNum(input, formatObj){
       const separators = ["/", ".", "-"];
       let isNum = true;
         let arr = input.value.split("");
@@ -52,6 +63,7 @@ function formatDateNum(input){
         })
         if(isNum===false)return false;
         else{
+            if(dateArray.length==1)return false
             if(dateArray.length>2){
                 if((dateArray[0].length===2 && dateArray[2].length===4) && dateArray.length===3){
                     day = dateArray[0];
@@ -78,31 +90,58 @@ function formatDateNum(input){
                     month = dateArray[1];
                 }
             }
-
             if(day===undefined && month===undefined){
                 return false;
             }
             else{
-                return [day,month,year]
+                if(day===undefined){
+                    if((date.getMonth() +1) === Number(month)){
+                        formatObj.day = date.getDate() + 1;
+                    }
+                    else{
+                        formatObj.day = 1;
+                    }
+                    formatObj.month = month;
+                    formatObj.year = year;
+                }
+                else if (year===undefined){
+                    if((date.getMonth() +1) === Number(month)){
+                        if(day<date.getDate()){
+                            formatObj.year = date.getFullYear() + 1;
+                        }
+                        else{
+                            formatObj.year = date.getFullYear();
+                        }
+                    }   
+                    else if((date.getMonth() +1) > Number(month)){
+                        formatObj.year = date.getFullYear() + 1;
+                    }
+                    else{
+                        formatObj.year = date.getFullYear();
+                    }
+                    formatObj.day = day;
+                    formatObj.month = month;
+                }
+                else{
+                    formatObj.day = day;
+                    formatObj.month = month;
+                    formatObj.year = year;
+                }
+
+                if(checkIfValid(formatObj)){
+                    return [day,month,year]
+                }
+
             }
         }
 }
 
 
-
-
-
-/*
-
-*/
-
-
-function formatDateText(input){
+function formatDateText(input, formatObj){
     const inputArr = input.value.split(" ");
     if(inputArr[inputArr.length-1]===""){
         inputArr.pop()
     };
-    let formatObj = [];
     inputArr.forEach((elem)=>{
         const word = elem.split("");
         let bool = checkForOrdinal(elem,formatObj); //ex. 12th of january
@@ -125,21 +164,32 @@ function formatDateText(input){
             }
         }
         if(/^\d{4}$/.test(elem)){ //year check
-                formatObj.year = Number(elem);            
+            formatObj.year = Number(elem);            
         }
     });
-    if(formatObj.year===undefined){
-        formatObj.year=date.getFullYear();
-        if(!checkIfValid(formatObj)){
+    if(formatObj.year===""){
+        if(formatObj.month === date.getMonth()+1){
+            if(formatObj.day< date.getDate()){
+                formatObj.year=date.getFullYear() + 1;
+            }
+            else{
+                formatObj.year=date.getFullYear();
+            }
+        }
+        if(formatObj.month > date.getMonth()+1){
+            formatObj.year=date.getFullYear();
+        }
+        else{
             formatObj.year=date.getFullYear() + 1;
         }
     }
-    let checkValidity = checkIfValid(formatObj);
-    if(checkValidity){
-        processDate(formatObj);
+    if(checkIfValid(formatObj)){
+        return true;
+    }
+    else {
+        return false;
     }
 }
-
 
 
 
@@ -147,23 +197,51 @@ function checkIfValid(obj){
     let getDay = date.getDate();
     let getMonth = date.getMonth() + 1;
     let getYear = date.getFullYear();
-
-    if(obj.year < getYear){
-        errorMsg("Check year");
+    let day = Number(obj.day);
+    let month = Number(obj.month);
+    let year = Number (obj.year);
+    let daysInChosenMonth = daysInMonth(obj.month, obj.year);
+    if(!daysInChosenMonth){
+        errorMsg("Invalid Date Format");
+        return false
+    }
+    if(day>daysInChosenMonth || day<1){
+        errorMsg(`Days must be less than ${daysInChosenMonth} or greater than 0`);
         return false;
-    };
-    if(getYear===obj.year){
-        if(obj.month < getMonth){
-            errorMsg("Check month");
+    }
+
+    else if(month>12 || month<1) {
+        errorMsg("Months must be between 1-12");
+        return false;
+    }
+    else if(year<getYear){
+        errorMsg("No time traveling");
+        return false;
+    }
+    else if(year===getYear && (month===getMonth) && day<getDay){
+        errorMsg("No time traveling");
+        return false;
+    }
+
+    else{
+        if(year < getYear){
+            errorMsg("Check year");
             return false;
-        }
-        if(obj.month ===getMonth){
-            if(obj.day < getDay){
-            errorMsg("Check day");
-            return false;
+        };
+        if(getYear===year){
+            if(month < getMonth){
+                errorMsg("Check month");
+                return false;
+            }
+            if(month ===getMonth){
+                if(day < getDay){
+                errorMsg("Check day");
+                return false;
+                }
             }
         }
     }
+
     return true;
 };
 
@@ -214,14 +292,9 @@ function autoCompleteMonth(input){
     } 
 
 }
+function daysInMonth(month, year) {
+    let chosenMonth = new Date(`${month}-01-${year}`);
+    return new Date(chosenMonth.getFullYear(), chosenMonth.getMonth()+1, 0).getDate();
 
+  }
 
-// if(e.inputType!=="deleteContentBackward"){
-//     const wordArray = this.value.toLowerCase().split(" ");
-//     const lastWord = wordArray[wordArray.length-1].split("");
-//     console.log(lastWord);
-//     if(compareArr.includes(lastWord.join(""))){
-//         const index = compareArr.indexOf(lastWord.join(""));
-//         this.value = this.value.toLowerCase().replace(compareArr[index], autoArr[index]);
-//     }
-// }
