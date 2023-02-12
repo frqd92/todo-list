@@ -1,24 +1,24 @@
+import { daysInMonth, chosenDayFunc } from "../utilities/dateUtils";
+import { errorMsg} from '/src/dom/modal';
 const compareArr = ["ja","fe" ,"mar", "ap", "may", "jun", "jul", "au", "se", "oc", "no", "de"];
 const autoArr = ["January", "February", "March","April","May", "June", "July", "August", "September", "October", "November", "December"];
 
 const date = new Date();
 
 
-export function modalDateInputFunc(input){
+export function modalDateInputFunc(input, btn, dayBtnText){
     autoCompleteMonth(input);
-    clickEnter(input)
+    clickEnter(input, btn,dayBtnText)
 }
 
 
-function clickEnter(input){
+function clickEnter(input, btn){
     input.addEventListener("keydown", renderDate);
     let formatObj = {};
     function renderDate(e){
         if(e.key==="Enter"){
             let invalid=false;
-            formatObj.day="";
-            formatObj.month="";
-            formatObj.year="";
+            formatObj.day="";formatObj.month="";formatObj.year="";
             const isDateNum = formatDateNum(this, formatObj);
 
             if(!isDateNum){ //if date is in number format
@@ -27,11 +27,12 @@ function clickEnter(input){
                     invalid=true;
                 }
             }
-            if(!invalid){
+            if(!invalid){ //if date in input passes all the checks
                 console.log("works")
-                console.log(formatObj)
+                processDate(formatObj, btn);
+                
             }
-            else{
+            else{ //if date format is wrong
                 console.log("Error in Formatting")
             }
         }
@@ -39,12 +40,16 @@ function clickEnter(input){
 }
 
 
-function processDate(obj){ //if it passes all the checks
+function processDate(obj, btn){ //if it passes all the checks
+
+    let addZero = [obj.day, obj.month].map(elem=>elem<10?"0"+Number(elem):Number(elem));
+    let value = `${addZero[0]}/${addZero[1]}/${obj.year}`;
+    btn.textContent = value;
+    let day = chosenDayFunc(obj.month,obj.day,obj.year);
+    document.querySelector(".due-btn-day-text").innerText = day;
 
 }
-function errorMsg(value){ //move to dom folder after
-    console.log(value)
-}
+
 
 
 function formatDateNum(input, formatObj){
@@ -136,19 +141,23 @@ function formatDateNum(input, formatObj){
         }
 }
 
-
 function formatDateText(input, formatObj){
     const inputArr = input.value.split(" ");
+    let monthCount=0, dayCount=0, yearCount=0;
     if(inputArr[inputArr.length-1]===""){
         inputArr.pop()
     };
     inputArr.forEach((elem)=>{
         const word = elem.split("");
         let bool = checkForOrdinal(elem,formatObj); //ex. 12th of january
-        if(!bool){
+        if(bool){
+            dayCount++
+        }
+        else{
             if(!isNaN(elem) && (elem>0 && elem<32)){
                 let day = checkDay(elem);
                 formatObj.day = Number(day);
+                dayCount++;
             }
         };
         if(/^[,;.-\s]+/.test(word[word.length-1])){
@@ -159,12 +168,15 @@ function formatDateText(input, formatObj){
             let month = word;
             month[0] = month[0].toUpperCase();
             if(autoArr.includes(month.join(""))){
+                monthCount++;
                 const monthInNum = autoArr.indexOf(month.join(""))+1
                 formatObj.month = monthInNum; 
             }
         }
         if(/^\d{4}$/.test(elem)){ //year check
-            formatObj.year = Number(elem);            
+            formatObj.year = Number(elem);
+            yearCount++;
+           
         }
     });
     if(formatObj.year===""){
@@ -179,9 +191,14 @@ function formatDateText(input, formatObj){
         if(formatObj.month > date.getMonth()+1){
             formatObj.year=date.getFullYear();
         }
-        else{
+        else if(formatObj.month < date.getMonth()+1){
             formatObj.year=date.getFullYear() + 1;
         }
+        yearCount++;
+
+    }
+    if(dayCount>1 ||monthCount>1 || yearCount>1){
+        return false;
     }
     if(checkIfValid(formatObj)){
         return true;
@@ -190,8 +207,6 @@ function formatDateText(input, formatObj){
         return false;
     }
 }
-
-
 
 function checkIfValid(obj){
     let getDay = date.getDate();
@@ -246,7 +261,6 @@ function checkIfValid(obj){
 };
 
 
-
 function checkDay(num){
     if(num.length===1){
         num = "0" + num;
@@ -277,7 +291,7 @@ function checkForOrdinal(val, obj){
 function autoCompleteMonth(input){
     input.addEventListener("input", autoComp);
     function autoComp(e){
-
+        this.classList.remove("date-input-invalid");
         if(e.inputType!=="deleteContentBackward"){
             let wordArray = this.value.toLowerCase().split(" ");
             wordArray.forEach((word, indexWord)=>{
@@ -292,9 +306,3 @@ function autoCompleteMonth(input){
     } 
 
 }
-function daysInMonth(month, year) {
-    let chosenMonth = new Date(`${month}-01-${year}`);
-    return new Date(chosenMonth.getFullYear(), chosenMonth.getMonth()+1, 0).getDate();
-
-  }
-

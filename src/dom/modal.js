@@ -78,7 +78,7 @@ function addModal(content){
     
     const dueDateText = elementCreator("p", ["class", "modal-due-text"], "Due date", dueDateDiv);
     const dueBtn = elementCreator("div", ["class", "modal-due-btn"], "Today", dueDateDiv);
-
+    const dayWeekText = elementCreator("p", ["class", "due-btn-day-text"], false, dueDateDiv);
     const datePickerDiv = elementCreator("div", ["class", "date-picker-div"],false, dueDateDiv);
 
 
@@ -86,7 +86,7 @@ function addModal(content){
     const enterDateDiv = elementCreator("div", ["class", "enter-date-div"], false, datePickerDiv);
     const enterDateInput = elementCreator("input", ["class", "enter-date-input"], false, enterDateDiv);
     enterDateInput.placeholder="Write your date & press enter";
-    modalDateInputFunc(enterDateInput);
+    modalDateInputFunc(enterDateInput, dueBtn, dayWeekText);
     const iconDiv = elementCreator("div", ["class", "modal-icon-div"], false, enterDateDiv )
     createIcon(iconDiv, "Hello", ["modal-i-div","modal-i-img", "modal-i-img-div"]);
 
@@ -176,4 +176,21 @@ function classListLogic(bool, elem, div, arrow, content){
         arrow.classList.add(currentArr[1]);
         content.classList.add(currentArr[2]);
     }
+}
+
+export function errorMsg(value){ //move to dom folder after
+    const input = document.querySelector(".enter-date-input");
+    const div = document.querySelector(".enter-date-div");
+    input.classList.add("date-input-invalid");
+    if(document.querySelector(".modal-input-error")===null){
+        const errorBox = elementCreator("div", ["class","modal-input-error"], value, div);
+
+        setTimeout(()=>{
+            errorBox.style.opacity="0";
+        },2300)
+        setTimeout(()=>{
+            errorBox.remove();
+        },2600)
+    }
+
 }
