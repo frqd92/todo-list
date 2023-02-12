@@ -1,6 +1,7 @@
 import { elementCreator } from "../utilities/elementCreator";
 import {createIcon} from "/src/utilities/iconCreate";
 import { modalDateInputFunc } from "../header/modalDateInput";
+import { quickAddBtnsFunc } from "../header/quickAddBtns";
 import '/src/styles/modal-nav.css';
 
 export function makeModal(btnArr){
@@ -31,48 +32,8 @@ export function makeModal(btnArr){
 //create each modal in the DOM
 function addModal(content){
     const form = elementCreator("div", ["id", "form"], false, content);
-
-    const inputFactory = (type)=>{
-        const div = elementCreator("div", ["class", "outer-form-input-div"],false, form)
-        const inputDiv = elementCreator("div", ["class", `form-input-div`], false, div);
-        const placeholder = elementCreator("div", ["class", "form-placeholder"], `${type}`, inputDiv);
-        const input = elementCreator("div", ["class", `form-${type.toLowerCase()}-input`], false, inputDiv);
-        input.setAttribute("contenteditable", "true");
-        input.addEventListener("input", formInputLogic);
-        let invalidLength;
-        if(type==="Title") invalidLength=100;
-        if(type==="Description") invalidLength=150;
-        const errorMsg = elementCreator("p", ["class", `form-invalid-length-msg`], false, div);
-
-        function formInputLogic(){
-            this.innerText.length>0?placeholder.innerText="":placeholder.innerText=type;
-            inputDiv.offsetHeight>97?inputDiv.classList.add("overflown-input"):inputDiv.classList.remove("overflown-input");
-
-            if(type==="Title")invalidInput(invalidLength);
-            else if(type==="Description")invalidInput(invalidLength);
-
-            function invalidInput(num){
-                if(input.innerText.length>0){
-                    errorMsg.style.display="block";
-                    errorMsg.innerText = `Characters: ${input.innerText.length} / ${invalidLength}`;
-                }
-                else{
-                    errorMsg.style.display="none";
-                }
-                if(input.innerText.length>num){
-                    inputDiv.classList.add("modal-invalid-input");
-                    errorMsg.classList.add("form-invalid-over");
-                }
-                else{
-                    inputDiv.classList.remove("modal-invalid-input");
-                    errorMsg.classList.remove("form-invalid-over");
-                }
-            }
-        }
-        return Object.assign({}, inputDiv)
-    }
-    const titleInput = inputFactory("Title");
-    const descInput = inputFactory("Description");
+    const titleInput = inputFactory("Title", form);
+    const descInput = inputFactory("Description", form);
 
     const dueDateDiv = elementCreator("div", ["class", "modal-due-div"], false, form);
     
@@ -80,8 +41,6 @@ function addModal(content){
     const dueBtn = elementCreator("div", ["class", "modal-due-btn"], "Today", dueDateDiv);
     const dayWeekText = elementCreator("p", ["class", "due-btn-day-text"], false, dueDateDiv);
     const datePickerDiv = elementCreator("div", ["class", "date-picker-div"],false, dueDateDiv);
-
-
     //input to enter a date-------------------------------------------
     const enterDateDiv = elementCreator("div", ["class", "enter-date-div"], false, datePickerDiv);
     const enterDateInput = elementCreator("input", ["class", "enter-date-input"], false, enterDateDiv);
@@ -89,7 +48,6 @@ function addModal(content){
     modalDateInputFunc(enterDateInput, dueBtn, dayWeekText);
     const iconDiv = elementCreator("div", ["class", "modal-icon-div"], false, enterDateDiv )
     createIcon(iconDiv, "Hello", ["modal-i-div","modal-i-img", "modal-i-img-div"]);
-
 
     // buttons where you quick add a due date-------------------------
     const dateBtnsDiv = elementCreator("div", ["class", "date-picker-btn-div"], false,datePickerDiv);
@@ -101,19 +59,11 @@ function addModal(content){
         for(const key in elem){
             if (elem.hasOwnProperty(key)) {
                 const value = elem[key];
-                elementCreator("div", ["class", "due-btn", `due-btn-${key}`],value, dateBtnsDiv);
+                const btn = elementCreator("div", ["class", "due-btn", `due-btn-${key}`],value, dateBtnsDiv);
+                quickAddBtnsFunc(btn);
               }
         }
     })
-
-
-
-
-
-
-
-
-
 
 }
 
@@ -121,10 +71,8 @@ function addModal(content){
 
 
 
-
-
-function calenderModal(div, arrow, content){
-
+function calenderModal(content){
+    const test = elementCreator("div", false, "fsdfkjdsflajflkadsjfas", content)
 
 
 
@@ -134,6 +82,56 @@ function taskOverview(div, arrow, content){
 
 
 }
+
+
+
+
+
+//factory function for title and description
+const inputFactory = (type, form)=>{
+    const div = elementCreator("div", ["class", "outer-form-input-div"],false, form)
+    const inputDiv = elementCreator("div", ["class", `form-input-div`], false, div);
+    const placeholder = elementCreator("div", ["class", "form-placeholder"], `${type}`, inputDiv);
+    const input = elementCreator("div", ["class", `form-${type.toLowerCase()}-input`], false, inputDiv);
+    input.setAttribute("contenteditable", "true");
+    input.addEventListener("input", formInputLogic);
+    let invalidLength;
+    if(type==="Title") invalidLength=100;
+    if(type==="Description") invalidLength=150;
+    const errorMsg = elementCreator("p", ["class", `form-invalid-length-msg`], false, div);
+
+    function formInputLogic(){
+        this.innerText.length>0?placeholder.innerText="":placeholder.innerText=type;
+        inputDiv.offsetHeight>97?inputDiv.classList.add("overflown-input"):inputDiv.classList.remove("overflown-input");
+
+        if(type==="Title")invalidInput(invalidLength);
+        else if(type==="Description")invalidInput(invalidLength);
+
+        function invalidInput(num){
+            if(input.innerText.length>0){
+                errorMsg.style.display="block";
+                errorMsg.innerText = `Characters: ${input.innerText.length} / ${invalidLength}`;
+            }
+            else{
+                errorMsg.style.display="none";
+            }
+            if(input.innerText.length>num){
+                inputDiv.classList.add("modal-invalid-input");
+                errorMsg.classList.add("form-invalid-over");
+            }
+            else{
+                inputDiv.classList.remove("modal-invalid-input");
+                errorMsg.classList.remove("form-invalid-over");
+            }
+        }
+    }
+    return Object.assign({}, inputDiv)
+}
+
+
+
+
+
 
 
 

@@ -33,7 +33,7 @@ function clickEnter(input, btn){
                 
             }
             else{ //if date format is wrong
-                console.log("Error in Formatting")
+                errorMsg("Error in date format")
             }
         }
     }
@@ -41,7 +41,6 @@ function clickEnter(input, btn){
 
 
 function processDate(obj, btn){ //if it passes all the checks
-
     let addZero = [obj.day, obj.month].map(elem=>elem<10?"0"+Number(elem):Number(elem));
     let value = `${addZero[0]}/${addZero[1]}/${obj.year}`;
     btn.textContent = value;

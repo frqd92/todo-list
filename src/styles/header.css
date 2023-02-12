@@ -45,7 +45,6 @@ header{
     grid-template-columns: 3fr 1fr 1fr;
     align-items: center;
     justify-items:end;
-
 }
 .header-options-middle{
     display: flex;
@@ -60,6 +59,7 @@ header{
     background-color: rgba(107, 104, 104, 0.285);
     border-radius: 10px;
     position: relative;
+
 }
 .bulb-div{
     cursor: pointer;
@@ -71,6 +71,7 @@ header{
     margin-left: 25px;
 }
 .bulb-brightness{
+    
     top: 10px;
     position: absolute;
     box-shadow:
@@ -95,6 +96,7 @@ header{
 .header-profile{
     margin-left: 25px;
 
+
 }
 
 
@@ -107,6 +109,7 @@ header{
     justify-content: center;
     gap: 20px;
     padding-right: 10px;
+    
 }
 .menu-icon{
     width: 27px;
