@@ -7,3 +7,16 @@ export function chosenDayFunc(month, day, year) { //gets day of a date as a stri
     let chosenDay = new Date(`${month}-${day}-${year}`);
     return chosenDay.toLocaleString('en-us', {weekday: 'long'})
 }
+
+export function getCurrentDateText(value){
+  const date = new Date();
+  switch(value){
+    case "day": 
+      return date.toLocaleString('en-us', {weekday: 'long'});
+    case "month":
+      return date.toLocaleString('en-us', {month: 'long'});
+    case "year":
+      return date.getFullYear();
+  }
+
+}

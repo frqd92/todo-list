@@ -1,7 +1,10 @@
-import { elementCreator } from "../utilities/elementCreator";
+import { elementCreator, imageCreator } from "../utilities/elementCreator";
+import { getCurrentDateText } from "../utilities/dateUtils";
 import {createIcon} from "/src/utilities/iconCreate";
 import { modalDateInputFunc } from "../header/modalDateInput";
 import { quickAddBtnsFunc } from "../header/quickAddBtns";
+import arrow from '/src/assets/images/arrow-simple.png';
+
 import '/src/styles/modal-nav.css';
 
 export function makeModal(btnArr){
@@ -69,9 +72,8 @@ function taskOverview(div, arrow, content){
 
 
 
-//due date div
+//due date div: date-input, quick buttons and calender to pick date
 function createDueDateDiv(datePickerDiv, dueBtn, dayWeekText){
-
     //input to enter a date-------------------------------------------
     const enterDateDiv = elementCreator("div", ["class", "enter-date-div"], false, datePickerDiv);
     const enterDateInput = elementCreator("input", ["class", "enter-date-input"], false, enterDateDiv);
@@ -98,7 +100,51 @@ function createDueDateDiv(datePickerDiv, dueBtn, dayWeekText){
               }
         }
     })
+
+    const datePickCal = elementCreator("div", ["class", "date-adder-calender-div"], false, datePickerDiv);
+
+    createDatePickCalDiv(datePickCal);
+
 }
+
+export function createDatePickCalDiv(div){
+    const calenderTitleDiv = elementCreator("div", ["class", "calender-title-div"], false, div);
+    const arrowDivLeft = elementCreator("div", ["class","arrow-div"], false, calenderTitleDiv);
+    const arrowLeft = imageCreator(arrow, ["class", "add-cal-arrow", "add-arrow-left"], arrowDivLeft);
+    const titleText = elementCreator("p", ["class", "calender-title-text"],`${getCurrentDateText("month")} ${getCurrentDateText("year")}`, calenderTitleDiv);
+    const arrowDivRight = elementCreator("div", ["class","arrow-div"], false, calenderTitleDiv);
+    const arrowRight = imageCreator(arrow, ["class", "add-cal-arrow","add-arrow-right"], arrowDivRight);
+    arrowHoverEffect([arrowDivLeft, arrowLeft], ["add-arrow-left-hov","add-arrow-clicked-right"]);
+    arrowHoverEffect([arrowDivRight, arrowRight], ["add-arrow-right-hov","add-arrow-clicked-right"]);
+}
+
+function arrowHoverEffect(arr, classL){
+    const [div,arrow] = arr;
+    div.addEventListener("mouseover", addHov);
+    div.addEventListener("mousedown", addEff);
+
+    function addHov(){
+        arrow.classList.add(classL[0]);
+        div.addEventListener("mouseleave", removeHov);
+    }
+    function removeHov(){
+        arrow.classList.remove(classL[0]);
+        div.addEventListener("mouseover", addHov,)
+        div.removeEventListener("mouseleave", removeHov)
+    }
+    function addEff(){
+        arrow.classList.add(classL[1]);
+        div.addEventListener("mouseup", removeEff);
+        arrow.classList.remove(classL[0]);
+    }
+    function removeEff(){
+        arrow.classList.remove(classL[1]);
+        div.addEventListener("mousedown", addEff);
+        div.removeEventListener("mouseup", removeEff);
+        arrow.classList.add(classL[0]);
+    }
+}
+
 
 
 
