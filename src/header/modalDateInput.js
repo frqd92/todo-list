@@ -11,7 +11,6 @@ export function modalDateInputFunc(input, btn, dayBtnText){
     clickEnter(input, btn,dayBtnText)
 }
 
-
 function clickEnter(input, btn){
     input.addEventListener("keydown", renderDate);
     let formatObj = {};
@@ -78,6 +77,11 @@ function formatDateNum(input, formatObj){
                     day = dateArray[2];
                     month = dateArray[1];
                     year = dateArray[0];
+                }
+                else if((dateArray[0].length===2 && dateArray[1].length===2 && dateArray[2].length===2) && dateArray.length===3){
+                    day = dateArray[0];
+                    month = dateArray[1];
+                    year = "20" + dateArray[2];
                 }
             }
             else{

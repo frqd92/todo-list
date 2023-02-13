@@ -32,43 +32,21 @@ export function makeModal(btnArr){
 //create each modal in the DOM
 function addModal(content){
     const form = elementCreator("div", ["id", "form"], false, content);
+    //title and description
     const titleInput = inputFactory("Title", form);
     const descInput = inputFactory("Description", form);
 
+    //due date div
     const dueDateDiv = elementCreator("div", ["class", "modal-due-div"], false, form);
-    
     const dueDateText = elementCreator("p", ["class", "modal-due-text"], "Due date", dueDateDiv);
     const dueBtn = elementCreator("div", ["class", "modal-due-btn"], "Today", dueDateDiv);
     const dayWeekText = elementCreator("p", ["class", "due-btn-day-text"], false, dueDateDiv);
     const datePickerDiv = elementCreator("div", ["class", "date-picker-div"],false, dueDateDiv);
-    //input to enter a date-------------------------------------------
-    const enterDateDiv = elementCreator("div", ["class", "enter-date-div"], false, datePickerDiv);
-    const enterDateInput = elementCreator("input", ["class", "enter-date-input"], false, enterDateDiv);
-    enterDateInput.placeholder="Write your date & press enter";
-    modalDateInputFunc(enterDateInput, dueBtn, dayWeekText);
-    const iconDiv = elementCreator("div", ["class", "modal-icon-div"], false, enterDateDiv )
-    createIcon(iconDiv, "Hello", ["modal-i-div","modal-i-img", "modal-i-img-div"]);
+    createDueDateDiv(datePickerDiv, dueBtn, dayWeekText);
 
-    // buttons where you quick add a due date-------------------------
-    const dateBtnsDiv = elementCreator("div", ["class", "date-picker-btn-div"], false,datePickerDiv);
-    const btnArray = [
-        {none:"None"}, {today:"Today"}, {tomorrow:"Tomorrow"}, 
-        {afterTomorrow:"After Tomorrow"},{week:"Next week"}, {month:"Next month"}
-    ]
-    btnArray.forEach((elem)=>{   
-        for(const key in elem){
-            if (elem.hasOwnProperty(key)) {
-                const value = elem[key];
-                const btn = elementCreator("div", ["class", "due-btn", `due-btn-${key}`],value, dateBtnsDiv);
-                quickAddBtnsFunc(btn);
-              }
-        }
-    })
+
 
 }
-
-
-
 
 
 function calenderModal(content){
@@ -82,6 +60,49 @@ function taskOverview(div, arrow, content){
 
 
 }
+
+
+
+
+
+
+
+
+
+//due date div
+function createDueDateDiv(datePickerDiv, dueBtn, dayWeekText){
+
+    //input to enter a date-------------------------------------------
+    const enterDateDiv = elementCreator("div", ["class", "enter-date-div"], false, datePickerDiv);
+    const enterDateInput = elementCreator("input", ["class", "enter-date-input"], false, enterDateDiv);
+    enterDateInput.placeholder="Write your date & press enter";
+    modalDateInputFunc(enterDateInput, dueBtn, dayWeekText);
+    const iconDiv = elementCreator("div", ["class", "modal-icon-div"], false, enterDateDiv )
+    createIcon(iconDiv, "Hello", ["modal-i-div","modal-i-img", "modal-i-img-div"]);
+
+    // buttons where you quick add a due date-------------------------
+    const dateBtnsDiv = elementCreator("div", ["class", "date-picker-btn-div"], false,datePickerDiv);
+    const hoverDiv = elementCreator("div",["class", "due-btn-hover-div"], false,document.body);
+    elementCreator("p", false, false, hoverDiv);
+    elementCreator("p", false, false, hoverDiv);
+    const btnArray = [
+        {none:"None"}, {today:"Today"}, {tomorrow:"Tomorrow"}, 
+        {afterTomorrow:"After tomorrow"},{week:"Next week"}, {month:"Next month"}
+    ]
+    btnArray.forEach((elem)=>{   
+        for(const key in elem){
+            if (elem.hasOwnProperty(key)) {
+                const value = elem[key];
+                const btn = elementCreator("div", ["class", "due-btn", `due-btn-${key}`],value, dateBtnsDiv);
+                quickAddBtnsFunc(btn);
+              }
+        }
+    })
+}
+
+
+
+
 
 
 

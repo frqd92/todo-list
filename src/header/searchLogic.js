@@ -4,7 +4,6 @@ export function searchLoupe(btn, input){
 
 
 export function inputBehaviour(input){
-    
     input.addEventListener("keydown", (e)=>{
         if(e.key==="Delete"){
             input.value="";
@@ -22,7 +21,6 @@ export function inputBehaviour(input){
     });
 
     input.addEventListener("focusout", inputClose);
-
 
     function inputClose(){
         if(input.value.length<1){

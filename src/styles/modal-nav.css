@@ -86,6 +86,7 @@
 
 .content-add{
     position: relative;
+    height: fit-content;
     
 }
 
@@ -104,6 +105,7 @@
 
 /* Title and description */
 #form{
+    position: relative;
     padding: 25px;
     display: flex;
     flex-direction: column;
@@ -229,12 +231,13 @@
 .due-btn-day-text{
     position: absolute;
     top: -16px;
-    right: 26%;
+    right: 74px;
     font-size: 0.8rem;
     font-family: roboto;
     color: rgba(244, 244, 244, 0.692);
-
+    width: 85px;
     border-bottom: none;
+    text-align: center;
 
 }
 .date-picker-div{
@@ -249,6 +252,7 @@
 
 }
 .date-picker-btn-div{
+    position: relative;
     display: grid;
     grid-template-columns: repeat(3, calc(100% / 3));
     grid-template-rows: 20px 20px;
@@ -259,6 +263,7 @@
 
 }
 .due-btn{
+    position: relative;
     border: 1px solid rgba(0, 0, 0, 0.248);
     background-color: rgba(11, 92, 105, 0.142);
     color: rgba(2, 2, 2, 0.776);
@@ -277,6 +282,35 @@
     color: rgba(253, 253, 253, 0.455);
     background-color:  rgba(24, 127, 142, 0.342);
 }
+
+.due-btn-hover-div{
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    border: 1px solid rgba(70, 65, 65, 0.184);
+    padding: 3px;
+    border-radius: 10px;
+    background-color: rgba(170, 165, 165, 0.22);
+    backdrop-filter: blur(10px);
+    font-size: 0.9rem;
+}
+.due-btn-hover-div p:nth-child(1){
+    font-family: roboto-medium;
+    color: rgba(255, 255, 255, 0.433);
+    text-shadow: 0px 1px 3px rgba(0, 0, 0, 0.412);
+
+}
+
+.due-btn-hover-div p:nth-child(2){
+    color: rgb(21, 18, 18);
+    font-size: 0.85rem;
+    text-shadow: 0px 0px 2px rgba(255, 255, 255, 0.212);
+    font-family: oxygen;
+}
+
+
 /* due date input */
 .enter-date-div{
     position: relative;
@@ -365,3 +399,4 @@
     transition: 0.3s linear opacity;
     text-align: center;
 }
+
