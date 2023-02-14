@@ -22,4 +22,3 @@ function incrDecrMonth(text, isIncr){
 
     text.innerText = `${returnMonth(nextMonth.getMonth()+1)} ${nextMonth.getFullYear()}`;
 }
-

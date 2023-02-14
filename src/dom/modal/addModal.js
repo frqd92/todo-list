@@ -1,4 +1,3 @@
-
 import { elementCreator} from '/src/utilities/elementCreator'
 import {createIcon} from "/src/utilities/iconCreate";
 import { modalDateInputFunc } from "/src/header/modal/modalDateInput";

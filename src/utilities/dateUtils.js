@@ -51,8 +51,6 @@ export function detectFirstDayMonth(selectDate){
 }
 
 
-
-
 //check if mm/yy is past (so that calender doesn't go back to previous)
 export function isPast(mm,yy){
 

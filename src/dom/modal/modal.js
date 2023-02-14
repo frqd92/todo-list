@@ -17,7 +17,7 @@ export function makeModal(btnArr){
                 break;
             case "calender-click-div":
                 classListLogic(true, "calender", outerDiv, arrow, content);
-                calenderModal(content);
+                calModal(content);
                 break;
             case "header-overview-btn":
                 classListLogic(true, "overview", outerDiv, arrow, content);

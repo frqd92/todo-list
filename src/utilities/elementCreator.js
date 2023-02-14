@@ -1,4 +1,4 @@
-export function elementCreator(type, selector,text, parent){
+export function elementCreator(type, selector,text, parent, isPrepend){
     const element = document.createElement(type);
     if(selector){
         if(selector[0]==="class"){
@@ -12,7 +12,8 @@ export function elementCreator(type, selector,text, parent){
     if(text){
         element.innerText = text;
     }
-    parent.appendChild(element);
+    !isPrepend?parent.appendChild(element):parent.prepend(element);
+
     return element;
 }
 
