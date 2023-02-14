@@ -42,18 +42,24 @@ function createCalHeader(div, typeCal){
 
 function createDaySquares(div, date, text){
     const [firstDayMonth, lastDayMonth] = firstLastDay(date);
-    //let prevMonth = prevMonthDays([firstDayMonth, lastDayMonth], date, text)
-    let dayCount=1;
+    let prevMonth = prevMonthDays([firstDayMonth, lastDayMonth], date, text)
+    let dayCount=1, nextMonthCount=1;
     for(let i=0;i<42;i++){
         const square = elementCreator("div", ["class", "cal-day-square"], false, div);
         if(i<firstDayMonth){
-            //console.log((prevMonth-((firstDayMonth-1)-i)));
-            //square.innerText = (prevMonth-((firstDayMonth-1)-i));
+            square.innerText = (prevMonth-((firstDayMonth-1)-i));
+            square.classList.add("cal-day-other-month");
         }
-        if(i>=firstDayMonth && dayCount<=lastDayMonth){ //days of current Month
+        else if(i>=firstDayMonth && dayCount<=lastDayMonth){ //days of current Month
             square.innerText = dayCount;
             dayCount++;
         }
+        else if(i>=lastDayMonth){
+            square.innerText = nextMonthCount;
+            nextMonthCount++;
+            square.classList.add("cal-day-other-month");
+        }
+
 
     }
 };
@@ -130,7 +136,7 @@ function renderCalender(date, text){
     const squares = calDiv.querySelectorAll(".cal-day-square");
     const div = calDiv.querySelector(".calender-adder-div");
     squares.forEach(elem=>elem.remove());
-    if(typeCal==="small"){createDaySquares(div, date)};
+    if(typeCal==="small"){createDaySquares(div, date, text)};
 }
 
 function arrowHoverEffect(arr, classL){
