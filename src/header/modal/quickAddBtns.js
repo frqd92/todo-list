@@ -1,4 +1,4 @@
-import { chosenDayFunc } from "../utilities/dateUtils";
+import { chosenDayFunc } from "/src/utilities/dateUtils";
 export function quickAddBtnsFunc(btn){
     quickBtnHover(btn);
 

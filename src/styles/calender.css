@@ -1,14 +1,16 @@
+
+
 /*calender in adder div to pick date*/
 .date-adder-calender-div{
     padding-top: 5px;
 }
+
 .calender-title-div{
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 2fr 1fr;
     justify-items: stretch;
     align-items: center;
     width: 100%;
-
 
 }
 
@@ -18,6 +20,7 @@
     font-size: 1.4rem;
     color:rgba(221, 221, 222, 0.849);
     white-space: nowrap;
+    text-align: center;
 
 }
 .arrow-div{
@@ -27,8 +30,6 @@
     cursor: pointer;
     height: 100%;
 }
-
-
 
 .add-cal-arrow{
     width: 20px;
@@ -55,6 +56,73 @@
 .add-arrow-left-hov{
     transform: rotate(180deg) scale(1.2);
 }
+
+
+
+
+
+/* general calender div, for specific cal add type after div */
+.calender-adder-div{
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    grid-template-rows: 1fr repeat(6, 2fr);
+    justify-items: center;
+}
+
+/* the calender's div beneath arrows */
+.calender-adder-div-small{
+    margin-top: 5px;
+    width: 100%;
+    height: 250px;
+
+}
+
+
+.cal-header-small{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: roboto-medium;
+}
+
+.cal-day-square{
+    font-size: 0.85rem;
+    padding: 0px 3px;
+    font-family: sofia;
+    width: 100%;
+    display: flex;
+    justify-content: end;
+    border: 1px solid rgba(230, 230, 230, 0.215);
+    margin-left:-1px;
+    margin-bottom: -1px;
+    color: rgba(254, 254, 254, 0.823);
+    
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 /* calender icon in header */

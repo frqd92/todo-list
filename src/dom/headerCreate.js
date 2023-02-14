@@ -3,14 +3,13 @@ import searchPng from '/src/assets/images/search.png'
 import bulbPng from '/src/assets/images/bulb.png'
 import overviewPng from '/src/assets/images/task-overview.png';
 import { bulbFunc } from "../header/lightBulb";
-import { createCalIcon } from "./calender";
 import addPng from '/src/assets/images/plus.png';
 import profilePng from '/src/assets/images/empty-user.png';
 import menuPng from '/src/assets/images/menu-line.png';
 import { searchLoupe, importBehaviour, inputBehaviour } from "../header/searchLogic";
 import githubPng from '/src/assets/images/github.png'
 import { menuButtonFunc } from "../header/menuBtnMobile";
-import { makeModal } from "./modal";
+import { makeModal } from "/src/dom/modal/modal";
 import { loggedIn } from "../state";
 import '/src/styles/header.css'
 import '/src/styles/mobile/header-mobile.css'
@@ -81,3 +80,20 @@ function createBulb(div){
     bulbFunc(bulbDiv);
     return bulbDiv;
 }
+
+//little calender icon in header
+function createCalIcon(parent){
+    const div = elementCreator("div", ["class", "header-calender-div"], false, parent);
+    const clickDiv = elementCreator("div", ["class", "calender-click-div"], false, div)
+
+    const monthDiv = elementCreator("div", ["class", "header-calender-month"], getDate()[0],div);
+    const dayDiv = elementCreator("div", ["class", "header-calender-day"], getDate()[1],div);
+
+    return div
+
+    function getDate(){
+        const date = String(new Date());
+        return [date.split(" ")[1], date.split(" ")[2]]
+    }
+}
+

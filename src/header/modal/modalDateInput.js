@@ -1,7 +1,8 @@
-import { daysInMonth, chosenDayFunc } from "../utilities/dateUtils";
-import { errorMsg} from '/src/dom/modal';
+import { daysInMonth, chosenDayFunc } from "../../utilities/dateUtils";
+import { elementCreator} from '/src/utilities/elementCreator'
+import { errorMsg} from '/src/dom/modal/addModal';
 const compareArr = ["ja","fe" ,"mar", "ap", "may", "jun", "jul", "au", "se", "oc", "no", "de"];
-const autoArr = ["January", "February", "March","April","May", "June", "July", "August", "September", "October", "November", "December"];
+export const autoArr = ["January", "February", "March","April","May", "June", "July", "August", "September", "October", "November", "December"];
 
 const date = new Date();
 

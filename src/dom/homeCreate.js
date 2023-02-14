@@ -5,7 +5,7 @@ import '/src/styles/homePage.css';
 export default function createHomePage(main){
     isHomeFunc(true);
     main.innerHTML = "";
-    elementCreator("p", false, "Home", main);
+
     dateTimeBox();
 
 }

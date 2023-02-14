@@ -5,7 +5,6 @@
     right:-34px;
     display: none;
     transition: width 0.2s ease-in;
-    
 }
 
 .triangle{
@@ -16,7 +15,6 @@
 .triangle-add{
     left:230px;
     
-
 }
 .triangle-calender{
 
@@ -64,6 +62,7 @@
 
 .modal-div-show-add{
     width: 400px;
+
 }
 
 .modal-div-show-calender{
@@ -87,7 +86,6 @@
 .content-add{
     position: relative;
     height: fit-content;
-    
 }
 
 .content-calender{
@@ -112,6 +110,7 @@
     gap: 33px;
     top: 0;
     left: 0;
+
 }
 
 .form-input-div{
@@ -120,6 +119,7 @@
     border-bottom: 1px solid rgba(185, 185, 185, 0.299); 
     color: rgba(0, 0, 0, 0.914); /*theme*/
     text-shadow: 0px 1px 1px rgba(0, 5, 40, 0.349);/*theme*/
+
  
 }
 .form-placeholder{
@@ -245,10 +245,15 @@
     grid-row: 2 / 3;
     padding: 5px;
     border-radius: 10px;
-    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
     display: flex;
     flex-direction: column;
     padding: 15px 10px;
+    box-shadow: rgba(2, 39, 82, 0.504) 0px 0px 0px 1px, rgba(6, 24, 44, 0.65) 0px 4px 3px -1px, rgba(26, 145, 200, 0.08) 0px 1px 0px inset;
+
+    /* box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; */
+
+
+
 
 }
 .date-picker-btn-div{
@@ -295,6 +300,7 @@
     background-color: rgba(170, 165, 165, 0.22);
     backdrop-filter: blur(10px);
     font-size: 0.9rem;
+    display: none;
 }
 .due-btn-hover-div p:nth-child(1){
     font-family: roboto-medium;
@@ -317,6 +323,7 @@
     display: flex;
     border-bottom: 1px solid rgba(142, 135, 135, 0.578);
     padding-bottom: 5px;
+
 }
 .enter-date-input{
     width: 100%;
@@ -329,8 +336,8 @@
     font-family: roboto-medium;
     letter-spacing: 0.05rem;
     color: rgba(2, 0, 31, 0.823);
-    
 }
+
 .enter-date-input::placeholder{
     font-family: oxygen;
     font-size: 1rem;
@@ -374,7 +381,7 @@
 
 .date-input-invalid{
     border: 1px solid rgba(255, 0, 0, 0.285);
-    box-shadow: rgba(220, 19, 19, 0.434) 0px 2px 10px;
+    box-shadow: rgba(220, 19, 19, 0.634) 0px 2px 12px;
 
     
 }
