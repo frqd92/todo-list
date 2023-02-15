@@ -1,9 +1,10 @@
 import { elementCreator, imageCreator } from "../utilities/elementCreator";
 import arrow from '/src/assets/images/arrow-simple.png';
-import { getCurrentDateText, detectFirstDayMonth, daysInMonth} from "/src/utilities/dateUtils";
+import { getCurrentDateText, detectFirstDayMonth, daysInMonth, formatNumDate} from "/src/utilities/dateUtils";
 import { returnMonth } from "/src/utilities/dateUtils";
+import { hideDateAdder } from "../header/modal/showHideDateAdder";
 const weekArr = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-let typeCal;
+let typeCal, currentMonth, currentYear;
 
 
 //add menu, date picked calender
@@ -14,7 +15,6 @@ export function calenderFact(div, type){
     //the actual calender
     const calenderDiv = elementCreator("div", ["class", "calender-adder-div",`calender-adder-div-${typeCal}`], false, datePickCalDiv);
     const [date,titleText] = calArrowsTitle(datePickCalDiv);
-    const calWidth = getComputedStyle(datePickCalDiv).getPropertyValue("width");
    
     createCalHeader(calenderDiv,typeCal);
 
@@ -23,7 +23,7 @@ export function calenderFact(div, type){
     } 
 
 
-    return Object.assign({}, datePickCalDiv);
+    return {datePickCalDiv};
 }
 
 
@@ -49,6 +49,7 @@ function createDaySquares(div, date, text){
         if(i<firstDayMonth){
             square.innerText = (prevMonth-((firstDayMonth-1)-i));
             square.classList.add("cal-day-other-month");
+            square.classList.add("cal-day-prev");
         }
         else if(i>=firstDayMonth && dayCount<=lastDayMonth){ //days of current Month
             square.innerText = dayCount;
@@ -58,11 +59,34 @@ function createDaySquares(div, date, text){
             square.innerText = nextMonthCount;
             nextMonthCount++;
             square.classList.add("cal-day-other-month");
+            square.classList.add("cal-day-next");
         }
+        square.addEventListener("click", inputCalDay)
 
-
+        function inputCalDay(e){
+            let day = e.target.innerText;
+            let month, year;
+            //for current month days
+            if(!e.target.className.includes("cal-day-other-month")){
+                month = currentMonth;
+                year = currentYear;
+            }
+            else if(e.target.className.includes("cal-day-prev")){
+                [month, year] = incrDecrMonth(text, false, true).split(" ");
+            }
+            else if(e.target.className.includes("cal-day-next")){
+                [month, year] = incrDecrMonth(text, true, true).split(" ");
+            }
+            let date = formatNumDate([day, returnMonth(month), year]);
+            document.querySelector(".modal-due-btn").innerText= date;
+            document.querySelector(".due-btn-day-text").innerText = getCurrentDateText("day", `${month}-${day}-${year}`);
+            
+            const datePickerDiv = div.parentElement.parentElement;
+            hideDateAdder(datePickerDiv);
+        }
     }
 };
+
 
 //calculates the days in prev month of the selected month.. Used to show the preceding left days before the first of the current month
 //ex if date is "February 2023", returns 31 because jan 2023 had
@@ -74,7 +98,6 @@ function prevMonthDays(arr, date, text){
     return daysInMonth(mm,yy)
   }
   
-
 function firstLastDay(date){
     const [mm,yy] = date;
     let firstDay = detectFirstDayMonth(date).split("").slice(0,3).join("");
@@ -91,6 +114,7 @@ function calArrowsTitle(div, calDiv){
     const arrowDivLeft = elementCreator("div", ["class","arrow-div"], false, calenderTitleDiv);
     const arrowLeft = imageCreator(arrow, ["class", "add-cal-arrow", "add-arrow-left"], arrowDivLeft);
     const titleText = elementCreator("p", ["class", "calender-title-text"],`${getCurrentDateText("month")} ${getCurrentDateText("year")}`, calenderTitleDiv);
+    [currentMonth, currentYear] = titleText.innerText.split(" ");
     const arrowDivRight = elementCreator("div", ["class","arrow-div"], false, calenderTitleDiv);
     const arrowRight = imageCreator(arrow, ["class", "add-cal-arrow","add-arrow-right"], arrowDivRight);
     arrowHoverEffect([arrowDivLeft, arrowLeft], ["add-arrow-left-hov","add-arrow-clicked-right"]);
@@ -120,6 +144,8 @@ function incrDecrMonth(text, isIncr, onlyValue){
     nextMonth.setMonth(action ,1);
     if(!onlyValue){
         text.innerText = `${returnMonth(nextMonth.getMonth()+1)} ${nextMonth.getFullYear()}`;
+        [currentMonth, currentYear] = text.innerText.split(" ");
+
         //logic to change the calender
         renderCalender(text.innerText.split(" "), text);
     }

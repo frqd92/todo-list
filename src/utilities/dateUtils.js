@@ -35,6 +35,8 @@ export function getCurrentDateText(value, chosenDate){
   }
 }
 
+
+
 //"February" returns 2
 // 2 returns "February"
 export function returnMonth(month){
@@ -48,6 +50,15 @@ export function detectFirstDayMonth(selectDate){
   const [mm,yy] = selectDate;
   const date = new Date(`${returnMonth(mm)}-1-${yy}`);
   return getCurrentDateText("day", date);
+}
+
+//adds a zero to nums less than 10
+//ex. arr [2,2,2023] returns string 02/02/2023
+export function formatNumDate(arr){
+  for(let i=0;i<2;i++){
+    arr[i] = arr[i]<10?"0"+arr[i]:arr[i];
+  }
+  return `${arr[0]}/${arr[1]}/${arr[2]}`
 }
 
 

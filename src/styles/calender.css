@@ -99,7 +99,7 @@
     margin-left:-1px;
     margin-bottom: -1px;
     color: rgba(254, 254, 254, 0.823);
-
+    cursor: pointer;
 
 }
 .cal-day-square:not(.cal-day-other-month){
@@ -164,6 +164,7 @@
     width: 100%;
     height: 100%;
     background: transparent;
+    
 }
 .header-calender-month{
     width: 100%;

@@ -1,4 +1,6 @@
 import { chosenDayFunc } from "/src/utilities/dateUtils";
+import { hideDateAdder } from "./showHideDateAdder";
+
 export function quickAddBtnsFunc(btn){
     quickBtnHover(btn);
 
@@ -19,6 +21,7 @@ function btnToDate(text){
         document.querySelector(".due-btn-day-text").innerText = "";
         mainBtn.innerText = "None";
     }
+    hideDateAdder(document.querySelector(".date-picker-div"));
 }
 
 function textToDate(text){
@@ -73,15 +76,5 @@ function quickBtnHover(btn){
 
     }
 
-
-
-
-
-    // div.innerText = "";
-    // div.style.display="block";
-
-    // div.style.top = (e.clientY) + "px";
-    // div.style.left = (e.clientX) + "px";
-    // div.innerText = textToDate(text)[0];
 
 }

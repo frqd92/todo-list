@@ -1,5 +1,5 @@
 import { daysInMonth, chosenDayFunc } from "../../utilities/dateUtils";
-import { elementCreator} from '/src/utilities/elementCreator'
+import { hideDateAdder } from "./showHideDateAdder";
 import { errorMsg} from '/src/dom/modal/addModal';
 const compareArr = ["ja","fe" ,"mar", "ap", "may", "jun", "jul", "au", "se", "oc", "no", "de"];
 export const autoArr = ["January", "February", "March","April","May", "June", "July", "August", "September", "October", "November", "December"];
@@ -45,8 +45,8 @@ function processDate(obj, btn){ //if it passes all the checks
     let value = `${addZero[0]}/${addZero[1]}/${obj.year}`;
     btn.textContent = value;
     let day = chosenDayFunc(obj.month,obj.day,obj.year);
-    document.querySelector(".due-btn-day-text").innerText = day;
-
+    document.querySelector(".due-btn-day-text").innerText = day;    
+    hideDateAdder(document.querySelector(".date-picker-div"));
 }
 
 

@@ -193,6 +193,7 @@
     align-items: center;
     font-size: 1.1rem;
     row-gap: 8px;
+    border-bottom: 1px solid rgba(142, 135, 135, 0.478);
 
 }
 
@@ -216,7 +217,7 @@
     text-shadow: 0px 0px 0px rgba(0, 0, 0, 0.274);/*theme*/
     box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 10px, rgba(0, 0, 0, 0.22) 0px 3px 3px;
     transition: transform linear 0.1s;
-
+    margin-bottom: 3px;
 }
 .modal-due-btn:hover{
     background-color: rgba(56, 107, 249, 0.287);
@@ -248,14 +249,27 @@
     display: flex;
     flex-direction: column;
     padding: 15px 10px;
-    box-shadow: rgba(2, 39, 82, 0.504) 0px 0px 0px 1px, rgba(6, 24, 44, 0.65) 0px 4px 3px -1px, rgba(26, 145, 200, 0.08) 0px 1px 0px inset;
-
-    /* box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; */
-
-
+    /* box-shadow: rgba(2, 39, 82, 0.504) 0px 0px 0px 1px, rgba(14, 17, 34, 0.65) 0px 2px 2px -1px, rgba(26, 145, 200, 0.08) 0px 1px 0px inset; */
+    box-shadow: rgba(2, 55, 58, 0.14) 0px 1px 6px;
+    position: absolute;
+    top: 1px;
+    width: 100%;
+    background-color: rgba(1, 2, 12, 0.554);
+    backdrop-filter: blur(15px);
+    transition: transform 0.2s ease-in-out;
 
 
 }
+
+.hidden-date-picker-div{
+    transform: scale(0);
+    transition: none;
+
+    z-index: -10000;
+}
+
+
+
 .date-picker-btn-div{
     position: relative;
     display: grid;
@@ -270,8 +284,8 @@
 .due-btn{
     position: relative;
     border: 1px solid rgba(0, 0, 0, 0.248);
-    background-color: rgba(11, 92, 105, 0.142);
-    color: rgba(2, 2, 2, 0.776);
+    background-color: rgba(17, 175, 199, 0.354);
+    color: rgba(179, 161, 161, 0.776);
     border-radius: 20px;
     cursor: pointer;
     display: flex;
@@ -281,11 +295,13 @@
     font-family: "sofia";
     white-space: nowrap;
     transition: color, background-color 0.2s linear;
+    margin-bottom: 3px;
 }
 
 .due-btn:hover{
-    color: rgba(253, 253, 253, 0.455);
+    color: rgba(253, 253, 253, 0.633);
     background-color:  rgba(24, 127, 142, 0.342);
+
 }
 
 .due-btn-hover-div{

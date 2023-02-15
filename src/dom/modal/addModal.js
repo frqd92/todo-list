@@ -3,6 +3,7 @@ import {createIcon} from "/src/utilities/iconCreate";
 import { modalDateInputFunc } from "/src/header/modal/modalDateInput";
 import { quickAddBtnsFunc } from "/src/header/modal/quickAddBtns";
 import { calenderFact} from "../calender";
+import { dueBtnLogic } from '../../header/modal/showHideDateAdder';
 //create each modal in the DOM
 export function addModal(content){
     const form = elementCreator("div", ["id", "form"], false, content);
@@ -15,10 +16,10 @@ export function addModal(content){
     const dueDateText = elementCreator("p", ["class", "modal-due-text"], "Due date", dueDateDiv);
     const dueBtn = elementCreator("div", ["class", "modal-due-btn"], "Today", dueDateDiv);
     const dayWeekText = elementCreator("p", ["class", "due-btn-day-text"], false, dueDateDiv);
-    const datePickerDiv = elementCreator("div", ["class", "date-picker-div"],false, dueDateDiv);
+    const datePickerDiv = elementCreator("div", ["class", "date-picker-div", "hidden-date-picker-div"],false, dueDateDiv);
+    dueBtnLogic(dueBtn, datePickerDiv);
     createDueDateDiv(datePickerDiv, dueBtn, dayWeekText);
 }
-
 
 
 
@@ -58,9 +59,6 @@ function createDueDateDiv(datePickerDiv, dueBtn, dayWeekText){
     const pickDateCal = calenderFact(datePickerDiv, "small");
 
 }
-
-//add a date through calender
-
 
 
 
