@@ -2,10 +2,10 @@ import { elementCreator, imageCreator } from "../utilities/elementCreator";
 import arrow from '/src/assets/images/arrow-simple.png';
 import { getCurrentDateText, detectFirstDayMonth, daysInMonth, formatNumDate} from "/src/utilities/dateUtils";
 import { returnMonth } from "/src/utilities/dateUtils";
-import { hideDateAdder } from "../header/modal/showHideDateAdder";
+//import { hideDateAdder } from "../header/modal/showHideAdder";
 const weekArr = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 let typeCal, currentMonth, currentYear;
-
+import { hideDiv } from "../header/modal/showHideAdder";
 
 //add menu, date picked calender
 export function calenderFact(div, type){
@@ -21,8 +21,6 @@ export function calenderFact(div, type){
     if(typeCal==="small"){
         createDaySquares(calenderDiv, date, titleText);
     } 
-
-
     return {datePickCalDiv};
 }
 
@@ -34,7 +32,7 @@ export function calenderFact(div, type){
 function createCalHeader(div, typeCal){
     //create header
     for(let i=0;i<7;i++){
-        const headerSquare = elementCreator("div", ["class", `cal-header-${typeCal}`, `cal-header-${weekArr[i].toLowerCase()}-${typeCal}`], weekArr[i],div);
+        elementCreator("div", ["class", `cal-header-${typeCal}`, `cal-header-${weekArr[i].toLowerCase()}-${typeCal}`], weekArr[i],div);
     }
 }
 
@@ -82,17 +80,16 @@ function createDaySquares(div, date, text){
             document.querySelector(".due-btn-day-text").innerText = getCurrentDateText("day", `${month}-${day}-${year}`);
             
             const datePickerDiv = div.parentElement.parentElement;
-            hideDateAdder(datePickerDiv);
+            hideDiv(document.querySelector(".date-picker-div"), "hidden-date-picker-div");
         }
     }
 };
 
 
 //calculates the days in prev month of the selected month.. Used to show the preceding left days before the first of the current month
-//ex if date is "February 2023", returns 31 because jan 2023 had
+//ex if date is "February 2023", returns 31 (jan 2023 had 31 days)
 function prevMonthDays(arr, date, text){
-    const prevMonthDays = arr[0];
-    //const nextMonthDays = 42-(prevMonthDays + arr[1]);
+
     const prevMonth = incrDecrMonth(text, false, true);
     const [mm, yy] = prevMonth.split(" ");
     return daysInMonth(mm,yy)

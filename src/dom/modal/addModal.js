@@ -3,7 +3,9 @@ import {createIcon} from "/src/utilities/iconCreate";
 import { modalDateInputFunc } from "/src/header/modal/modalDateInput";
 import { quickAddBtnsFunc } from "/src/header/modal/quickAddBtns";
 import { calenderFact} from "../calender";
-import { dueBtnLogic } from '../../header/modal/showHideDateAdder';
+import { closeDivLogic} from '../../header/modal/showHideAdder';
+import { adderOptionsFunc } from '../../header/modal/groups';
+import { hideDiv } from '../../header/modal/showHideAdder';
 //create each modal in the DOM
 export function addModal(content){
     const form = elementCreator("div", ["id", "form"], false, content);
@@ -17,11 +19,75 @@ export function addModal(content){
     const dueBtn = elementCreator("div", ["class", "modal-due-btn"], "Today", dueDateDiv);
     const dayWeekText = elementCreator("p", ["class", "due-btn-day-text"], false, dueDateDiv);
     const datePickerDiv = elementCreator("div", ["class", "date-picker-div", "hidden-date-picker-div"],false, dueDateDiv);
-    dueBtnLogic(dueBtn, datePickerDiv);
     createDueDateDiv(datePickerDiv, dueBtn, dayWeekText);
+
+    //Add to group div
+    const groupDiv = elementCreator("div", ["class", "modal-group-div"], false, form);
+    const groupText = elementCreator("div", ["class", "modal-group-text"], "Group", groupDiv);
+    const groupBtn = elementCreator("div", ["class", "modal-group-btn"], "None", groupDiv);
+
+    //add "hidden-options-div" after
+    const groupOptions = elementCreator("div", ["class", "modal-group-options", "hidden-options-div"], false, groupDiv);
+    createGroupOptions(groupOptions);
+
+    //priority div;
+    const priorityDiv = elementCreator("div", ["class", "modal-priority-div"], false, form);
+    const priorityText = elementCreator("div", ["class", "modal-priority-text"], "Priority", priorityDiv);
+    const priorityBtn = elementCreator("div", ["class", "modal-priority-btn"], "Normal", priorityDiv);
+    const colorCircle = elementCreator("div", ["class", "priority-circle"], false, priorityBtn);
+
+    const priorityOptions = elementCreator("div", ["class", "modal-group-priorities", "hidden-priorities-div"], false, priorityDiv);
+    createPrioritiesOptions(priorityOptions,priorityBtn,colorCircle);
+
+    //reoccurring div 
+
+
+    //logic to close these divs
+    const infoArray = [
+        [dueBtn, datePickerDiv, "date-picker-div", "hidden-date-picker-div"],
+        [groupBtn, groupOptions, "modal-group-options", "hidden-options-div",],
+        [priorityBtn, priorityOptions, "modal-group-priorities","hidden-priorities-div"]
+    ];
+    closeDivLogic(form, infoArray);
 }
 
 
+function createPrioritiesOptions(div, btn){
+    const priorityText = ["Normal", "High", "Highest"];
+
+    for(let i=0;i<3;i++){
+        const column= elementCreator("div", ["class", "priority-column"], priorityText[i], div)
+        column.addEventListener("click",(e)=>{
+            btn.innerText = e.target.innerText;
+            const colorCircle = elementCreator("div", ["class", "priority-circle", `circle-${e.target.innerText.toLowerCase()}`], false, btn);
+            hideDiv(div, "hidden-priorities-div")
+        })
+    }
+    
+
+}
+
+
+
+
+
+function createGroupOptions(div){
+    //if no groups, show "No groups, add one from below". listofGroups is display:none if noGroupsText is display:block
+    const noGroupsText = elementCreator("div", ["class", "empty-group-options"], "Group list empty", div);
+    //if present, gets list of groups from firebase , otherwise show noGroupsText
+    const listOfGroups = elementCreator("div", ["class", "options-group-list", "options-group-list-hidden"], false, div);
+    const inputDiv = elementCreator("div", ["class", "group-input-div"], false, div)
+    const input = elementCreator("input", ["class", "group-add-input"], false,inputDiv);
+    input.placeholder="Type your new group name or quick add from the left";
+    const quickAdder = elementCreator("div", ["class", "group-quick"], false,inputDiv);
+    const addNewGroupBtn = elementCreator("div", ["class", "add-group-div"],"+", div);
+    const contentArr = ["Work", "Home", "Fitness", "Finance", "Travel", "Social", "Shopping", "Education", "Personal"];
+    for(let group of contentArr){
+       elementCreator("button", ["class", "quick-add-btn"], group, quickAdder)
+    }
+    adderOptionsFunc(div);
+
+}
 
 
 //due date div: date-input, quick buttons and calender to pick date

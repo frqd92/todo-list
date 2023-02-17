@@ -1,5 +1,5 @@
 import { chosenDayFunc } from "/src/utilities/dateUtils";
-import { hideDateAdder } from "./showHideDateAdder";
+import { hideDiv } from "./showHideAdder";
 
 export function quickAddBtnsFunc(btn){
     quickBtnHover(btn);
@@ -16,12 +16,14 @@ function btnToDate(text){
         let day = chosenDayFunc(mm,dd,yy);
         document.querySelector(".due-btn-day-text").innerText = day;
         mainBtn.innerText = date;
+        hideDiv(document.querySelector(".date-picker-div"), "hidden-date-picker-div");
+
     }
     else{
         document.querySelector(".due-btn-day-text").innerText = "";
         mainBtn.innerText = "None";
     }
-    hideDateAdder(document.querySelector(".date-picker-div"));
+
 }
 
 function textToDate(text){
