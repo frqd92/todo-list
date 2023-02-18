@@ -35,7 +35,11 @@ export function getCurrentDateText(value, chosenDate){
   }
 }
 
-
+//returns today in mm/dd/yyyy format
+export function getToday(){
+  const date = new Date();
+  return `${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`;
+}
 
 //"February" returns 2
 // 2 returns "February"
