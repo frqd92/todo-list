@@ -47,6 +47,8 @@ export function addModal(content){
     const repeatOptions = elementCreator("div", ["class", "modal-repeat-options", "hidden-repeat-div"], false, repeatDiv);
     createRepeatOptions(repeatOptions, repeatBtn);
 
+
+
     //logic to close/open the divs
     const infoArray = [
         [dueBtn, datePickerDiv, "date-picker-div", "hidden-date-picker-div"],
@@ -71,10 +73,13 @@ function createRepeatOptions(div,mainBtn){
     const every = elementCreator("div", ["class", "repeat-select"], "week",repeatInputsDiv);
     const inEffectDiv = elementCreator("div", ["class", "ineffect-div"], false, div);
     elementCreator("span", false, "In effect", inEffectDiv);
+    const times = elementCreator("input", ["class", "ineffect-until", "ineffect-invisible"], false, inEffectDiv);
+    times.placeholder="x";
     const inEffect = elementCreator("div", ["class", "repeat-ineffect"], "forever", inEffectDiv);
-    const inEffectOther = elementCreator("div", ["class", "ineffect-other", "ineffect-invisible"], false, inEffectDiv);
+    const inEffectOther = elementCreator("input", ["class", "ineffect-other", "ineffect-invisible"], false, inEffectDiv);
+    inEffectOther.placeholder="Type date";
     const saveBtn = elementCreator("button", false, "Save", div);
-    modalRepeatLogic(infoTextDiv, numInput, every, inEffect, inEffectOther)
+    modalRepeatLogic(infoTextDiv, numInput, every, inEffect, inEffectOther, times)
 
 }
 

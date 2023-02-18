@@ -8,9 +8,9 @@ export const autoArr = ["January", "February", "March","April","May", "June", "J
 const date = new Date();
 
 
-export function modalDateInputFunc(input, btn, dayBtnText){
+export function modalDateInputFunc(input, btn){
     autoCompleteMonth(input);
-    clickEnter(input, btn,dayBtnText)
+    clickEnter(input, btn)
 }
 
 function clickEnter(input, btn){
@@ -30,24 +30,37 @@ function clickEnter(input, btn){
             }
             if(!invalid){ //if date in input passes all the checks
                 console.log("works")
-                processDate(formatObj, btn);
+                processDate(formatObj, btn, input);
                 
             }
             else{ //if date format is wrong
-                errorMsg("Error in date format")
+                if(btn){
+                    errorMsg("Error in date format")
+
+                }
+                else{
+                    input.placeholder="invalid date"
+                }
             }
         }
     }
 }
 
 
-function processDate(obj, btn){ //if it passes all the checks
+function processDate(obj, btn, input){ //if it passes all the checks
     let addZero = [obj.day, obj.month].map(elem=>elem<10?"0"+Number(elem):Number(elem));
     let value = `${addZero[0]}/${addZero[1]}/${obj.year}`;
-    btn.textContent = value;
     let day = chosenDayFunc(obj.month,obj.day,obj.year);
-    document.querySelector(".due-btn-day-text").innerText = day;    
-    hideDiv(document.querySelector(".date-picker-div"), "hidden-date-picker-div");
+    if(btn){
+        btn.textContent = value;
+        document.querySelector(".due-btn-day-text").innerText = day;   
+        hideDiv(document.querySelector(".date-picker-div"), "hidden-date-picker-div");
+    }
+    else{
+        input.value = value;
+    }
+
+
 }
 
 
@@ -138,7 +151,7 @@ function formatDateNum(input, formatObj){
                     formatObj.year = year;
                 }
 
-                if(checkIfValid(formatObj)){
+                if(checkIfValid(formatObj, input)){
                     return [day,month,year]
                 }
 

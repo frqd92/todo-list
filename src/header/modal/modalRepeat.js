@@ -1,7 +1,11 @@
-export function modalRepeatLogic(infoTextDiv, input, every, inEffect, inEffectOther){
+import { modalDateInputFunc } from "./modalDateInput";
+
+
+export function modalRepeatLogic(infoTextDiv, input, every, inEffect, inEffectOther, times){
     const [,firstText, secondText] = infoTextDiv.childNodes;
+
     everyTextFunc(every, firstText, input);
-    inEffectFunc(inEffect, secondText, inEffectOther)
+    inEffectFunc(inEffect, secondText, inEffectOther, times);
     input.addEventListener("input", (e)=>{
         if(/[a-z\W]/i.test(e.data)){
                 input.value = input.value.replaceAll(e.data,"");
@@ -43,14 +47,32 @@ export function modalRepeatLogic(infoTextDiv, input, every, inEffect, inEffectOt
                 textArr[0] = every.innerText;
             }
             let newVal = textArr.join(" ");
-            console.log(newVal);
-            console.log(firstText.innerText);
+
             firstText.innerText = newVal;
         })
     }
     
-    function inEffectFunc(inEffect, secondText, inEffectOther){
+    function inEffectFunc(inEffect, secondText, inEffectOther, times){
+            inEffect.addEventListener("click", ()=>{
+                let text = inEffect.innerText;
+                if(text==="forever"){
+                    inEffect.innerText= "until";
+                    times.classList.add("ineffect-invisible");
+                    inEffectOther.classList.remove("ineffect-invisible");
+                    modalDateInputFunc(inEffectOther)
 
+                }
+                else if(text==="until"){
+                    inEffect.innerText= "times";
+                    times.classList.remove("ineffect-invisible");
+                    inEffectOther.classList.add("ineffect-invisible")
+                }
+                else if(text==="times"){
+                    inEffect.innerText= "forever";
+                    inEffectOther.classList.add("ineffect-invisible");
+                    times.classList.add("ineffect-invisible");
+                }
+            })
     }
 
 

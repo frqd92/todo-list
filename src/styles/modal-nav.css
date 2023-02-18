@@ -712,6 +712,7 @@
     display: flex;
     align-items: center;
     gap: 5px;
+   
 }
 .repeat-ineffect, .repeat-select{
     cursor: pointer;
@@ -724,8 +725,19 @@
     border: 1px solid rgba(255, 255, 255, 0.801);
 
 }
-.ineffect-other{
+.ineffect-other, .ineffect-until{
+    width: 95px;
+    text-align: center;
+    font-size: 0.9rem;
+    font-family: open;
+    border-radius: 10px;
+    border: none;
+    outline: none;
+    height: 25px;
 
+}
+.ineffect-until{
+    width: 40px;
 }
 .ineffect-invisible{
     display: none;
