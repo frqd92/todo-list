@@ -659,9 +659,13 @@
 
 
 /* Repeat */
+.modal-repeat-btn{
+    white-space: nowrap;
+  
+}
 .modal-repeat-options{
+    padding-top: 10px;
     position: absolute;
-    background-color: rgba(255, 255, 255, 0.731);
     z-index: 10000;
     top: 22px;
     right: 0;
@@ -671,28 +675,31 @@
     justify-content: center;
     align-items: center;
     font-family: roboto;
-    padding: 0px 0px;
-    gap: 10px;
+    background: rgba(217, 212, 212, 0.581);
+    backdrop-filter: blur(50px);
 }
-.modal-repeat-options > div{
- 
-}
+
 .repeat-info-text{
-    width: 100%;
+
     display: flex;
     justify-content: center;
     gap: 4px;
     font-family: roboto-medium;
-    background-color: rgba(110, 106, 106, 0.621);
-    color: rgba(255, 255, 255, 0.972);
-    text-shadow: 0px 0px 4px rgba(0, 0, 0, 0.437);
-    padding: 3px 0px;
+    color: rgba(0, 0, 0, 0.972);
+    text-shadow: 0px 0px 4px rgba(207, 207, 207, 0.437);
+    white-space: nowrap;
+    font-size: 1rem;
+    padding: 2px;
+    margin-top: 10px;
+    width: 100%;
+    border-top: 1px solid rgba(255, 255, 255, 0.372);
 }
 .repeat-inputs-div{
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 5px;
+    margin-bottom: 10px;
 
 }
 .repeat-input{
@@ -726,7 +733,7 @@
 
 }
 .ineffect-other, .ineffect-until{
-    width: 95px;
+    width: 100px;
     text-align: center;
     font-size: 0.9rem;
     font-family: open;
@@ -735,6 +742,10 @@
     outline: none;
     height: 25px;
 
+}
+.ineffect-other::placeholder{
+    font-size: 0.55rem;
+    margin-bottom: 12px;
 }
 .ineffect-until{
     width: 40px;

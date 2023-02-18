@@ -61,10 +61,6 @@ export function addModal(content){
 
 
 function createRepeatOptions(div,mainBtn){
-    const infoTextDiv = elementCreator("div", ["class", "repeat-info-text"], false, div);
-    elementCreator("span", false, "Every", infoTextDiv);
-    elementCreator("span", ["class", "info-text-1"], "week", infoTextDiv);
-    elementCreator("span", ["class", "info-text-2"], "forever", infoTextDiv);
 
     const repeatInputsDiv = elementCreator("div", ["class", "repeat-inputs-div"], false,div);
     elementCreator("span", false, "Every", repeatInputsDiv);
@@ -77,9 +73,14 @@ function createRepeatOptions(div,mainBtn){
     times.placeholder="x";
     const inEffect = elementCreator("div", ["class", "repeat-ineffect"], "forever", inEffectDiv);
     const inEffectOther = elementCreator("input", ["class", "ineffect-other", "ineffect-invisible"], false, inEffectDiv);
-    inEffectOther.placeholder="Type date";
+    inEffectOther.placeholder="Type date & click Enter";
+    const infoTextDiv = elementCreator("div", ["class", "repeat-info-text"], false, div);
+    elementCreator("span", false, "Every", infoTextDiv);
+    elementCreator("span", ["class", "info-text-1"], "week", infoTextDiv);
+    elementCreator("span", ["class", "info-text-2"], "forever", infoTextDiv);
+
     const saveBtn = elementCreator("button", false, "Save", div);
-    modalRepeatLogic(infoTextDiv, numInput, every, inEffect, inEffectOther, times)
+    modalRepeatLogic(infoTextDiv, numInput, every, inEffect, inEffectOther, times, saveBtn)
 
 }
 
@@ -198,19 +199,22 @@ const inputFactory = (type, form)=>{
 
 
 
-export function errorMsg(value){ //move to dom folder after
-    const input = document.querySelector(".enter-date-input");
-    const div = document.querySelector(".enter-date-div");
+export function errorMsg(value, input){ //move to dom folder after
+    const div = input.parentElement;
     input.classList.add("date-input-invalid");
-    if(document.querySelector(".modal-input-error")===null){
-        const errorBox = elementCreator("div", ["class","modal-input-error"], value, div);
+    if(input.className.includes("ineffect-other")){
 
-        setTimeout(()=>{
-            errorBox.style.opacity="0";
-        },2300)
-        setTimeout(()=>{
-            errorBox.remove();
-        },2600)
+    }
+    else{
+        if(document.querySelector(".modal-input-error")===null){
+            const errorBox = elementCreator("div", ["class","modal-input-error"], value, div);
+            setTimeout(()=>{
+                errorBox.style.opacity="0";
+            },2300)
+            setTimeout(()=>{
+                errorBox.remove();
+            },2600)
+        }
     }
 
 }

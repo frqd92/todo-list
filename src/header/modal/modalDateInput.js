@@ -31,15 +31,17 @@ function clickEnter(input, btn){
             if(!invalid){ //if date in input passes all the checks
                 console.log("works")
                 processDate(formatObj, btn, input);
+                if(!btn)return true;
                 
             }
             else{ //if date format is wrong
                 if(btn){
-                    errorMsg("Error in date format")
-
+                    errorMsg("Error in date format", input)
                 }
                 else{
+                    input.value="";
                     input.placeholder="invalid date"
+                    return false;
                 }
             }
         }
@@ -218,7 +220,7 @@ function formatDateText(input, formatObj){
     if(dayCount>1 ||monthCount>1 || yearCount>1){
         return false;
     }
-    if(checkIfValid(formatObj)){
+    if(checkIfValid(formatObj, input)){
         return true;
     }
     else {
@@ -226,7 +228,7 @@ function formatDateText(input, formatObj){
     }
 }
 
-function checkIfValid(obj){
+function checkIfValid(obj, input){
     let getDay = date.getDate();
     let getMonth = date.getMonth() + 1;
     let getYear = date.getFullYear();
@@ -235,40 +237,40 @@ function checkIfValid(obj){
     let year = Number (obj.year);
     let daysInChosenMonth = daysInMonth(obj.month, obj.year);
     if(!daysInChosenMonth){
-        errorMsg("Invalid Date Format");
+        errorMsg("Invalid Date Format", input);
         return false
     }
     if(day>daysInChosenMonth || day<1){
-        errorMsg(`Days must be less than ${daysInChosenMonth} or greater than 0`);
+        errorMsg(`Days must be less than ${daysInChosenMonth} or greater than 0`, input);
         return false;
     }
 
     else if(month>12 || month<1) {
-        errorMsg("Months must be between 1-12");
+        errorMsg("Months must be between 1-12", input);
         return false;
     }
     else if(year<getYear){
-        errorMsg("No time traveling");
+        errorMsg("No time traveling", input);
         return false;
     }
     else if(year===getYear && (month===getMonth) && day<getDay){
-        errorMsg("No time traveling");
+        errorMsg("No time traveling", input);
         return false;
     }
 
     else{
         if(year < getYear){
-            errorMsg("Check year");
+            errorMsg("Check year", input);
             return false;
         };
         if(getYear===year){
             if(month < getMonth){
-                errorMsg("Check month");
+                errorMsg("Check month", input);
                 return false;
             }
             if(month ===getMonth){
                 if(day < getDay){
-                errorMsg("Check day");
+                errorMsg("Check day", input);
                 return false;
                 }
             }

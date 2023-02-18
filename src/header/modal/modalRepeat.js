@@ -1,8 +1,7 @@
 import { modalDateInputFunc } from "./modalDateInput";
-
-
-export function modalRepeatLogic(infoTextDiv, input, every, inEffect, inEffectOther, times){
-    const [,firstText, secondText] = infoTextDiv.childNodes;
+import { hideDiv } from '/src/header/modal/showHideAdder';
+export function modalRepeatLogic(infoTextDiv, input, every, inEffect, inEffectOther, times, saveBtn){
+    const [everyText,firstText, secondText] = infoTextDiv.childNodes;
 
     everyTextFunc(every, firstText, input);
     inEffectFunc(inEffect, secondText, inEffectOther, times);
@@ -24,6 +23,11 @@ export function modalRepeatLogic(infoTextDiv, input, every, inEffect, inEffectOt
             input.addEventListener("focusout", ()=>{input.value=1}, {once:true})
             firstText.innerText = every.innerText;
         }
+    })
+    saveBtn.addEventListener("click", ()=>{
+        document.querySelector(".modal-repeat-btn").innerText= `${everyText.innerText} ${firstText.innerText} ${secondText.innerText}`;
+        hideDiv(document.querySelector(".modal-repeat-options"), "hidden-repeat-div")
+
     })
 }
 
@@ -59,23 +63,48 @@ export function modalRepeatLogic(infoTextDiv, input, every, inEffect, inEffectOt
                     inEffect.innerText= "until";
                     times.classList.add("ineffect-invisible");
                     inEffectOther.classList.remove("ineffect-invisible");
-                    modalDateInputFunc(inEffectOther)
-
+                    modalDateInputFunc(inEffectOther);
+                    inEffectOther.addEventListener("keydown",inputCheckUntil);
                 }
                 else if(text==="until"){
+                    inEffectOther.value="";
+                    inEffectOther.removeEventListener("keydown",inputCheckUntil);
                     inEffect.innerText= "times";
                     times.classList.remove("ineffect-invisible");
-                    inEffectOther.classList.add("ineffect-invisible")
+                    inEffectOther.classList.add("ineffect-invisible");
+                    times.addEventListener("keydown", inputCheckTimes);
+                    times.addEventListener("input", checkNumTimes);
+
                 }
                 else if(text==="times"){
+                    times.value= "";
+                    times.removeEventListener("keydown", inputCheckTimes);
                     inEffect.innerText= "forever";
                     inEffectOther.classList.add("ineffect-invisible");
                     times.classList.add("ineffect-invisible");
+                    secondText.innerText="forever";
                 }
             })
+            function inputCheckTimes(e){
+                if(e.key==="Enter" && Number(times.value)>0){
+                    secondText.innerText=`x${times.value}`
+                }
+            }
+            function checkNumTimes(e){
+                if(/[a-z\W]/i.test(e.data)){
+                    this.value = this.value.replaceAll(e.data,"");
+                };
+                if(this.value.split("").length>3){
+                    this.value="";
+                    this.placeholder="1-999"
+                }
+            }
+            function inputCheckUntil(e){
+                if(e.key==="Enter" && inEffectOther.value.length!==0){
+                    secondText.innerText=`until ${inEffectOther.value}`
+                }
+            }
     }
-
-
 
 
     function checkPlural(isPlural, arr){
