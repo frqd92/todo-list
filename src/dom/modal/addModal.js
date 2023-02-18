@@ -7,6 +7,7 @@ import { closeDivLogic} from '../../header/modal/showHideAdder';
 import { adderOptionsFunc } from '../../header/modal/groups';
 import { hideDiv } from '../../header/modal/showHideAdder';
 import { modalRepeatLogic } from '../../header/modal/modalRepeat';
+import { modalNotesLogic } from '../../header/modal/modalNotes';
 //create each modal in the DOM
 export function addModal(content){
     const form = elementCreator("div", ["id", "form"], false, content);
@@ -47,6 +48,12 @@ export function addModal(content){
     const repeatOptions = elementCreator("div", ["class", "modal-repeat-options", "hidden-repeat-div"], false, repeatDiv);
     createRepeatOptions(repeatOptions, repeatBtn);
 
+    //notes div
+    const notesDiv = elementCreator("div", ["class", "modal-notes-div"], false, form);
+    const notesText = elementCreator("div", ["class", "modal-notes-text"], "Add notes", notesDiv);
+    const notesBtn = elementCreator("div", ["class", "modal-notes-btn"], "No notes", notesDiv);
+    const notesOptions = elementCreator("div", ["class", "modal-notes-options", "hidden-notes-div"], false, notesDiv);
+    createNotesOptions(notesOptions,notesBtn )
 
 
     //logic to close/open the divs
@@ -54,14 +61,22 @@ export function addModal(content){
         [dueBtn, datePickerDiv, "date-picker-div", "hidden-date-picker-div"],
         [groupBtn, groupOptions, "modal-group-options", "hidden-options-div",],
         [priorityBtn, priorityOptions, "modal-group-priorities","hidden-priorities-div"],
-        [repeatBtn, repeatOptions, "modal-repeat-options","hidden-repeat-div"]
+        [repeatBtn, repeatOptions, "modal-repeat-options","hidden-repeat-div"],
+        [notesBtn, notesOptions, "modal-notes-options", "hidden-notes-div"]
     ];
     closeDivLogic(form, infoArray);
 }
 
+function createNotesOptions(div, mainBtn){
+
+    const textArea = elementCreator("textarea", ["class", "notes-textarea"], false, div);
+    textArea.setAttribute("contenteditable","true");
+    textArea.setAttribute("maxlength", "600")
+    const saveBtn = elementCreator("button", ["class", "notes-save-btn"], "Save", div);
+    modalNotesLogic(textArea,saveBtn);
+}
 
 function createRepeatOptions(div,mainBtn){
-
     const repeatInputsDiv = elementCreator("div", ["class", "repeat-inputs-div"], false,div);
     elementCreator("span", false, "Every", repeatInputsDiv);
     const numInput = elementCreator("input", ["class", "repeat-input"],"1", repeatInputsDiv);
@@ -78,9 +93,10 @@ function createRepeatOptions(div,mainBtn){
     elementCreator("span", false, "Every", infoTextDiv);
     elementCreator("span", ["class", "info-text-1"], "week", infoTextDiv);
     elementCreator("span", ["class", "info-text-2"], "forever", infoTextDiv);
-
-    const saveBtn = elementCreator("button", false, "Save", div);
-    modalRepeatLogic(infoTextDiv, numInput, every, inEffect, inEffectOther, times, saveBtn)
+    const btnDiv= elementCreator("div", ["class", "repeat-btn-div"], false, div)
+    const noRepeatBtn = elementCreator("button", false, "No repeat", btnDiv);
+    const saveBtn = elementCreator("button", false, "Save", btnDiv);
+    modalRepeatLogic(infoTextDiv, numInput, every, inEffect, inEffectOther, times, saveBtn, noRepeatBtn);
 
 }
 

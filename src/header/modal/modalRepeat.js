@@ -1,6 +1,6 @@
 import { modalDateInputFunc } from "./modalDateInput";
 import { hideDiv } from '/src/header/modal/showHideAdder';
-export function modalRepeatLogic(infoTextDiv, input, every, inEffect, inEffectOther, times, saveBtn){
+export function modalRepeatLogic(infoTextDiv, input, every, inEffect, inEffectOther, times, saveBtn, noRepeatBtn){
     const [everyText,firstText, secondText] = infoTextDiv.childNodes;
 
     everyTextFunc(every, firstText, input);
@@ -27,6 +27,10 @@ export function modalRepeatLogic(infoTextDiv, input, every, inEffect, inEffectOt
     saveBtn.addEventListener("click", ()=>{
         document.querySelector(".modal-repeat-btn").innerText= `${everyText.innerText} ${firstText.innerText} ${secondText.innerText}`;
         hideDiv(document.querySelector(".modal-repeat-options"), "hidden-repeat-div")
+    })
+    noRepeatBtn.addEventListener("click", ()=>{
+        document.querySelector(".modal-repeat-btn").innerText= "No repeat";
+        hideDiv(document.querySelector(".modal-repeat-options"), "hidden-repeat-div");
 
     })
 }
