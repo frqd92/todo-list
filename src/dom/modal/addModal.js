@@ -6,6 +6,7 @@ import { calenderFact} from "../calender";
 import { closeDivLogic} from '../../header/modal/showHideAdder';
 import { adderOptionsFunc } from '../../header/modal/groups';
 import { hideDiv } from '../../header/modal/showHideAdder';
+import { modalRepeatLogic } from '../../header/modal/modalRepeat';
 //create each modal in the DOM
 export function addModal(content){
     const form = elementCreator("div", ["id", "form"], false, content);
@@ -37,24 +38,51 @@ export function addModal(content){
     const colorCircle = elementCreator("div", ["class", "priority-circle"], false, priorityBtn);
 
     const priorityOptions = elementCreator("div", ["class", "modal-group-priorities", "hidden-priorities-div"], false, priorityDiv);
-    createPrioritiesOptions(priorityOptions,priorityBtn,colorCircle);
+    createPrioritiesOptions(priorityOptions,priorityBtn);
 
-    //reoccurring div 
+    //repeat div
+    const repeatDiv = elementCreator("div", ["class", "modal-repeat-div"], false, form);
+    const repeatText = elementCreator("div", ["class", "modal-repeat-text"], "Repeat", repeatDiv);
+    const repeatBtn = elementCreator("div", ["class", "modal-repeat-btn"], "No repeat", repeatDiv);
+    const repeatOptions = elementCreator("div", ["class", "modal-repeat-options", "hidden-repeat-div"], false, repeatDiv);
+    createRepeatOptions(repeatOptions, repeatBtn);
 
-
-    //logic to close these divs
+    //logic to close/open the divs
     const infoArray = [
         [dueBtn, datePickerDiv, "date-picker-div", "hidden-date-picker-div"],
         [groupBtn, groupOptions, "modal-group-options", "hidden-options-div",],
-        [priorityBtn, priorityOptions, "modal-group-priorities","hidden-priorities-div"]
+        [priorityBtn, priorityOptions, "modal-group-priorities","hidden-priorities-div"],
+        [repeatBtn, repeatOptions, "modal-repeat-options","hidden-repeat-div"]
     ];
     closeDivLogic(form, infoArray);
 }
 
 
+function createRepeatOptions(div,mainBtn){
+    const infoTextDiv = elementCreator("div", ["class", "repeat-info-text"], false, div);
+    elementCreator("span", false, "Every", infoTextDiv);
+    elementCreator("span", ["class", "info-text-1"], "week", infoTextDiv);
+    elementCreator("span", ["class", "info-text-2"], "forever", infoTextDiv);
+
+    const repeatInputsDiv = elementCreator("div", ["class", "repeat-inputs-div"], false,div);
+    elementCreator("span", false, "Every", repeatInputsDiv);
+    const numInput = elementCreator("input", ["class", "repeat-input"],"1", repeatInputsDiv);
+    numInput.placeholder = "1-100";
+    const every = elementCreator("div", ["class", "repeat-select"], "week",repeatInputsDiv);
+    const inEffectDiv = elementCreator("div", ["class", "ineffect-div"], false, div);
+    elementCreator("span", false, "In effect", inEffectDiv);
+    const inEffect = elementCreator("div", ["class", "repeat-ineffect"], "forever", inEffectDiv);
+    const inEffectOther = elementCreator("div", ["class", "ineffect-other", "ineffect-invisible"], false, inEffectDiv);
+    const saveBtn = elementCreator("button", false, "Save", div);
+    modalRepeatLogic(infoTextDiv, numInput, every, inEffect, inEffectOther)
+
+}
+
+
+
+
 function createPrioritiesOptions(div, btn){
     const priorityText = ["Normal", "High", "Highest"];
-
     for(let i=0;i<3;i++){
         const column= elementCreator("div", ["class", "priority-column"], priorityText[i], div)
         column.addEventListener("click",(e)=>{
@@ -63,13 +91,7 @@ function createPrioritiesOptions(div, btn){
             hideDiv(div, "hidden-priorities-div")
         })
     }
-    
-
 }
-
-
-
-
 
 function createGroupOptions(div){
     //if no groups, show "No groups, add one from below". listofGroups is display:none if noGroupsText is display:block
@@ -123,7 +145,6 @@ function createDueDateDiv(datePickerDiv, dueBtn, dayWeekText){
     })
     //calender from calender factory 
     const pickDateCal = calenderFact(datePickerDiv, "small");
-
 }
 
 

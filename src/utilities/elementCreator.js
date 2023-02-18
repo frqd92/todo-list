@@ -10,7 +10,13 @@ export function elementCreator(type, selector,text, parent, isPrepend){
         }
     }
     if(text){
-        element.innerText = text;
+        if(type==="input"){
+            element.value = text;
+        }
+        else{
+            element.innerText = text;
+
+        }
     }
     !isPrepend?parent.appendChild(element):parent.prepend(element);
 
