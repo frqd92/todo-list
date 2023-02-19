@@ -1,5 +1,6 @@
 import { elementCreator } from "../../utilities/elementCreator";
 import { hideDiv } from "./showHideAdder";
+import { groupArray, loggedIn } from "../../state";
 let emptyDiv, optionsDiv,inputDiv,addBtn, noneBtn, mainDiv, btns;
 export function adderOptionsFunc(div){
     mainDiv=div;
@@ -8,13 +9,29 @@ export function adderOptionsFunc(div){
     noneBtn.addEventListener("click", noGroupAdd);
     addBtn.addEventListener("click", newGroupAdd);
     optionsQuickBtnsFunc(inputDiv);
+    checkForGroups();
 }
-
+function checkForGroups(){
+    let groups = JSON.parse(localStorage.getItem("groups"));
+    if(groups!==null){
+        emptyDiv.style.display="none";
+        groups.forEach(elem=>{
+            const group = elementCreator("div", ["class", "options-element"], elem, optionsDiv);
+            group.addEventListener("click", ()=>{
+                document.querySelector(".modal-group-btn").innerText = group.innerText;
+                hideDiv(document.querySelector(".modal-group-options"), "hidden-options-div");
+            });
+        })
+    }
+    else{
+        emptyDiv.style.display="block";
+    }
+}
 function newGroupAdd(){
     const input = inputDiv.querySelector("input");
     input.addEventListener("keydown",e=>{
         if(e.key==="Enter" && input.value.trim("").length>1){
-            addElementAndHide(input)    ;
+            addElementAndHide(input);
         }
     })
     if(input.value.trim("").length>0){
@@ -53,18 +70,23 @@ function addElementAndHide(input){
             text = input.value;
             errorMsgPlaceholder(`${text} already exists`, input);
             return;
+
         }
     })
     if(checker){
         inputDiv.style.display="none";
         const group = elementCreator("div", ["class", "options-element"], input.value, optionsDiv);
+        if(!loggedIn){
+            groupArray.push(input.value);
+            localStorage.setItem("groups", JSON.stringify(groupArray))
+        }
         input.value="";
         emptyDiv.style.display="none";
         group.addEventListener("click", ()=>{
             document.querySelector(".modal-group-btn").innerText = group.innerText;
             hideDiv(document.querySelector(".modal-group-options"), "hidden-options-div");
-
         });
+
 
     };
 }

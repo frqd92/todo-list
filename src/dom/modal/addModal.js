@@ -8,7 +8,7 @@ import { adderOptionsFunc } from '../../header/modal/groups';
 import { hideDiv } from '../../header/modal/showHideAdder';
 import { modalRepeatLogic } from '../../header/modal/modalRepeat';
 import { modalNotesLogic } from '../../header/modal/modalNotes';
-import { saveBtnLogic } from './saveBtn';
+import addNewTask from '/src/header/modal/addNewTask';
 //create each modal in the DOM
 export function addModal(content){
     const form = elementCreator("div", ["id", "form"], false, content);
@@ -56,7 +56,7 @@ export function addModal(content){
 
     //save button
     const saveAdderBtn = elementCreator("button", ["class", "save-adder-btn"], "Save task", form)
-    saveBtnLogic(saveAdderBtn);
+    addNewTask(saveAdderBtn);
     //logic to close/open the divs
     const infoArray = [
         [dueBtn, datePickerDiv, "date-picker-div", "hidden-date-picker-div"],
