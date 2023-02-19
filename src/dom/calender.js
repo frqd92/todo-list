@@ -1,7 +1,6 @@
 import { elementCreator, imageCreator } from "../utilities/elementCreator";
 import arrow from '/src/assets/images/arrow-simple.png';
-import { getCurrentDateText, detectFirstDayMonth, daysInMonth, formatNumDate} from "/src/utilities/dateUtils";
-import { returnMonth } from "/src/utilities/dateUtils";
+import { getCurrentDateText, detectFirstDayMonth, daysInMonth, formatNumDate, returnMonth, getToday, isPast} from "/src/utilities/dateUtils";
 //import { hideDateAdder } from "../header/modal/showHideAdder";
 const weekArr = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 let typeCal, currentMonth, currentYear;
@@ -39,8 +38,10 @@ function createCalHeader(div, typeCal){
 
 
 function createDaySquares(div, date, text){
+
     const [firstDayMonth, lastDayMonth] = firstLastDay(date);
-    let prevMonth = prevMonthDays([firstDayMonth, lastDayMonth], date, text)
+    let prevMonth = prevMonthDays([firstDayMonth, lastDayMonth], date, text);
+
     let dayCount=1, nextMonthCount=1;
     for(let i=0;i<42;i++){
         const square = elementCreator("div", ["class", "cal-day-square"], false, div);
@@ -52,6 +53,7 @@ function createDaySquares(div, date, text){
         else if(i>=firstDayMonth && dayCount<=lastDayMonth){ //days of current Month
             square.innerText = dayCount;
             dayCount++;
+
         }
         else if(i>=lastDayMonth){
             square.innerText = nextMonthCount;
@@ -59,29 +61,52 @@ function createDaySquares(div, date, text){
             square.classList.add("cal-day-other-month");
             square.classList.add("cal-day-next");
         }
-        square.addEventListener("click", inputCalDay)
-
-        function inputCalDay(e){
-            let day = e.target.innerText;
-            let month, year;
-            //for current month days
-            if(!e.target.className.includes("cal-day-other-month")){
-                month = currentMonth;
-                year = currentYear;
-            }
-            else if(e.target.className.includes("cal-day-prev")){
-                [month, year] = incrDecrMonth(text, false, true).split(" ");
-            }
-            else if(e.target.className.includes("cal-day-next")){
-                [month, year] = incrDecrMonth(text, true, true).split(" ");
-            }
-            let date = formatNumDate([day, returnMonth(month), year]);
-            document.querySelector(".modal-due-btn").innerText= date;
-            document.querySelector(".due-btn-day-text").innerText = getCurrentDateText("day", `${month}-${day}-${year}`);
-            
-            const datePickerDiv = div.parentElement.parentElement;
-            hideDiv(document.querySelector(".date-picker-div"), "hidden-date-picker-div");
+        if(dayCount===getToday("day")+1 && date[0]===returnMonth(getToday("month"))){
+            square.classList.add("current-day-cal")
         }
+        if(inputCalDay(false, square)){
+            square.classList.add("valid-square")
+        }
+        if(square.className.includes("valid-square")){
+            square.addEventListener("click", inputCalDay);
+        }
+    }
+
+    
+
+    function inputCalDay(e, square){
+        let day, month, year, tar;
+        if(e){
+            day = e.target.innerText;
+            tar=e.target.className;
+        }
+        else{
+            day=square.innerText;
+            tar=square.className;
+        }   
+
+        //for current month days
+        if(!tar.includes("cal-day-other-month")){
+            month = currentMonth;
+            year = currentYear;
+        }
+        else if(tar.includes("cal-day-prev")){
+            [month, year] = incrDecrMonth(text, false, true).split(" ");
+        }
+        else if(tar.includes("cal-day-next")){
+            [month, year] = incrDecrMonth(text, true, true).split(" ");
+        }
+        let date = formatNumDate([day, returnMonth(month), year]);
+        if(!e){
+            return isPast(date);
+        }
+        document.querySelector(".modal-due-btn").innerText= date;
+        document.querySelector(".due-btn-day-text").innerText = getCurrentDateText("day", `${month}-${day}-${year}`);
+        
+        const datePickerDiv = div.parentElement.parentElement;
+        hideDiv(document.querySelector(".date-picker-div"), "hidden-date-picker-div");
+        
+
     }
 };
 

@@ -254,10 +254,10 @@
     position: absolute;
     top: 1px;
     width: 100%;
-    background-color: rgba(1, 2, 12, 0.854);
+    background-color: rgba(1, 2, 12, 0.9);
     transition: transform 0.2s ease-in-out;
     z-index: 1000000;
-    backdrop-filter: blur(10px);
+    backdrop-filter: blur(50px);
 
 }
 
@@ -459,18 +459,36 @@
     text-align: center;
     width: 100%;
     padding: 5px;
-    background-color: rgba(125, 56, 56, 0.838);
+    background-color: rgba(171, 54, 54, 0.798);
 
 }
-
-
-.add-group-div{
+.modal-group-btn-div{
     width: 100%;
-    height: 25px;
+    height: 27px;
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+}
+.no-group-btn{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(202, 63, 63, 0.822);
+    transition: 0.2s linear background-color, transform;
+    cursor: pointer;
+}
+.no-group-btn:hover{
+    transform: scale(1.04);
+    background-color: rgba(249, 112, 54, 0.87);
+}
+.no-group-btn:active{
+    transform: scale(0.99);
+}
+.add-group-div{
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: rgba(10, 79, 119, 0.952);
+    background-color: rgba(0, 0, 0, 0.95);
+
     cursor: pointer;
     font-size: 1.5rem;
     font-family: playfair;
@@ -505,7 +523,7 @@
     text-align: center;
     padding: 5px 0px;
     border-bottom: 1px solid rgba(255, 255, 255, 0.15);
-    background-color: rgba(0, 0, 0, 0.958);
+    background-color: rgba(30, 48, 147, 0.882);
     cursor: pointer;
     transition: transform 0.2s linear;
 }

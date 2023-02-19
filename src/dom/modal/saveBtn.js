@@ -15,18 +15,20 @@ function validateForm(){
         return;
     }
     const obj = {};
-    let day
-    values[2].innerText==="Today"?day = getToday():day=values[2].innerText;
-    
+    let day, desc, group,repeat, notes;
+    values[1].innerText===""?desc=false:desc=values[1].innerText;
+    values[2].innerText==="Today"?day=getToday():day=values[2].innerText;
+    values[3].innerText==="None"?group=false:group=values[3].innerText;
+    values[5].innerText==="No repeat"?repeat=false:repeat=values[5].innerText;
+    values[6].innerText==="No notes"?notes=false:notes=values[6].innerText;
+
     obj.title=values[0].innerText;
-    obj.description=values[1].innerText;
+    obj.description=desc;
     obj.due=day;
-    obj.group=values[3].innerText;
+    obj.group=group;
     obj.priority= values[4].innerText;
-    obj.repeat = values[5].innerText;
-    obj.notes = values[6].innerText;
+    obj.repeat = repeat;
+    obj.notes = notes;
     console.log(obj);
-
-
 
 }

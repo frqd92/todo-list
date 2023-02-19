@@ -7,7 +7,38 @@ export function daysInMonth(month, year) {
     return new Date(chosenMonth.getFullYear(), chosenMonth.getMonth()+1, 0).getDate();
   }
 
-  
+//checks if a date "dd/mm/yyyy" has passed 
+export function isPast(value){
+    const [day, month, year] = strDateToArr(value);
+    const date = new Date();
+    let getDay = date.getDate();
+    let getMonth = date.getMonth() + 1;
+    let getYear = date.getFullYear();
+    let daysInChosenMonth = daysInMonth(month,year);
+    if(year<getYear){
+      return false;
+    }
+    else if(year===getYear){
+      if(month<getMonth){
+        return false;
+      }
+      else if(month===getMonth){
+        if(day<getDay){
+          return false;
+        }
+      }
+    }
+    return true;
+}
+
+//returns "dd/mm/yyyy" as an array [dd,mm,yyyy] 
+export function strDateToArr(str){
+  return str.replaceAll(/[^0-9]/g," ").split(" ").map(elem=>Number(elem));
+}
+
+
+
+
 //gets day of a date as a string
 export function chosenDayFunc(month, day, year) { 
     let chosenDay = new Date(`${month}-${day}-${year}`);
@@ -35,10 +66,19 @@ export function getCurrentDateText(value, chosenDate){
   }
 }
 
-//returns today in mm/dd/yyyy format
-export function getToday(){
+//returns today in mm/dd/yyyy format if no parameter
+export function getToday(val){
   const date = new Date();
-  return `${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`;
+  if(!val){
+    return `${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`;
+  }
+  else{
+    switch(val){
+      case "day": return date.getDate();
+      case "month": return date.getMonth()+1;
+      case "year": return date.getFullYear();
+    }
+  }
 }
 
 //"February" returns 2
@@ -66,7 +106,3 @@ export function formatNumDate(arr){
 }
 
 
-//check if mm/yy is past (so that calender doesn't go back to previous)
-export function isPast(mm,yy){
-
-}

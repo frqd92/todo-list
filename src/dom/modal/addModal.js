@@ -28,8 +28,6 @@ export function addModal(content){
     const groupDiv = elementCreator("div", ["class", "modal-group-div"], false, form);
     const groupText = elementCreator("div", ["class", "modal-group-text"], "Group", groupDiv);
     const groupBtn = elementCreator("div", ["class", "modal-group-btn","adder-value"], "None", groupDiv);
-
-    //add "hidden-options-div" after
     const groupOptions = elementCreator("div", ["class", "modal-group-options", "hidden-options-div"], false, groupDiv);
     createGroupOptions(groupOptions);
 
@@ -127,7 +125,9 @@ function createGroupOptions(div){
     const input = elementCreator("input", ["class", "group-add-input"], false,inputDiv);
     input.placeholder="Type your new group name or quick add from the left";
     const quickAdder = elementCreator("div", ["class", "group-quick"], false,inputDiv);
-    const addNewGroupBtn = elementCreator("div", ["class", "add-group-div"],"+", div);
+    const groupBtnDiv = elementCreator("div", ["class", "modal-group-btn-div"], false, div);
+    const noGroupBtn = elementCreator("div", ["class", "no-group-btn"], "None", groupBtnDiv);
+    const addNewGroupBtn = elementCreator("div", ["class", "add-group-div"],"+", groupBtnDiv);
     const contentArr = ["Work", "Home", "Fitness", "Finance", "Travel", "Social", "Shopping", "Education", "Personal"];
     for(let group of contentArr){
        elementCreator("button", ["class", "quick-add-btn"], group, quickAdder)
