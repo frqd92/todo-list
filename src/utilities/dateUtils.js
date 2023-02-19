@@ -3,7 +3,7 @@ import { autoArr } from "/src/header/modal/modalDateInput";
  //gets the days in a month of a year
  //ex. 2/2023 returns 28
 export function daysInMonth(month, year) {
-    let chosenMonth = new Date(`${month}-01-${year}`);
+    let chosenMonth = new Date(`${year}-${month}-01`);
     return new Date(chosenMonth.getFullYear(), chosenMonth.getMonth()+1, 0).getDate();
   }
 
@@ -14,7 +14,6 @@ export function isPast(value){
     let getDay = date.getDate();
     let getMonth = date.getMonth() + 1;
     let getYear = date.getFullYear();
-    let daysInChosenMonth = daysInMonth(month,year);
     if(year<getYear){
       return false;
     }
@@ -41,7 +40,7 @@ export function strDateToArr(str){
 
 //gets day of a date as a string
 export function chosenDayFunc(month, day, year) { 
-    let chosenDay = new Date(`${month}-${day}-${year}`);
+    let chosenDay = new Date(`${year}-${month}-${day}`);
     return chosenDay.toLocaleString('en-us', {weekday: 'long'})
 }
 
@@ -84,7 +83,7 @@ export function getToday(val){
 //"February" returns 2
 // 2 returns "February"
 export function returnMonth(month){
-    if(isNaN(month)) return autoArr.indexOf(month) + 1;
+    if(isNaN(month)) return autoArr.indexOf(month)+1;
     else return autoArr[month-1];
 
 }
@@ -92,7 +91,7 @@ export function returnMonth(month){
 //String "February 2023" returns wednesday
 export function detectFirstDayMonth(selectDate){
   const [mm,yy] = selectDate;
-  const date = new Date(`${returnMonth(mm)}-1-${yy}`);
+  const date = new Date(yy,returnMonth(mm), 1);
   return getCurrentDateText("day", date);
 }
 

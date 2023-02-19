@@ -38,7 +38,6 @@ function createCalHeader(div, typeCal){
 
 
 function createDaySquares(div, date, text){
-
     const [firstDayMonth, lastDayMonth] = firstLastDay(date);
     let prevMonth = prevMonthDays([firstDayMonth, lastDayMonth], date, text);
 
@@ -100,8 +99,9 @@ function createDaySquares(div, date, text){
         if(!e){
             return isPast(date);
         }
+
         document.querySelector(".modal-due-btn").innerText= date;
-        document.querySelector(".due-btn-day-text").innerText = getCurrentDateText("day", `${month}-${day}-${year}`);
+        document.querySelector(".due-btn-day-text").innerText = getCurrentDateText("day", `${year}-${month}-${day}`);
         
         const datePickerDiv = div.parentElement.parentElement;
         hideDiv(document.querySelector(".date-picker-div"), "hidden-date-picker-div");
@@ -159,8 +159,9 @@ function arrowChoose(leftBtn, rightBtn, text){
 function incrDecrMonth(text, isIncr, onlyValue){
     //logic to change text
     let [month, year] = text.innerText.split(" ");
-    const date = new Date(`${month}-1-${year}`);
-    month = returnMonth(month);
+    month = returnMonth(month)-1;
+    console.log(month, year);
+    const date = new Date(`${year}-${month}-1`);
     const nextMonth = new Date(date);
     let action = isIncr?nextMonth.getMonth() + 1 : nextMonth.getMonth() - 1;
     nextMonth.setMonth(action ,1);
