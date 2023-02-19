@@ -40,7 +40,6 @@ function createCalHeader(div, typeCal){
 function createDaySquares(div, date, text){
     const [firstDayMonth, lastDayMonth] = firstLastDay(date);
     let prevMonth = prevMonthDays([firstDayMonth, lastDayMonth], date, text);
-
     let dayCount=1, nextMonthCount=1;
     for(let i=0;i<42;i++){
         const square = elementCreator("div", ["class", "cal-day-square"], false, div);
@@ -114,24 +113,25 @@ function createDaySquares(div, date, text){
 //calculates the days in prev month of the selected month.. Used to show the preceding left days before the first of the current month
 //ex if date is "February 2023", returns 31 (jan 2023 had 31 days)
 function prevMonthDays(arr, date, text){
-
     const prevMonth = incrDecrMonth(text, false, true);
     const [mm, yy] = prevMonth.split(" ");
     return daysInMonth(mm,yy)
   }
   
 function firstLastDay(date){
-    const [mm,yy] = date;
+    let [mm,yy] = date;
     let firstDay = detectFirstDayMonth(date).split("").slice(0,3).join("");
     firstDay = weekArr.indexOf(firstDay);
-    let lastDay = daysInMonth(mm,yy);
+
+
+    let lastDay = daysInMonth(mm,yy, true);
     return [firstDay, lastDay];
 }
 
 
 //-----------------------------------------------------------------------------------------
 //the arrows and title
-function calArrowsTitle(div, calDiv){
+function calArrowsTitle(div){
     const calenderTitleDiv = elementCreator("div", ["class", "calender-title-div"], false, div, true);
     const arrowDivLeft = elementCreator("div", ["class","arrow-div"], false, calenderTitleDiv);
     const arrowLeft = imageCreator(arrow, ["class", "add-cal-arrow", "add-arrow-left"], arrowDivLeft);
@@ -159,21 +159,19 @@ function arrowChoose(leftBtn, rightBtn, text){
 function incrDecrMonth(text, isIncr, onlyValue){
     //logic to change text
     let [month, year] = text.innerText.split(" ");
-    month = returnMonth(month)-1;
-    console.log(month, year);
+    month = returnMonth(month)+1;
     const date = new Date(`${year}-${month}-1`);
     const nextMonth = new Date(date);
     let action = isIncr?nextMonth.getMonth() + 1 : nextMonth.getMonth() - 1;
     nextMonth.setMonth(action ,1);
     if(!onlyValue){
-        text.innerText = `${returnMonth(nextMonth.getMonth()+1)} ${nextMonth.getFullYear()}`;
+        text.innerText = `${returnMonth(nextMonth.getMonth())} ${nextMonth.getFullYear()}`;
         [currentMonth, currentYear] = text.innerText.split(" ");
-
         //logic to change the calender
         renderCalender(text.innerText.split(" "), text);
     }
     else{
-        return `${returnMonth(nextMonth.getMonth()+1)} ${nextMonth.getFullYear()}`;
+        return `${returnMonth(nextMonth.getMonth())} ${nextMonth.getFullYear()}`;
     }
 
 

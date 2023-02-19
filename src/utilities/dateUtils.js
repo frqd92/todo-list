@@ -2,9 +2,13 @@ import { autoArr } from "/src/header/modal/modalDateInput";
 
  //gets the days in a month of a year
  //ex. 2/2023 returns 28
-export function daysInMonth(month, year) {
-    let chosenMonth = new Date(`${year}-${month}-01`);
-    return new Date(chosenMonth.getFullYear(), chosenMonth.getMonth()+1, 0).getDate();
+export function daysInMonth(mm, year, tr) {
+    let month = returnMonth(mm);
+    let chosenMonth = new Date(year,month,1);
+    if(tr){
+      console.log(new Date(chosenMonth.getFullYear(), chosenMonth.getMonth()+1,0 ).getDate());
+      }
+    return new Date(chosenMonth.getFullYear(), chosenMonth.getMonth()+1,0 ).getDate();
   }
 
 //checks if a date "dd/mm/yyyy" has passed 
@@ -12,7 +16,7 @@ export function isPast(value){
     const [day, month, year] = strDateToArr(value);
     const date = new Date();
     let getDay = date.getDate();
-    let getMonth = date.getMonth() + 1;
+    let getMonth = date.getMonth();
     let getYear = date.getFullYear();
     if(year<getYear){
       return false;
@@ -74,24 +78,25 @@ export function getToday(val){
   else{
     switch(val){
       case "day": return date.getDate();
-      case "month": return date.getMonth()+1;
+      case "month": return date.getMonth();
       case "year": return date.getFullYear();
     }
   }
 }
 
-//"February" returns 2
-// 2 returns "February"
+//"February" returns 1
+// 1 returns "February"
 export function returnMonth(month){
-    if(isNaN(month)) return autoArr.indexOf(month)+1;
-    else return autoArr[month-1];
+    if(isNaN(month)) return autoArr.indexOf(month);
+    else return autoArr[month];
 
 }
 
 //String "February 2023" returns wednesday
 export function detectFirstDayMonth(selectDate){
-  const [mm,yy] = selectDate;
-  const date = new Date(yy,returnMonth(mm), 1);
+  let [mm,yy] = selectDate;
+  mm = isNaN(Number(mm))?returnMonth(mm):mm;
+  const date = new Date(yy,mm, 1);
   return getCurrentDateText("day", date);
 }
 
