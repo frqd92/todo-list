@@ -21,7 +21,6 @@ function clickEnter(input, btn){
             let invalid=false;
             formatObj.day="";formatObj.month="";formatObj.year="";
             const isDateNum = formatDateNum(this, formatObj);
-
             if(!isDateNum){ //if date is in number format
                 let isDateText = formatDateText(this, formatObj);
                 if(!isDateText){
@@ -50,9 +49,10 @@ function clickEnter(input, btn){
 
 
 function processDate(obj, btn, input){ //if it passes all the checks
+    obj.month=obj.month+1;
     let addZero = [obj.day, obj.month].map(elem=>elem<10?"0"+Number(elem):Number(elem));
     let value = `${addZero[0]}/${addZero[1]}/${obj.year}`;
-    let day = chosenDayFunc(obj.month,obj.day,obj.year);
+    let day = chosenDayFunc(obj.year,obj.month,obj.day);
     if(btn){
         btn.textContent = value;
         document.querySelector(".due-btn-day-text").innerText = day;   
@@ -61,8 +61,6 @@ function processDate(obj, btn, input){ //if it passes all the checks
     else{
         input.value = value;
     }
-
-
 }
 
 
@@ -71,15 +69,15 @@ function formatDateNum(input, formatObj){
       const separators = ["/", ".", "-"];
       let isNum = true;
         let arr = input.value.split("");
-        arr=arr.filter(elem=> elem!==" ");
+        arr=arr.filter(elem=>elem!==" ");
         arr.forEach((elem,index)=>{
             if(separators.includes(elem))arr[index] = " ";
         })
         let dateArray = arr.join("").split(" ");
         let day,month,year;
         dateArray.forEach((elem, index)=>{
-            if(elem.length===1)dateArray[index]= "0"+elem;
-            if(isNaN(elem))isNum = false;
+            if(elem.length===1) dateArray[index]= "0"+elem;  
+            if(isNaN(elem))isNum = false;   
         })
         if(isNum===false)return false;
         else{
@@ -87,32 +85,32 @@ function formatDateNum(input, formatObj){
             if(dateArray.length>2){
                 if((dateArray[0].length===2 && dateArray[2].length===4) && dateArray.length===3){
                     day = dateArray[0];
-                    month = dateArray[1];
+                    month = Number(dateArray[1]-1);
                     year = dateArray[2];
                 }
                 else if((dateArray[0].length===4 && dateArray[2].length===2) && dateArray.length===3){
                     day = dateArray[2];
-                    month = dateArray[1];
+                    month = Number(dateArray[1]-1);
                     year = dateArray[0];
                 }
                 else if((dateArray[0].length===2 && dateArray[1].length===2 && dateArray[2].length===2) && dateArray.length===3){
                     day = dateArray[0];
-                    month = dateArray[1];
+                    month = Number(dateArray[1]-1);
                     year = "20" + dateArray[2];
                 }
             }
             else{
                 if((dateArray[0].length===4) && dateArray.length===2){
-                    month = dateArray[1];
+                    month = Number(dateArray[1]-1);
                     year = dateArray[0];
                 }
                 else if(dateArray[1].length===4 && dateArray.length===2){
-                    month = dateArray[0];
+                    month = Number(dateArray[0]-1)
                     year = dateArray[1];
                 }
-                else if(dateArray.length===2 ){
+                else if(dateArray.length===2){
                     day = dateArray[0];
-                    month = dateArray[1];
+                    month = Number(dateArray[1]-1)
                 }
             }
             if(day===undefined && month===undefined){
@@ -120,7 +118,7 @@ function formatDateNum(input, formatObj){
             }
             else{
                 if(day===undefined){
-                    if((date.getMonth() +1) === Number(month)){
+                    if((date.getMonth()) === month){
                         formatObj.day = date.getDate() + 1;
                     }
                     else{
@@ -130,15 +128,16 @@ function formatDateNum(input, formatObj){
                     formatObj.year = year;
                 }
                 else if (year===undefined){
-                    if((date.getMonth() +1) === Number(month)){
+                    if((date.getMonth()) === month){
                         if(day<date.getDate()){
                             formatObj.year = date.getFullYear() + 1;
                         }
                         else{
                             formatObj.year = date.getFullYear();
                         }
+    
                     }   
-                    else if((date.getMonth() +1) > Number(month)){
+                    else if((date.getMonth()) > month){
                         formatObj.year = date.getFullYear() + 1;
                     }
                     else{
@@ -152,7 +151,6 @@ function formatDateNum(input, formatObj){
                     formatObj.month = month;
                     formatObj.year = year;
                 }
-
                 if(checkIfValid(formatObj, input)){
                     return [day,month,year]
                 }
@@ -215,8 +213,8 @@ function formatDateText(input, formatObj){
             formatObj.year=date.getFullYear() + 1;
         }
         yearCount++;
-
     }
+    formatObj.month=formatObj.month-1;
     if(dayCount>1 ||monthCount>1 || yearCount>1){
         return false;
     }
@@ -229,8 +227,9 @@ function formatDateText(input, formatObj){
 }
 
 function checkIfValid(obj, input){
+    console.log(obj);
     let getDay = date.getDate();
-    let getMonth = date.getMonth() + 1;
+    let getMonth = date.getMonth();
     let getYear = date.getFullYear();
     let day = Number(obj.day);
     let month = Number(obj.month);
@@ -245,7 +244,7 @@ function checkIfValid(obj, input){
         return false;
     }
 
-    else if(month>12 || month<1) {
+    else if(month>11 || month<0) {
         errorMsg("Months must be between 1-12", input);
         return false;
     }

@@ -2,12 +2,12 @@ import { autoArr } from "/src/header/modal/modalDateInput";
 
  //gets the days in a month of a year
  //ex. 2/2023 returns 28
-export function daysInMonth(mm, year, tr) {
-    let month = returnMonth(mm);
+export function daysInMonth(mm, year) {
+
+    let month = isNaN(mm)?returnMonth(mm):mm;
+
     let chosenMonth = new Date(year,month,1);
-    if(tr){
-      console.log(new Date(chosenMonth.getFullYear(), chosenMonth.getMonth()+1,0 ).getDate());
-      }
+
     return new Date(chosenMonth.getFullYear(), chosenMonth.getMonth()+1,0 ).getDate();
   }
 
@@ -43,8 +43,8 @@ export function strDateToArr(str){
 
 
 //gets day of a date as a string
-export function chosenDayFunc(month, day, year) { 
-    let chosenDay = new Date(`${year}-${month}-${day}`);
+export function chosenDayFunc(year, month, day) { 
+    let chosenDay = new Date(year,month,day);
     return chosenDay.toLocaleString('en-us', {weekday: 'long'})
 }
 
