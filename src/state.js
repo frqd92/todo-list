@@ -32,3 +32,13 @@ export function updateDataLocal(){
 export function updateDataServer(){
 
 }
+
+
+//for testing in mainPageCreate.js
+export function testShit(){
+    document.querySelector(".nav-title").addEventListener("click", ()=>{
+        console.log("task array: ", taskArray);
+        console.log("group array: ", groupArray);
+        console.log("logged in: ", loggedIn);
+    })
+}

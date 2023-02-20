@@ -2,6 +2,7 @@ import { loginCreate } from "../dom/loginCreate";
 import { isSignedIn } from "../state";
 import clearBody from "../utilities/clearBody";
 import { createMainPage } from "../dom/mainPageCreate";
+import { firebaseAuthen } from "./authen";
 export function loginPage(){
     const [googleBtn, guestBtn] = loginCreate();
     googleBtn.addEventListener("click", loginGoogle);
@@ -10,14 +11,16 @@ export function loginPage(){
 }
 
 function loginAsGuest(){
-    isSignedIn(false);
-    clearBody(document.querySelectorAll("body > *"), "body-login");
-    createMainPage();
-
+    createMain(false)
 };
 
 function loginGoogle(){
-    isSignedIn(true);
+    firebaseAuthen();
+}
+
+
+export function createMain(isSigned){
+    isSignedIn(isSigned);
     clearBody(document.querySelectorAll("body > *"), "body-login");
     createMainPage();
-};
+}

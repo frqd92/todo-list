@@ -9,9 +9,16 @@ export function adderOptionsFunc(div){
     noneBtn.addEventListener("click", noGroupAdd);
     addBtn.addEventListener("click", newGroupAdd);
     optionsQuickBtnsFunc(inputDiv);
-    checkForGroups();
+
+    loggedIn?checkForGroupsServer():checkForGroupsLocal();
+
 }
-function checkForGroups(){
+
+//
+function checkForGroupsServer(){
+    
+}
+function checkForGroupsLocal(){
     let groups = JSON.parse(localStorage.getItem("groups"));
     if(groups!==null){
         emptyDiv.style.display="none";
