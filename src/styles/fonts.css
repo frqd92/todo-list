@@ -30,3 +30,7 @@
     font-family: "ptserif";
     src: url(/src/assets/fonts/PTSerif.ttf);
 }
+@font-face {
+    font-family: "kalam";
+    src: url(/src/assets/fonts/kalam.ttf);
+}

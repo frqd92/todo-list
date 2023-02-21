@@ -5,7 +5,7 @@ import tasksPng from '/src/assets/images/tasks.png';
 import arrowCircle from '/src/assets/images/arrow-circle.png';
 import gearPng from '/src/assets/images/gear.png';
 import { hideMenFunc } from "../nav/hideMenu";
-import taskPage from "./taskPageCreate";
+import taskPage from "/src/dom/taskPage/taskPageCreate";
 import createHomePage from "./homeCreate";
 import { isHome, isHomeFunc } from "../state";
 import '/src/styles/nav.css'

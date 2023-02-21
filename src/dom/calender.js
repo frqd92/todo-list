@@ -104,8 +104,6 @@ function createDaySquares(div, date, text){
         
         const datePickerDiv = div.parentElement.parentElement;
         hideDiv(document.querySelector(".date-picker-div"), "hidden-date-picker-div");
-        
-
     }
 };
 

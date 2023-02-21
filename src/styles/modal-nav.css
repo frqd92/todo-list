@@ -447,12 +447,14 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    z-index: 1000000;
+    z-index: 1000000000;
     color: white;
     font-family: roboto;
     font-size: 1rem;
     border-radius: 2px;
-    background: rgb(0, 0, 0)
+    background: rgb(0, 0, 0);
+    border-top: none;
+    box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
 }
 
 .empty-group-options{
@@ -681,9 +683,8 @@
    
 }
 .modal-repeat-options{
-    padding-top: 10px;
     position: absolute;
-    z-index: 10000;
+    z-index: 100000;
     top: 22px;
     right: 0;
     width: 234px;
@@ -694,39 +695,50 @@
     font-family: roboto;
     background: rgba(138, 135, 135, 0.982);
     backdrop-filter: blur(50px);
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+
 }
 
 .repeat-info-text{
-    background-color: rgba(255, 255, 255, 0.445);
+    background-color: rgba(255, 255, 255, 0.284);
     display: flex;
     justify-content: center;
     gap: 4px;
     font-family: roboto-medium;
     color: rgba(0, 0, 0, 0.972);
-    text-shadow: 0px 0px 4px rgba(207, 207, 207, 0.237);
+    text-shadow: 0px 0px 4px rgba(129, 129, 165, 0.237);
     white-space: nowrap;
     font-size: 1rem;
-    padding: 2px;
-    margin-top: 10px;
+    padding: 5px;
     width: 100%;
 
 }
-.repeat-inputs-div{
+.repeat-inputs-div, .ineffect-div, .repeat-starting{
+    width: 100%;
     display: flex;
-    justify-content: center;
     align-items: center;
-    gap: 5px;
-    margin-bottom: 10px;
-
+    height: 40px;
+    padding: 0px 10px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.19);
 }
-.repeat-input{
+
+
+
+
+.repeat-inputs-div span, .ineffect-div span, .repeat-starting span{
+
+    width: 100px;
+}
+
+.repeat-input, .ineffect-until{
     height: 23px;
-    width: 37px;
+    width: 35px;
     text-align: center;
     border: none;
     outline: none;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    border-radius: 10px;
+    margin-right: 10px;
+
 }
 .repeat-select{
     text-align: center;
@@ -734,8 +746,7 @@
 .ineffect-div{
     display: flex;
     align-items: center;
-    gap: 3px;
-   
+
 }
 .repeat-ineffect, .repeat-select{
     cursor: pointer;
@@ -746,29 +757,43 @@
 
 
 }
-.ineffect-other,.ineffect-until{
-    width: 100px;
+.ineffect-other{
+    width: 80px;
     text-align: center;
     font-size: 0.9rem;
     font-family: open;
-    border-radius: 10px;
     border: none;
     outline: none;
     height: 25px;
-    margin-left: 2px;
 
 }
 
 .ineffect-other::placeholder{
-    font-size: 0.55rem;
-    margin-bottom: 12px;
+    font-size: 0.45rem;
 }
-.ineffect-until{
-    width: 40px;
-}
+
 .ineffect-invisible{
     display: none;
 }
+.repeat-starting{
+    border: none;
+    margin: none;
+}
+
+.repeat-starting span{
+
+}
+.starting-input{
+    font-size: 1.1rem;
+    height: 25px;
+    width: 80px;
+    border: none;
+    outline: none;
+    text-align: center;
+}
+
+
+
 .repeat-btn-div{
     display: grid;
     grid-template-columns: 2fr 3fr;
@@ -830,6 +855,7 @@
     padding: 2px 5px;
     background-color: rgba(253, 253, 253, 0.896);
     backdrop-filter: blur(10px);
+    box-shadow: 0px 0px 6px rgb(6, 185, 235);
 }
 .notes-save-btn{
     border: none;

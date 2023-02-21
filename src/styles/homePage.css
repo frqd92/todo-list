@@ -4,3 +4,47 @@ main{
   align-items: center;
   
 }
+
+
+/* if user has no stored tasks */
+
+.no-tasks-div{
+  position: absolute;
+  top: 18px;
+  right: 110px;
+  display: flex;
+  align-items: end;
+  animation: noTaskDivAnim infinite 2s ease;
+
+}
+.no-task-text{
+  color: white;
+  font-family: kalam;
+  font-size: 1.2rem;
+  margin: 0px 0px 10px 0px;
+  white-space: nowrap;
+
+}
+.empty-arrow{
+  width: 100px;
+  filter: invert(100%);
+ 
+}
+      
+
+@keyframes noTaskDivAnim {
+  0%{
+    opacity: 1;
+    text-shadow: 0px 1px 8px rgba(72, 130, 210, 0.3);
+
+  }
+  50%{
+    opacity: 0.1;
+    text-shadow: 0px 0px 1px rgb(183, 183, 211);
+  }
+  100%{
+    opacity: 1;
+    text-shadow: 0px 1px 8px rgb(72, 130, 210, 0.3);
+
+  }
+}

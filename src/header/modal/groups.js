@@ -1,6 +1,7 @@
 import { elementCreator } from "../../utilities/elementCreator";
 import { hideDiv } from "./showHideAdder";
 import { groupArray, loggedIn } from "../../state";
+import { writeUserGroups } from "../../rtDatabase";
 let emptyDiv, optionsDiv,inputDiv,addBtn, noneBtn, mainDiv, btns;
 export function adderOptionsFunc(div){
     mainDiv=div;
@@ -10,19 +11,15 @@ export function adderOptionsFunc(div){
     addBtn.addEventListener("click", newGroupAdd);
     optionsQuickBtnsFunc(inputDiv);
 
-    loggedIn?checkForGroupsServer():checkForGroupsLocal();
+    checkForGroups()
 
 }
 
 //
-function checkForGroupsServer(){
-    
-}
-function checkForGroupsLocal(){
-    let groups = JSON.parse(localStorage.getItem("groups"));
-    if(groups!==null){
+function checkForGroups(){
+    if(groupArray.length>0){
         emptyDiv.style.display="none";
-        groups.forEach(elem=>{
+        groupArray.forEach(elem=>{
             const group = elementCreator("div", ["class", "options-element"], elem, optionsDiv);
             group.addEventListener("click", ()=>{
                 document.querySelector(".modal-group-btn").innerText = group.innerText;
@@ -34,6 +31,8 @@ function checkForGroupsLocal(){
         emptyDiv.style.display="block";
     }
 }
+
+
 function newGroupAdd(){
     const input = inputDiv.querySelector("input");
     input.addEventListener("keydown",e=>{
@@ -83,6 +82,10 @@ function addElementAndHide(input){
     if(checker){
         inputDiv.style.display="none";
         const group = elementCreator("div", ["class", "options-element"], input.value, optionsDiv);
+        if(loggedIn){
+            groupArray.push(input.value);
+            writeUserGroups(groupArray);
+        }
         if(!loggedIn){
             groupArray.push(input.value);
             localStorage.setItem("groups", JSON.stringify(groupArray))

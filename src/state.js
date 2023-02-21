@@ -1,3 +1,7 @@
+import { readUserTasks } from "./rtDatabase";
+
+
+
 export let loggedIn = false;
 export let savedTheme = "light-theme";
 export let isHome = true;
@@ -26,10 +30,24 @@ export function updateDataLocal(){
     if(tasks!==null){
         taskArray=tasks;
     }
-    console.log(taskArray);
+
 }
 
-export function updateDataServer(){
+export function updateDataServer(taskFromSer, groupFromSer){
+    let arrFromServer;
+    if(taskFromSer){//for tasks
+        arrFromServer = taskFromSer;
+        if(arrFromServer.length>0){
+            taskArray=arrFromServer;
+         }
+    }
+    else{//for groups
+        arrFromServer = groupFromSer;
+        if(arrFromServer.length>0){
+            groupArray=arrFromServer;
+         }
+    }
+
 
 }
 

@@ -1,5 +1,6 @@
 import { getToday } from "/src/utilities/dateUtils";
 import { loggedIn, taskArray } from "../../state";
+import { writeUserTasks } from "../../rtDatabase";
 export default function addNewTask(btn){
     btn.addEventListener("click", formatForObj);
 }
@@ -32,13 +33,13 @@ function formatForObj(){
     obj.notes = notes;
     taskArray.push(obj)
     console.log(taskArray);
-    loggedIn?pushToServer(obj):pushToLocal(taskArray);
+    loggedIn?pushToServer(taskArray):pushToLocal(taskArray);
 
 }
 
 function pushToLocal(arr){
     localStorage.setItem("task-array", JSON.stringify(arr));
 }
-function pushToServer(obj){
-
+function pushToServer(taskArray){
+    writeUserTasks(taskArray)
 }
