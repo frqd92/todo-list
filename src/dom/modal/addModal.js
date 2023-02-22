@@ -6,9 +6,10 @@ import { calenderFact} from "../calender";
 import { closeDivLogic} from '../../header/modal/showHideAdder';
 import { adderOptionsFunc } from '../../header/modal/groups';
 import { hideDiv } from '../../header/modal/showHideAdder';
-import { modalRepeatLogic } from '../../header/modal/modalRepeat';
+import { repeatLogic } from '../../header/modal/modalRepeat';
 import { modalNotesLogic } from '../../header/modal/modalNotes';
 import addNewTask from '/src/header/modal/addNewTask';
+import { getCurrentDateText } from '../../utilities/dateUtils';
 //create each modal in the DOM
 export function addModal(content){
     const form = elementCreator("div", ["id", "form"], false, content);
@@ -20,7 +21,7 @@ export function addModal(content){
     const dueDateDiv = elementCreator("div", ["class", "modal-due-div"], false, form);
     const dueDateText = elementCreator("p", ["class", "modal-due-text"], "Due date", dueDateDiv);
     const dueBtn = elementCreator("div", ["class", "modal-due-btn", "adder-value"], "Today", dueDateDiv);
-    const dayWeekText = elementCreator("p", ["class", "due-btn-day-text"], false, dueDateDiv);
+    const dayWeekText = elementCreator("p", ["class", "due-btn-day-text"], getCurrentDateText("day"), dueDateDiv);
     const datePickerDiv = elementCreator("div", ["class", "date-picker-div", "hidden-date-picker-div"],false, dueDateDiv);
     createDueDateDiv(datePickerDiv, dueBtn, dayWeekText);
 
@@ -45,7 +46,7 @@ export function addModal(content){
     const repeatText = elementCreator("div", ["class", "modal-repeat-text"], "Repeat", repeatDiv);
     const repeatBtn = elementCreator("div", ["class", "modal-repeat-btn", "adder-value"], "No repeat", repeatDiv);
     const repeatOptions = elementCreator("div", ["class", "modal-repeat-options", "hidden-repeat-div"], false, repeatDiv);
-    createRepeatOptions(repeatOptions, repeatBtn);
+    createRepeatOptions(repeatOptions);
 
     //notes div
     const notesDiv = elementCreator("div", ["class", "modal-notes-div"], false, form);
@@ -77,28 +78,39 @@ function createNotesOptions(div, mainBtn){
     modalNotesLogic(textArea,saveBtn);
 }
 
-function createRepeatOptions(div,mainBtn){
-    const repeatInputsDiv = elementCreator("div", ["class", "repeat-inputs-div"], false,div);
-    elementCreator("span", false, "Every", repeatInputsDiv);
-    const numInput = elementCreator("input", ["class", "repeat-input"],"1", repeatInputsDiv);
-    numInput.placeholder = "1-100";
-    const every = elementCreator("div", ["class", "repeat-select"], "week",repeatInputsDiv);
-    const inEffectDiv = elementCreator("div", ["class", "ineffect-div"], false, div);
-    elementCreator("span", false, "In effect", inEffectDiv);
-    const times = elementCreator("input", ["class", "ineffect-until", "ineffect-invisible"], false, inEffectDiv);
-    times.placeholder="x";
-    const inEffect = elementCreator("div", ["class", "repeat-ineffect"], "forever", inEffectDiv);
-    const inEffectOther = elementCreator("input", ["class", "ineffect-other", "ineffect-invisible"], false, inEffectDiv);
-    inEffectOther.placeholder="Type date & click Enter";
-    const infoTextDiv = elementCreator("div", ["class", "repeat-info-text"], false, div);
-    elementCreator("span", false, "Every", infoTextDiv);
-    elementCreator("span", ["class", "info-text-1"], "week", infoTextDiv);
-    elementCreator("span", ["class", "info-text-2"], "forever", infoTextDiv);
-    const btnDiv= elementCreator("div", ["class", "repeat-btn-div"], false, div)
-    const noRepeatBtn = elementCreator("button", false, "No repeat", btnDiv);
-    const saveBtn = elementCreator("button", false, "Save", btnDiv);
-    modalRepeatLogic(infoTextDiv, numInput, every, inEffect, inEffectOther, times, saveBtn, noRepeatBtn);
+export function createRepeatOptions(div,mainBtn){
+    const choices = ["Day", "Week", "Month", "Year"];
+    const weekDays = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+    const tabDiv = elementCreator("div", ["class", "repeat-tab-div"], false, div);
+    for(let i=0;i<4;i++){
+        const btn = elementCreator("div", ["class", "repeat-tab-btn"], false, tabDiv);
+        if(i===1) btn.classList.add("repeat-chosen-tab");
+        elementCreator("p", false, choices[i], btn)
+    }
+    const repeatNumDiv = elementCreator("div", ["class", "repeat-num-div"], false, div);
+    elementCreator("p", false, "Repeat every", repeatNumDiv);
+    elementCreator("input", ["class", "repeat-num-input"], "1", repeatNumDiv);
+    elementCreator("p", ["class", "repeat-num-text"], "week", repeatNumDiv);
 
+    //hidden unless week tab is chosen, visible in default as week is default tab
+    const repeatWeekDiv = elementCreator("div", ["class", "repeat-week-div", "show-week-repeat"], false, div);
+    for(let i=0;i<7;i++){
+        const checkBtnDiv = elementCreator("div", ["class", "repeat-check-btn-div"], false, repeatWeekDiv);
+        elementCreator("span", false, weekDays[i], checkBtnDiv);
+        const checkBox = elementCreator("div", ["class", "repeat-check-div"], false, checkBtnDiv);
+        elementCreator("p", ["class", "repeat-checked"], "X", checkBox)
+    }
+    const summaryDiv = elementCreator("div", ["class", "repeat-summary-div"], false, div);
+    elementCreator("p", false ,"Repeat every", summaryDiv);
+    elementCreator("p", ["class", "summary-text-1"], "week", summaryDiv);
+    elementCreator("p", ["class", "summary-text-2"], "on", summaryDiv);
+    elementCreator("p", ["class", "summary-text-3"], "forever", summaryDiv);
+
+    const btnDiv = elementCreator("div", ["class", "repeat-btn-div"], false, div);
+    elementCreator("div", ["class", "no-repeat-btn"], "No repeat", btnDiv);
+    elementCreator("div", ["class", "repeat-save-btn"], "Save", btnDiv);
+
+    repeatLogic(div);
 }
 
 

@@ -41,7 +41,6 @@ export function strDateToArr(str){
 
 
 
-
 //gets day of a date as a string
 export function chosenDayFunc(year, month, day) { 
     let chosenDay = new Date(year,month,day);
@@ -104,9 +103,17 @@ export function detectFirstDayMonth(selectDate){
 //ex. arr [2,2,2023] returns string 02/02/2023
 export function formatNumDate(arr){
   for(let i=0;i<2;i++){
-    arr[i] = arr[i]<10?"0"+arr[i]:arr[i];
+    arr[i] = arr[i]<10?"0"+(arr[i]):arr[i];
   }
+
   return `${arr[0]}/${arr[1]}/${arr[2]}`
 }
 
 
+//adds one to the month when it's displayed since months are 0-11 in date object
+// ex. string 19/0/2023 becomes 19/01/2023
+export function addOneToMonth(date){
+  let arr = date.split("/");
+  arr[1] = Number(arr[1])<10?"0" + (Number(arr[1])+1):(Number(arr[1])+1);
+  return arr.join("/");
+}

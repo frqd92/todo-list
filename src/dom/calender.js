@@ -1,6 +1,6 @@
 import { elementCreator, imageCreator } from "../utilities/elementCreator";
 import arrow from '/src/assets/images/arrow-simple.png';
-import { getCurrentDateText, detectFirstDayMonth, daysInMonth, formatNumDate, returnMonth, getToday, isPast} from "/src/utilities/dateUtils";
+import { getCurrentDateText, detectFirstDayMonth, daysInMonth, formatNumDate, returnMonth, getToday, isPast, addOneToMonth} from "/src/utilities/dateUtils";
 //import { hideDateAdder } from "../header/modal/showHideAdder";
 const weekArr = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 let typeCal, currentMonth, currentYear;
@@ -22,8 +22,6 @@ export function calenderFact(div, type){
     } 
     return {datePickCalDiv};
 }
-
-
 
 
 
@@ -51,7 +49,6 @@ function createDaySquares(div, date, text){
         else if(i>=firstDayMonth && dayCount<=lastDayMonth){ //days of current Month
             square.innerText = dayCount;
             dayCount++;
-
         }
         else if(i>=lastDayMonth){
             square.innerText = nextMonthCount;
@@ -59,7 +56,7 @@ function createDaySquares(div, date, text){
             square.classList.add("cal-day-other-month");
             square.classList.add("cal-day-next");
         }
-        if(dayCount===getToday("day")+1 && date[0]===returnMonth(getToday("month"))){
+        if(dayCount===getToday("day")+1 && date[0]===returnMonth(getToday("month")) &&Number(date[1])===getToday("year")){
             square.classList.add("current-day-cal")
         }
         if(inputCalDay(false, square)){
@@ -70,7 +67,7 @@ function createDaySquares(div, date, text){
         }
     }
 
-    
+
 
     function inputCalDay(e, square){
         let day, month, year, tar;
@@ -97,16 +94,15 @@ function createDaySquares(div, date, text){
         let date = formatNumDate([day, returnMonth(month), year]);
         if(!e){
             return isPast(date);
-        }
-
-        document.querySelector(".modal-due-btn").innerText= date;
+        };
+        let finalDate = addOneToMonth(date)
+        document.querySelector(".modal-due-btn").innerText= finalDate;
         document.querySelector(".due-btn-day-text").innerText = getCurrentDateText("day", `${year}-${month}-${day}`);
         
         const datePickerDiv = div.parentElement.parentElement;
         hideDiv(document.querySelector(".date-picker-div"), "hidden-date-picker-div");
     }
 };
-
 
 //calculates the days in prev month of the selected month.. Used to show the preceding left days before the first of the current month
 //ex if date is "February 2023", returns 31 (jan 2023 had 31 days)
@@ -171,9 +167,8 @@ function incrDecrMonth(text, isIncr, onlyValue){
     else{
         return `${returnMonth(nextMonth.getMonth())} ${nextMonth.getFullYear()}`;
     }
-
-
 }
+
 
 //when arrow button is clicked, removes squares and runs createDaySquares again with new date
 function renderCalender(date, text){
