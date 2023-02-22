@@ -13,12 +13,12 @@ export function dueDateVal(val){
     dueDateAdder = val
     let dayText = document.querySelector(".due-btn-day-text").innerText;
     dayText = dayText.split("").slice(0,3).join("");
-    clearRepeat(document.querySelector(".modal-repeat-options"), dayText);
+    renderWeek(document.querySelector(".modal-repeat-options"), dayText);
     // weekLogic(document.querySelector(".modal-repeat-options"), dayText);
     updateText2(document.querySelector(".summary-text-2"));
 }
 
-function clearRepeat(div, day){
+function renderWeek(div, day){
     div.innerHTML="";
     createRepeatOptions(div);
     const btns = div.querySelectorAll(".repeat-check-btn-div");
@@ -42,28 +42,6 @@ function clearRepeat(div, day){
 }
 
 
-
-
-
-
-//week check btns
-function weekLogic(div, chosenDay){
-    const btns = div.querySelectorAll(".repeat-check-btn-div");
-    const text = div.querySelector(".summary-text-2");
-    btns.forEach(btn=>{
-        const p = btn.querySelector("span");
-        const check = btn.querySelector(".repeat-checked");
-        if(p.innerText===chosenDay){
-            check.classList.add("repeat-checked-visible")
-        }
-        else{
-            btn.addEventListener("click", weekBtnsFunc);
-        }
-
-    })
-
-
-}
 
 
 
@@ -109,13 +87,13 @@ function updateText2(text){
 function resizeTextField(field){
     const allChecked = document.querySelectorAll(".repeat-checked-visible");
     if(allChecked.length>5){
-        field.style.fontSize = "9.5px"
+        field.style.fontSize = "9px"
     }
     else if(allChecked.length>3){
-        field.style.fontSize = "11px";
+        field.style.fontSize = "10px";
     }
     else if(allChecked.length<3){
-        field.style.fontSize = "13px";
+        field.style.fontSize = "12px";
     }
 }
 
@@ -128,7 +106,9 @@ function tabOptions(div){
     const numText = div.querySelector(".repeat-num-text");
     const input = div.querySelector(".repeat-num-input");
     const weekDiv = div.querySelector(".repeat-week-div");
+    const monthDiv = div.querySelector(".repeat-month-div");
     const summaryText1 = div.querySelector(".summary-text-1");
+    const summaryText2 = div.querySelector(".summary-text-2");
 
     
     tabBtns.forEach(btn=>{
@@ -141,7 +121,19 @@ function tabOptions(div){
         checkPlural(input, numText);
         selectTab(this);
         this.innerText==="Week"?weekDiv.classList.add("show-week-repeat"):weekDiv.classList.remove("show-week-repeat");
-        if(this.innerText==="Month") monthFunc()
+        this.innerText==="Month"?monthDiv.classList.add("show-month-repeat"):monthDiv.classList.remove("show-month-repeat");
+        if(this.innerText==="Month"){
+            summaryText2.style.display="block";
+            monthFunc();
+        }
+        if(this.innerText==="Week"){
+            summaryText2.style.display="block"
+            updateText2(summaryText2);
+        }
+        if(this.innerText==="Day" || this.innerText==="Year"){
+            summaryText2.style.display="none"
+            summaryText2.innerText="";
+        }
         updateSummary(summaryText1, input.value, numText.innerText)
 
     }
@@ -164,12 +156,6 @@ function monthFunc(){
     else{
         day = dueDateAdder.slice(0, 2)
     }
-    console.log(day);
-    if(day>28){
-
-    }
-
-
 }
 
 
@@ -229,111 +215,4 @@ function updateSummary(text1, inputVal, numText){
 
 
 
-
-
-
-
-// export function modalRepeatLogic(infoTextDiv, input, every, inEffect, inEffectOther, times, saveBtn, noRepeatBtn){
-//     const [everyText,firstText, secondText] = infoTextDiv.childNodes;
-
-//     everyTextFunc(every, firstText, input);
-//     inEffectFunc(inEffect, secondText, inEffectOther, times);
-//     input.addEventListener("input", (e)=>{
-
-//         if(Number(input.value)>1){
-//             every.innerText=word;
-//             firstText.innerText = input.value + " " + every.innerText;
-//         }
-//         else{
-//             const word = checkPlural(false,every.innerText.split(""));
-//             every.innerText=word;
-//             input.addEventListener("focusout", ()=>{input.value=1}, {once:true})
-//             firstText.innerText = every.innerText;
-//         }
-//     })
-//     saveBtn.addEventListener("click", ()=>{
-//         document.querySelector(".modal-repeat-btn").innerText= `${everyText.innerText} ${firstText.innerText} ${secondText.innerText}`;
-//         hideDiv(document.querySelector(".modal-repeat-options"), "hidden-repeat-div")
-//     })
-//     noRepeatBtn.addEventListener("click", ()=>{
-//         document.querySelector(".modal-repeat-btn").innerText= "No repeat";
-//         hideDiv(document.querySelector(".modal-repeat-options"), "hidden-repeat-div");
-
-//     })
-// }
-
-//     function everyTextFunc(every, firstText, input){
-//         every.addEventListener("click", ()=>{
-//             const arrSing = ["week", "month", "year", "day"];
-//             const arrPlur = ["weeks", "months", "years", "days"];
-//             let arr="";
-//             Number(input.value)>1?arr=arrPlur:arr=arrSing;
-//             if(arr.indexOf(every.innerText)!==3){
-//                 every.innerText = arr[arr.indexOf(every.innerText)+1];
-//             }
-//             else{
-//                 every.innerText = arr[0];
-//             }
-//             let textArr = firstText.innerText.split(" ");
-//             if(textArr.length>1){
-//                 textArr[1]= every.innerText;
-//             }
-//             else{
-//                 textArr[0] = every.innerText;
-//             }
-//             let newVal = textArr.join(" ");
-
-//             firstText.innerText = newVal;
-//         })
-//     }
-    
-//     function inEffectFunc(inEffect, secondText, inEffectOther, times){
-//             inEffect.addEventListener("click", ()=>{
-//                 let text = inEffect.innerText;
-//                 if(text==="forever"){
-//                     inEffect.innerText= "until";
-//                     times.classList.add("ineffect-invisible");
-//                     inEffectOther.classList.remove("ineffect-invisible");
-//                     modalDateInputFunc(inEffectOther);
-//                     inEffectOther.addEventListener("keydown",inputCheckUntil);
-//                 }
-//                 else if(text==="until"){
-//                     inEffectOther.value="";
-//                     inEffectOther.removeEventListener("keydown",inputCheckUntil);
-//                     inEffect.innerText= "times";
-//                     times.classList.remove("ineffect-invisible");
-//                     inEffectOther.classList.add("ineffect-invisible");
-//                     times.addEventListener("keydown", inputCheckTimes);
-//                     times.addEventListener("input", checkNumTimes);
-
-//                 }
-//                 else if(text==="times"){
-//                     times.value= "";
-//                     times.removeEventListener("keydown", inputCheckTimes);
-//                     inEffect.innerText= "forever";
-//                     inEffectOther.classList.add("ineffect-invisible");
-//                     times.classList.add("ineffect-invisible");
-//                     secondText.innerText="forever";
-//                 }
-//             })
-//             function inputCheckTimes(e){
-//                 if(e.key==="Enter" && Number(times.value)>0){
-//                     secondText.innerText=`x${times.value}`
-//                 }
-//             }
-//             function checkNumTimes(e){
-//                 if(/[a-z\W]/i.test(e.data)){
-//                     this.value = this.value.replaceAll(e.data,"");
-//                 };
-//                 if(this.value.split("").length>3){
-//                     this.value="";
-//                     this.placeholder="1-999"
-//                 }
-//             }
-//             function inputCheckUntil(e){
-//                 if(e.key==="Enter" && inEffectOther.value.length!==0){
-//                     secondText.innerText=`until ${inEffectOther.value}`
-//                 }
-//             }
-//     }
 

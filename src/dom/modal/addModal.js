@@ -9,7 +9,7 @@ import { hideDiv } from '../../header/modal/showHideAdder';
 import { repeatLogic } from '../../header/modal/modalRepeat';
 import { modalNotesLogic } from '../../header/modal/modalNotes';
 import addNewTask from '/src/header/modal/addNewTask';
-import { getCurrentDateText } from '../../utilities/dateUtils';
+import { getCurrentDateText, addSuffixToDay, whichWeekDayOfMonth } from '../../utilities/dateUtils';
 //create each modal in the DOM
 export function addModal(content){
     const form = elementCreator("div", ["id", "form"], false, content);
@@ -100,6 +100,11 @@ export function createRepeatOptions(div,mainBtn){
         const checkBox = elementCreator("div", ["class", "repeat-check-div"], false, checkBtnDiv);
         elementCreator("p", ["class", "repeat-checked"], "X", checkBox)
     }
+    //also hidden unless month blah blah 
+    const repeatMonthDiv = elementCreator("div", ["class", "repeat-month-div"], false, div);
+    elementCreator("div", ["class", "repeat-left"], `on the ${getTodayFromBtn()}`, repeatMonthDiv);
+    elementCreator("div", ["class", "repeat-right"], `on the ${whichWeekDayOfMonth(document.querySelector(".modal-due-btn").innerText)}`, repeatMonthDiv);
+    
     const summaryDiv = elementCreator("div", ["class", "repeat-summary-div"], false, div);
     elementCreator("p", false ,"Repeat every", summaryDiv);
     elementCreator("p", ["class", "summary-text-1"], "week", summaryDiv);
@@ -114,7 +119,18 @@ export function createRepeatOptions(div,mainBtn){
 }
 
 
+function getTodayFromBtn(){
+    const btnText = document.querySelector(".modal-due-btn").innerText;
+    const date = new Date();
 
+    if(btnText==="Today"){
+        return addSuffixToDay(date.getDate()) ;
+    }
+    else{
+        return addSuffixToDay(btnText.split("").slice(0,2).join(""));
+    }
+
+}
 
 function createPrioritiesOptions(div, btn){
     const priorityText = ["Normal", "High", "Highest"];

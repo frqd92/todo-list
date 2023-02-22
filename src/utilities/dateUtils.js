@@ -3,9 +3,7 @@ import { autoArr } from "/src/header/modal/modalDateInput";
  //gets the days in a month of a year
  //ex. 2/2023 returns 28
 export function daysInMonth(mm, year) {
-
     let month = isNaN(mm)?returnMonth(mm):mm;
-
     let chosenMonth = new Date(year,month,1);
 
     return new Date(chosenMonth.getFullYear(), chosenMonth.getMonth()+1,0 ).getDate();
@@ -114,6 +112,74 @@ export function formatNumDate(arr){
 // ex. string 19/0/2023 becomes 19/01/2023
 export function addOneToMonth(date){
   let arr = date.split("/");
-  arr[1] = Number(arr[1])<10?"0" + (Number(arr[1])+1):(Number(arr[1])+1);
+  arr[1] = Number(arr[1])<9?"0" + (Number(arr[1])+1):(Number(arr[1])+1);
   return arr.join("/");
 }
+
+
+//adds suffix to day.. ex 24 returns 24th
+export function addSuffixToDay(num){
+  num = Number(num);
+  let day = Number(num)<9?("0"+num).split(""):num.toString().split("");
+  if(Number(day[1])===1){
+    return num+"st";
+  }
+  else if(Number(day[1])===2){
+    return num+"nd";
+  }
+  else if(Number(day[1])===3){
+    return num+"rd";
+  }
+  else{
+    return num+"th";
+  }
+}
+//ex 22/02/2023 returns 4th wed
+//ex 
+export function whichWeekDayOfMonth(val){
+    const weekDays = ["Monday", "Tuesday","Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+
+    let date = val==="Today"?addOneToMonth(getToday()):val;
+    date=strDateToArr(date);
+    const [dd,,]= date;
+    const dueWeekDay = getCurrentDateText("day", `${date[2]}/${date[1]}/${date[0]}`);
+    const firstWeekDayMonth = getCurrentDateText("day", `${date[2]}/${date[1]}/1`);
+    const indexOfFirstWeekDay = weekDays.indexOf(firstWeekDayMonth);
+    let weekDayCount=indexOfFirstWeekDay;
+    let overallCount=0;
+    let whichWeek = 0;
+    while(overallCount<Number(dd)){
+      // console.log(weekDays[weekDayCount]);
+
+      if(dueWeekDay===weekDays[weekDayCount]){
+        whichWeek++;
+      }
+      weekDayCount++;
+
+      if(weekDayCount===7){
+        weekDayCount=0;
+      }
+      overallCount++;
+      
+    }
+    console.log(whichWeek)
+
+  }
+
+
+
+/*
+
+    if(overallCount===daysInChosenMonth){
+      console.log(weekDayCount)
+      return;
+    }
+    if(weekDays[i]===dueWeekDay){
+      weekDayCount++;
+    }
+    if(i===6){
+      i=0;
+    }
+    overallCount++;
+
+*/

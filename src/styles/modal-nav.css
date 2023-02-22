@@ -802,6 +802,30 @@
     position: static;
     transform:translateY(0) scale(1);
 }
+
+
+
+.repeat-month-div{
+    transition: transform 0.1s ease;
+    transform:translateY(-130px) scale(0);
+    position: absolute;
+    z-index: -1000;
+    display: flex;
+    width: 100%;
+    border: 1px solid black;
+
+}
+.repeat-month-div > div{
+
+}
+.show-month-repeat{
+    position: static;
+    transform:translateY(0) scale(1);
+}
+
+
+
+
 .repeat-check-btn-div{
     font-size: 0.83rem;
     gap: 3px;
@@ -837,8 +861,11 @@
 }
 .repeat-checked-noclick{
     cursor: not-allowed;
-}
 
+}
+.repeat-checked-noclick:hover{
+    background: none;
+}
 
 
 /* repeat summary */
