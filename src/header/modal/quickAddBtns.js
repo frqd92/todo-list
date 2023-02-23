@@ -13,7 +13,7 @@ function btnToDate(text){
     const mainBtn = document.querySelector(".modal-due-btn");
     if(text!=="None"){
         const [date, [dd,mm,yy]] = textToDate(text);
-        let day = chosenDayFunc(mm,dd,yy);
+        let day = chosenDayFunc(yy,mm,dd);
         document.querySelector(".due-btn-day-text").innerText = day;
         mainBtn.innerText = date;
         hideDiv(document.querySelector(".date-picker-div"), "hidden-date-picker-div");
@@ -54,7 +54,7 @@ function quickBtnHover(btn){
 
     function makeVisible(){
         const [date, [dd,mm,yy]] = textToDate(btn.innerText);
-        let day = chosenDayFunc(mm,dd,yy);
+        let day = chosenDayFunc(yy,Number(mm)-1,dd);
         hoverDiv.style.display="flex";
         dayDiv.innerText = day;
         dateDiv.innerText= date;

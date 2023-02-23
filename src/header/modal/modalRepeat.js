@@ -7,14 +7,33 @@ let dueDateAdder;
 export function repeatLogic(repeatDiv){
     inputLogic(repeatDiv);
     tabOptions(repeatDiv);
+    effectiveDiv(repeatDiv);
 }
+
+function effectiveDiv(div){
+    const btn = div.querySelector(".effective-btn");
+    const menu = div.querySelector(".effective-dropdown-div");
+    const arrow = div.querySelector(".effective-arrow")
+    btn.addEventListener("click", showHideSelect);
+    function showHideSelect(){
+        arrow.classList.toggle("effective-arrow-toggle");
+        menu.classList.toggle("dropdown-div-shown");
+    }
+}
+
+
+
+
+
+
+
+
 
 export function dueDateVal(val){
     dueDateAdder = val
     let dayText = document.querySelector(".due-btn-day-text").innerText;
     dayText = dayText.split("").slice(0,3).join("");
     renderWeek(document.querySelector(".modal-repeat-options"), dayText);
-    // weekLogic(document.querySelector(".modal-repeat-options"), dayText);
     updateText2(document.querySelector(".summary-text-2"));
 }
 
@@ -124,7 +143,7 @@ function tabOptions(div){
         this.innerText==="Month"?monthDiv.classList.add("show-month-repeat"):monthDiv.classList.remove("show-month-repeat");
         if(this.innerText==="Month"){
             summaryText2.style.display="block";
-            monthFunc();
+            monthFunc(summaryText2);
         }
         if(this.innerText==="Week"){
             summaryText2.style.display="block"
@@ -147,18 +166,33 @@ function tabOptions(div){
     }
 };
 
-function monthFunc(){
-    const date = new Date();
-    let day;
-    if(dueDateAdder==="Today"){
-        day = date.getDate();
-    }
-    else{
-        day = dueDateAdder.slice(0, 2)
+function monthFunc(text2){
+    const repeatLeft = document.querySelector(".repeat-left");
+    const repeatRight = document.querySelector(".repeat-right");
+    repeatLeft.addEventListener("click", toggleMonthRepeat);
+    repeatRight.addEventListener("click", toggleMonthRepeat);
+    text2.innerText="on " + repeatLeft.innerText;
+    function toggleMonthRepeat(){
+        if(this.className.includes("repeat-left")){
+            repeatRight.classList.remove("chosen-month-repeat");
+        }
+        else{
+            repeatLeft.classList.remove("chosen-month-repeat");
+        }
+        text2.innerText="on " + this.innerText
+        this.classList.add("chosen-month-repeat");
+        resizeWithMonth();
+    };
+    function resizeWithMonth(){
+        const div = document.querySelector(".repeat-summary-div")
+        if(isOverflown(div)){
+            div.style.fontSize = "11px";
+        }
+        else{
+            div.style.fontSize = "12px";
+        }
     }
 }
-
-
 // numInput logic--------------------------------------------------
 
 function inputLogic(div){

@@ -433,6 +433,7 @@
 
 }
 .modal-group-div-text{
+    
 }
 
 .modal-group-btn{
@@ -708,7 +709,7 @@
     justify-content: space-evenly;
     padding: 0px 5px;
     box-shadow: 0px 0px 5px black;
-
+    
 }
 .repeat-tab-btn{
     transform: skew(-25deg);
@@ -716,10 +717,8 @@
     color: rgba(76, 74, 74, 0.913);
     width: 100%;
     cursor: pointer;
-    background: rgba(138, 135, 135, 0.982);
     text-shadow: none;
     transition: all linear 0.1s;
-    
     border-right: 1px solid black;
 }
 
@@ -812,12 +811,32 @@
     z-index: -1000;
     display: flex;
     width: 100%;
-    border: 1px solid black;
-
+    white-space: nowrap;
+    font-size: 0.9rem;
+    border-top: 1px solid rgba(0, 0, 0, 0.17);
+    border-bottom:1px solid rgba(0, 0, 0, 0.17);
+    height: 30px;
+    color: rgba(0, 0, 0, 0.423);
 }
 .repeat-month-div > div{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50%;
+    height: 100%;
+    transition: all 0.15s linear;
+    cursor: pointer;
+}  
+
+
+.chosen-month-repeat{
+    color: rgb(0, 0, 0);
+    background-color: rgba(52, 160, 218, 0.157);
+    font-size: 0.95rem;
+    box-shadow: rgba(0, 0, 0, 0.09) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
 
 }
+
 .show-month-repeat{
     position: static;
     transform:translateY(0) scale(1);
@@ -867,6 +886,111 @@
     background: none;
 }
 
+/* repeat effective*/
+.repeat-effective-div{
+    display: flex;
+    gap: 10px;
+    justify-content: space-between;
+    align-items: center;
+    width: 50%;
+    padding: 5px 0px;
+}
+.effective-btn-div{
+    position:relative;
+}
+
+.effective-btn{
+    border: 1px solid rgba(0, 0, 0, 0.44);
+    border-radius: 5px;
+    padding: 0px 5px;
+    display: flex;
+    justify-content: center;
+    gap: 3px;
+    align-items: center;
+    box-shadow: rgba(6, 24, 44, 0.4) 0px 0px 0px 1px, rgba(6, 24, 44, 0.65) 0px 4px 6px -1px, rgba(255, 255, 255, 0.08) 0px 1px 0px inset;
+    background-color: rgba(0, 0, 0, 0.475);
+    color: white;
+    font-size: 1rem;
+    width: 80px;
+}
+
+.effective-btn:active{
+    box-shadow: rgba(6, 24, 44, 0.4) 0px 0px 0px 1px, rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
+    transform: scale(0.98);
+}
+
+
+.effective-text{
+    font-family: open;
+}
+
+.effective-btn-text{
+    color: rgb(213, 216, 217);
+}
+.effective-arrow{
+    font-family: ptserif;
+    font-size: 1.2rem;
+    color: rgba(255, 255, 255, 0.8);
+    text-shadow: 0px 0px 4px black;
+    transform: rotate(0deg);
+    transition: 0.1s linear transform;
+}
+.effective-arrow-toggle{
+    transform: rotate(-90deg);
+}
+
+.effective-dropdown-div{
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    z-index: 1000;
+    backdrop-filter: blur(20px);
+    color: white;
+    border-radius: 5px;
+    font-size: 0.95rem;
+    height: 0px;
+    transition: all 0.1s linear;
+    white-space: nowrap;
+    overflow: hidden;
+    left: -30px;
+    width: 150px;
+}
+
+
+.effective-dropdown-row{
+    text-align: center;
+    transition: 0.1s linear background-color;
+    cursor: pointer;
+    padding: 3px 5px;
+    
+
+}
+.effective-dropdown-row:first-child{
+    border-bottom: 1px solid rgba(255, 255, 255, 0.276);
+    border-radius: 3px 3px 0px 0px;
+}
+.effective-dropdown-row:nth-child(2){
+    border-radius: 0px 0px 3px 3px;
+}
+.effective-dropdown-row:hover{
+    background-color: rgba(86, 153, 187, 0.392);
+
+}
+.dropdown-div-shown{
+    padding: 10px 10px;
+    height: fit-content;
+    background-color: rgba(1, 1, 1, 0.467);
+
+}
+
+
+.effective-other-text{
+
+}
+.effect-other-hidden{
+    display: none;
+}
+
 
 /* repeat summary */
 .repeat-summary-div{
@@ -876,7 +1000,7 @@
     gap: 4px;
     justify-content: center;
     align-items: center;
-    background-color: rgba(113, 108, 164, 0.569);
+    background-color: rgba(55, 55, 61, 0.472);
     color: rgba(255, 255, 255, 0.763);
     font-family: open;
     white-space: nowrap;
@@ -895,30 +1019,49 @@
     display: grid;
     grid-template-columns: 1fr 3fr;
     align-items: center;
+    height: 40px;
+    font-family: roboto;
+    color: black;
+    white-space: nowrap;
 }
 .repeat-btn-div > div{
-    color: rgb(217, 214, 214);
-    font-family: ptserif;
     cursor: pointer;
 }
-.repeat-btn-div > div:hover{
-    color: rgb(217, 214, 214);
-    filter: hue-rotate(30deg) brightness(1.1);
+
+.no-repeat-btn, .repeat-save-btn{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: rgba(255, 255, 255, 0.856);  
+    text-shadow: 0px 0px 10px rgb(2, 1, 1);    
+    text-transform: uppercase;
+
 }
 .no-repeat-btn{
+    background-image: linear-gradient(to right, rgba(33, 4, 0, 0.6) 0%, rgb(49, 0, 0, 0.6)  51%, rgb(49, 5, 0, 0.6)  100%);
     height: 100%;
-    display: flex;
-    align-items: center;
-    background-color: rgba(149, 61, 61, 0.83);
-    white-space: nowrap;
     font-size: 0.9rem;
-    padding: 0px 5px;
-}
+    padding: 0px 10px;
+}  
+.no-repeat-btn:hover{
+  
+}  
 .repeat-save-btn{
-    text-align: center;
-    background-color: rgba(80, 195, 98, 0.475);
-}
+    transition: 0.3s all linear;
+    background-size: 200% auto;
+    box-shadow: 0 0 5px #223549;
+    background-image: linear-gradient(to right, #232526 0%, #414345  51%, #232526  100%);
+    height: 100%;
 
+  }
+
+.repeat-save-btn:hover {
+    background-position: right center;
+    color: rgba(255, 255, 255, 0.689);
+    text-decoration: none;
+    text-shadow: 0px 0px 5px rgb(254, 254, 254);          
+}
+ 
 /* ----------------------------------------------Notes-----------------------------*/
 .modal-notes-btn, .modal-repeat-btn{
     overflow: hidden;

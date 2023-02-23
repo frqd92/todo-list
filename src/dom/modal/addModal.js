@@ -10,6 +10,7 @@ import { repeatLogic } from '../../header/modal/modalRepeat';
 import { modalNotesLogic } from '../../header/modal/modalNotes';
 import addNewTask from '/src/header/modal/addNewTask';
 import { getCurrentDateText, addSuffixToDay, whichWeekDayOfMonth } from '../../utilities/dateUtils';
+
 //create each modal in the DOM
 export function addModal(content){
     const form = elementCreator("div", ["id", "form"], false, content);
@@ -78,7 +79,7 @@ function createNotesOptions(div, mainBtn){
     modalNotesLogic(textArea,saveBtn);
 }
 
-export function createRepeatOptions(div,mainBtn){
+export function createRepeatOptions(div){
     const choices = ["Day", "Week", "Month", "Year"];
     const weekDays = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
     const tabDiv = elementCreator("div", ["class", "repeat-tab-div"], false, div);
@@ -102,9 +103,20 @@ export function createRepeatOptions(div,mainBtn){
     }
     //also hidden unless month blah blah 
     const repeatMonthDiv = elementCreator("div", ["class", "repeat-month-div"], false, div);
-    elementCreator("div", ["class", "repeat-left"], `on the ${getTodayFromBtn()}`, repeatMonthDiv);
-    elementCreator("div", ["class", "repeat-right"], `on the ${whichWeekDayOfMonth(document.querySelector(".modal-due-btn").innerText)}`, repeatMonthDiv);
+    elementCreator("div", ["class", "repeat-left", "chosen-month-repeat"], `every ${getTodayFromBtn()} day`, repeatMonthDiv);
+    elementCreator("div", ["class", "repeat-right"], `every ${addSuffixToDay(whichWeekDayOfMonth(document.querySelector(".modal-due-btn").innerText))}  ${document.querySelector(".due-btn-day-text").innerText} `, repeatMonthDiv);
     
+    const effectiveDiv = elementCreator("div", ["class", "repeat-effective-div"], false, div);
+    elementCreator("p", ["class", "effective-text"], "Effective:", effectiveDiv);
+    const effectiveBtnDiv = elementCreator("div", ["class", "effective-btn-div"], false, effectiveDiv);
+    const btn = elementCreator("div", ["class", "effective-btn"], false, effectiveBtnDiv);
+    elementCreator("p", ["class", "effective-btn-text"], "forever", btn);
+    elementCreator("p", ["class", "effective-arrow"], "<", btn);
+    elementCreator("div", ["class", "effective-other-text", "effect-other-hidden"], false, effectiveDiv);
+    const effectiveDropdown = elementCreator("div", ["class", "effective-dropdown-div"], false, effectiveBtnDiv);
+    elementCreator("div", ["class", "effective-dropdown-row"], "until a date", effectiveDropdown);
+    elementCreator("div", ["class", "effective-dropdown-row"], "x number of times", effectiveDropdown);
+
     const summaryDiv = elementCreator("div", ["class", "repeat-summary-div"], false, div);
     elementCreator("p", false ,"Repeat every", summaryDiv);
     elementCreator("p", ["class", "summary-text-1"], "week", summaryDiv);

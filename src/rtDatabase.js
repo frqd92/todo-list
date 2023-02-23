@@ -23,8 +23,6 @@ export function writeUserGroups(group) {
 
 
 
-
-
 export function readUserTasks(){
     const userID = auth.currentUser.uid;
     const dbRef = ref(getDatabase());

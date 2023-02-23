@@ -150,7 +150,6 @@ export function whichWeekDayOfMonth(val){
     let whichWeek = 0;
     while(overallCount<Number(dd)){
       // console.log(weekDays[weekDayCount]);
-
       if(dueWeekDay===weekDays[weekDayCount]){
         whichWeek++;
       }
@@ -162,8 +161,7 @@ export function whichWeekDayOfMonth(val){
       overallCount++;
       
     }
-    console.log(whichWeek)
-
+    return whichWeek
   }
 
 
