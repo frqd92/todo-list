@@ -11,6 +11,7 @@ export function closeDivLogic(form, arr){
 
 function forBtns(div, classN, form, divClass, mainBtn){
     if(div.className.includes(classN)){
+
         div.classList.remove(classN);
         form.addEventListener("click", hide);
 
@@ -25,8 +26,9 @@ function forBtns(div, classN, form, divClass, mainBtn){
         form.removeEventListener("click", hide);
      }
      function hide(e){
-        if(!e.target.closest(`.${divClass}`) && e.target!==mainBtn){
-            hideDiv(div, classN)
+        //remove third && after rework logic
+        if(!e.target.closest(`.${divClass}`) && e.target!==mainBtn && !e.target.closest(".cal-general-div")){
+            hideDiv(div, classN);
        }
      }
 };

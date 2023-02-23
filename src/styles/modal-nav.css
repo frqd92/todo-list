@@ -962,7 +962,7 @@
     transition: 0.1s linear background-color;
     cursor: pointer;
     padding: 3px 5px;
-    
+    position: relative;
 
 }
 .effective-dropdown-row:first-child{
@@ -988,7 +988,7 @@
 
 }
 .effect-other-hidden{
-    display: none;
+    /* display: none; */
 }
 
 

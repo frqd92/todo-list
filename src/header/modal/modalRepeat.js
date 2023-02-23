@@ -1,7 +1,7 @@
 
 import { inputOnlyNum, traverseNumInputWithArrows, isOverflown } from "../../utilities/inputUtils";
 import { createRepeatOptions } from "../../dom/modal/addModal";
-import { getToday, getCurrentDateText } from '/src/utilities/dateUtils';
+import CalFactory from "../../dom/calenderFact/calFactory";
 let dueDateAdder;
 
 export function repeatLogic(repeatDiv){
@@ -13,11 +13,19 @@ export function repeatLogic(repeatDiv){
 function effectiveDiv(div){
     const btn = div.querySelector(".effective-btn");
     const menu = div.querySelector(".effective-dropdown-div");
-    const arrow = div.querySelector(".effective-arrow")
+    const arrow = div.querySelector(".effective-arrow");
+    const [btnUntil, btnTimes] = div.querySelectorAll(".effective-dropdown-row");
+    const otherText = div.querySelector(".effective-other-text");
     btn.addEventListener("click", showHideSelect);
     function showHideSelect(){
         arrow.classList.toggle("effective-arrow-toggle");
         menu.classList.toggle("dropdown-div-shown");
+    };
+
+    btnUntil.addEventListener("click", generateCal);
+    function generateCal(){
+        const cal = CalFactory("effective", document.getElementById("form"), otherText, true, false, true);
+     
     }
 }
 

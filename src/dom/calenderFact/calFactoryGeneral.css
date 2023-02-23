@@ -1,0 +1,303 @@
+.cal-general-div{
+    position: absolute;
+    border: 1px solid black;
+
+    z-index: 1000000;
+}
+/* ----------------------------------------calendar ----------------------------------------*/
+
+.cal-adder-div{
+    padding-top: 5px;
+}
+
+.calender-title-div{
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    justify-items: stretch;
+    align-items: center;
+    width: 100%;
+
+}
+.calender-title-text{
+    font-family: sofia;
+    text-shadow: 0px 1px 3px rgba(0, 0, 0, 0.403);
+    font-size: 1.4rem;
+    color:rgba(221, 221, 222, 0.849);
+    white-space: nowrap;
+    text-align: center;
+
+}
+.arrow-div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    height: 100%;
+}
+
+.add-cal-arrow{
+    width: 20px;
+
+    filter: invert(70%) brightness(1.6) drop-shadow(0px 0px 8px rgba(102, 100, 218, 0.472)) ;
+    transition: filter, transform 0.1s linear;  
+}
+.add-arrow-clicked-left{
+    filter: invert(60%) brightness(1.2) drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.972));
+    transform: scale(1) rotate(180deg);
+}
+.add-arrow-clicked-right{
+    filter: invert(60%) brightness(1.2) drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.972));
+    transform: scale(1);
+}
+
+.add-arrow-right-hov{
+    transform: scale(1.2);
+
+}
+.add-arrow-left{
+    transform: rotate(180deg) scale(1);
+}
+.add-arrow-left-hov{
+    transform: rotate(180deg) scale(1.2);
+}
+
+
+
+
+
+/* general calender div, for specific cal add type after div */
+.calender-adder-div{
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    grid-template-rows: 1fr repeat(6, 2fr);
+    justify-items: center;
+    
+}
+
+/* the calender's div beneath arrows */
+.calender-adder-div-small{
+    margin-top: 5px;
+    width: 100%;
+    height: 250px;
+
+}
+
+
+.cal-header{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: roboto-medium;
+    color: rgba(129, 129, 138, 0.956);
+    text-shadow: 0px 1px 5px rgba(0, 2, 57, 0.225) ;
+}
+
+.cal-day-square{
+    font-size: 0.85rem;
+    padding: 0px 3px;
+    font-family: sofia;
+    width: 100%;
+    display: flex;
+    justify-content: end;
+    border: 1px solid rgba(230, 230, 230, 0.215);
+    margin-left:-1px;
+    margin-bottom: -1px;
+    color: rgba(254, 254, 254, 0.823);
+    cursor: pointer;
+    backdrop-filter: blur(10px);
+    transition: 0.15s ease transform;
+}
+.valid-square:hover{
+    transform: scale(1.07);
+    z-index: 10000;
+}
+.cal-day-square:not(.cal-day-other-month, .current-day-cal){
+    background-color: rgba(63, 164, 236, 0.146);
+}
+.cal-day-square:not(.cal-day-other-month, .current-day-cal):hover{
+    background-color: rgba(12, 109, 173, 0.415);
+}
+.cal-day-other-month{
+    color: rgba(109, 109, 109, 0.761);
+    background-color: rgba(87, 100, 119, 0.186);
+}
+.cal-day-other-month:hover{
+    color: rgba(201, 198, 198, 0.306);
+    background-color: rgba(102, 97, 97, 0.353);
+
+}
+
+.cal-day-square:not(.valid-square){
+    cursor:no-drop;
+}
+
+.current-day-cal{
+    background-color: rgba(85, 212, 140, 0.302);
+    box-shadow: 0px 0px 7px rgb(153, 208, 222);
+
+}
+.current-day-cal:hover{
+    background-color: rgba(175, 211, 108, 0.407);
+    box-shadow: 0px 0px 10px rgb(153, 208, 222);
+}
+
+
+
+/* ----------------------------------------quick btns ----------------------------------------*/
+
+.cal-general-quick-div{
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(3, calc(100% / 3));
+    grid-template-rows: 20px 20px;
+    gap: 1px;
+    padding-top: 5px;
+    border-bottom: 1px solid rgba(142, 135, 135, 0.478);
+    padding-bottom: 5px;
+}
+.cal-due-btn{
+    position: relative;
+    border: 1px solid rgba(0, 0, 0, 0.248);
+    background-color: rgba(17, 175, 199, 0.354);
+    color: rgba(179, 161, 161, 0.776);
+    border-radius: 20px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 75%;
+    font-family: "sofia";
+    white-space: nowrap;
+    transition: color, background-color 0.2s linear;
+    margin-bottom: 3px;
+}
+
+.cal-due-btn:hover{
+    color: rgba(253, 253, 253, 0.633);
+    background-color:  rgba(24, 127, 142, 0.342);
+
+}
+
+.cal-due-btn-hover-div{
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    border: 1px solid rgba(70, 65, 65, 0.184);
+    padding: 3px;
+    border-radius: 10px;
+    background-color: rgba(170, 165, 165, 0.22);
+    backdrop-filter: blur(10px);
+    font-size: 0.9rem;
+    display: none;
+}
+.cal-due-btn-hover-div p:nth-child(1){
+    font-family: roboto-medium;
+    color: rgba(255, 255, 255, 0.433);
+    text-shadow: 0px 1px 3px rgba(0, 0, 0, 0.412);
+
+}
+
+.cal-due-btn-hover-div p:nth-child(2){
+    color: rgb(21, 18, 18);
+    font-size: 0.85rem;
+    text-shadow: 0px 0px 2px rgba(255, 255, 255, 0.212);
+    font-family: oxygen;
+}
+
+
+
+
+/* ----------------------------------------input field ----------------------------------------*/
+.cal-general-date-div{
+    position: relative;
+    display: flex;
+    border-bottom: 1px solid rgba(142, 135, 135, 0.578);
+    padding-bottom: 5px;
+
+}
+.cal-general-input{
+    width: 100%;
+    border-radius: 20px;
+    outline: none;
+    border: 1px solid rgba(0, 0, 0, 0.306);
+    box-shadow: 0px 0px 5px rgba(147, 147, 241, 0.647);
+    padding: 3px 30px 3px 15px;
+    font-size: 1.2rem;
+    font-family: roboto-medium;
+    letter-spacing: 0.05rem;
+    color: rgba(2, 0, 31, 0.823);
+}
+
+.cal-general-input::placeholder{
+    font-family: oxygen;
+    font-size: 1rem;
+}
+
+.cal-icon-div{
+    position: absolute;
+    top: 3px;
+    right: 3px;
+    
+}
+.cal-i-div{
+    align-self: self-start;
+    position: relative;
+}
+.cal-i-img{
+    width: 25px;
+    filter: invert(30%);
+
+}
+.cal-i-img:hover {
+    filter: hue-rotate(200deg)
+}
+
+.cal-i-img-div{
+    position: absolute;
+    display: none;
+    border: 1px solid rgba(0, 0, 0, 0.28);
+    top: 0px;
+    right: 0px;
+    width: 200px;
+    border-radius: 18px 18px 18px 0px;
+    font-family: roboto;
+    padding: 6px;
+    text-align: center;
+    font-size: 0.8rem;
+    opacity: 0;
+    transition: opacity ease-in-out 0.2s;
+    color: rgba(0, 0, 0, 0.736);
+}
+
+.date-input-invalid{
+    border: 1px solid rgba(255, 0, 0, 0.285);
+    box-shadow: rgba(220, 19, 19, 0.634) 0px 2px 12px;
+
+    
+}
+.modal-input-error{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position:absolute;
+    width: 120px;
+    color: rgba(255, 255, 255, 0.702);
+    height: fit-content;
+    background-color: rgba(76, 1, 1, 0.541);
+    backdrop-filter: blur(20px);
+    border-radius: 10px;
+    padding: 3px;
+    top:3px;
+    left: -135px;
+    font-family: open;
+    font-size: 0.7rem;
+    box-shadow: rgba(234, 165, 165, 0.2) 0px 2px 10px;
+    opacity: 1;
+    transition: 0.3s linear opacity;
+    text-align: center;
+}
+
+

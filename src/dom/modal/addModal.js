@@ -11,7 +11,7 @@ import { modalNotesLogic } from '../../header/modal/modalNotes';
 import addNewTask from '/src/header/modal/addNewTask';
 import { getCurrentDateText, addSuffixToDay, whichWeekDayOfMonth } from '../../utilities/dateUtils';
 
-//create each modal in the DOM
+
 export function addModal(content){
     const form = elementCreator("div", ["id", "form"], false, content);
     //title and description
