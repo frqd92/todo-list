@@ -19,9 +19,9 @@ export default function CalFactory(mainBtn, appendTo, textElem, returnInput, ret
 }
 // Makes the calender------------------------------------------------------------------------------
 function generateCal(div, textElem, returnDay, mainBtn, userClass){
-    const datePickCalDiv = elementCreator("div", ["class", "date-adder-calender-div"], false, div);
-    const calenderDiv = elementCreator("div", ["class", "calender-adder-div"], false, datePickCalDiv);
-    const [date,titleText] = calArrowsTitle(datePickCalDiv, textElem);
+    const datePickCalDiv = elementCreator("div", ["class", "cal-head-div"], false, div);
+    const calenderDiv = elementCreator("div", ["class", "cal-main-div"], false, datePickCalDiv);
+    const [date,titleText] = calArrowsTitle(datePickCalDiv, textElem, mainBtn, userClass);
     createCalHeader(calenderDiv,typeCal);
     createDaySquares(calenderDiv, date, titleText, false, textElem, mainBtn, userClass);
 }
@@ -29,7 +29,7 @@ function generateCal(div, textElem, returnDay, mainBtn, userClass){
 function createCalHeader(div){
     //create header
     for(let i=0;i<7;i++){
-        elementCreator("div", ["class", `cal-header`, `cal-header-${weekArr[i].toLowerCase()}-${typeCal}`], weekArr[i],div);
+        elementCreator("div", ["class", `cal-calender-header`], weekArr[i],div);
     }
 }
 function createDaySquares(div, date, text, returnDay, textElem, mainBtn, userClass){
@@ -37,11 +37,11 @@ function createDaySquares(div, date, text, returnDay, textElem, mainBtn, userCla
     let prevMonth = prevMonthDays([firstDayMonth, lastDayMonth], date, text);
     let dayCount=1, nextMonthCount=1;
     for(let i=0;i<42;i++){
-        const square = elementCreator("div", ["class", "cal-day-square"], false, div);
+        const square = elementCreator("div", ["class", "cal-square"], false, div);
         if(i<firstDayMonth){
             square.innerText = (prevMonth-((firstDayMonth-1)-i));
-            square.classList.add("cal-day-other-month");
-            square.classList.add("cal-day-prev");
+            square.classList.add("cal-other-month");
+            square.classList.add("cal-prev");
         }
         else if(i>=firstDayMonth && dayCount<=lastDayMonth){ //days of current Month
             square.innerText = dayCount;
@@ -50,16 +50,16 @@ function createDaySquares(div, date, text, returnDay, textElem, mainBtn, userCla
         else if(i>=lastDayMonth){
             square.innerText = nextMonthCount;
             nextMonthCount++;
-            square.classList.add("cal-day-other-month");
-            square.classList.add("cal-day-next");
+            square.classList.add("cal-other-month");
+            square.classList.add("cal-next");
         }
         if(dayCount===getToday("day")+1 && date[0]===returnMonth(getToday("month")) &&Number(date[1])===getToday("year")){
-            square.classList.add("current-day-cal")
+            square.classList.add("cal-current-day")
         }
         if(inputCalDay(false, square)){
-            square.classList.add("valid-square")
+            square.classList.add("cal-valid-day")
         }
-        if(square.className.includes("valid-square")){
+        if(square.className.includes("cal-valid-day")){
             square.addEventListener("click", inputCalDay);
         }
     }
@@ -75,14 +75,14 @@ function createDaySquares(div, date, text, returnDay, textElem, mainBtn, userCla
         }   
 
         //for current month days
-        if(!tar.includes("cal-day-other-month")){
+        if(!tar.includes("cal-other-month")){
             month = currentMonth;
             year = currentYear;
         }
-        else if(tar.includes("cal-day-prev")){
+        else if(tar.includes("cal-prev")){
             [month, year] = incrDecrMonth(text, false, true).split(" ");
         }
-        else if(tar.includes("cal-day-next")){
+        else if(tar.includes("cal-next")){
             [month, year] = incrDecrMonth(text, true, true).split(" ");
         }
         let date = formatNumDate([day, returnMonth(month), year]);
@@ -95,7 +95,6 @@ function createDaySquares(div, date, text, returnDay, textElem, mainBtn, userCla
             document.querySelector(".due-btn-day-text").innerText = getCurrentDateText("day", `${year}-${month}-${day}`);
         }
         else{
-        console.log("shitfartpiss");
             removeCalDivOnOutsideClick(div, mainBtn, userClass)
         }
         
@@ -103,9 +102,6 @@ function createDaySquares(div, date, text, returnDay, textElem, mainBtn, userCla
     }
 }
 function removeCalDivOnOutsideClick(div, btn, userClass){
-    console.log(div);
-    console.log(btn);
-    console.log(userClass);
     document.addEventListener("click", hideDivFromSquareClick);
     document.addEventListener("keypress", hideDivFromInputKeypress);
 
@@ -161,30 +157,30 @@ function firstLastDay(date){
 
 
 //the arrows and title
-function calArrowsTitle(div, textElem){
-    const calenderTitleDiv = elementCreator("div", ["class", "calender-title-div"], false, div, true);
-    const arrowDivLeft = elementCreator("div", ["class","arrow-div"], false, calenderTitleDiv);
-    const arrowLeft = imageCreator(arrow, ["class", "add-cal-arrow", "add-arrow-left"], arrowDivLeft);
-    const titleText = elementCreator("p", ["class", "calender-title-text"],`${getCurrentDateText("month")} ${getCurrentDateText("year")}`, calenderTitleDiv);
+function calArrowsTitle(div, textElem, mainBtn, userClass){
+    const calenderTitleDiv = elementCreator("div", ["class", "cal-title-div"], false, div, true);
+    const arrowDivLeft = elementCreator("div", ["class","cal-arrow-div"], false, calenderTitleDiv);
+    const arrowLeft = imageCreator(arrow, ["class", "cal-arrow", "cal-arrow-left"], arrowDivLeft);
+    const titleText = elementCreator("p", ["class", "cal-title-text"],`${getCurrentDateText("month")} ${getCurrentDateText("year")}`, calenderTitleDiv);
     [currentMonth, currentYear] = titleText.innerText.split(" ");
-    const arrowDivRight = elementCreator("div", ["class","arrow-div"], false, calenderTitleDiv);
-    const arrowRight = imageCreator(arrow, ["class", "add-cal-arrow","add-arrow-right"], arrowDivRight);
-    arrowHoverEffect([arrowDivLeft, arrowLeft], ["add-arrow-left-hov","add-arrow-clicked-right"]);
-    arrowHoverEffect([arrowDivRight, arrowRight], ["add-arrow-right-hov","add-arrow-clicked-right"]);
+    const arrowDivRight = elementCreator("div", ["class","cal-arrow-div"], false, calenderTitleDiv);
+    const arrowRight = imageCreator(arrow, ["class", "cal-arrow","cal-arrow-right"], arrowDivRight);
+    arrowHoverEffect([arrowDivLeft, arrowLeft], ["cal-arrow-left-hov","cal-arrow-clicked-right"]);
+    arrowHoverEffect([arrowDivRight, arrowRight], ["cal-arrow-right-hov","cal-arrow-clicked-right"]);
     arrowChoose(arrowDivLeft, arrowDivRight, titleText, textElem);
     return [titleText.innerText.split(" "), titleText];
 }
 
-function arrowChoose(leftBtn, rightBtn, text, textElem){
+function arrowChoose(leftBtn, rightBtn, text, textElem, mainBtn, userClass){
     rightBtn.addEventListener("click", ()=>{
-        incrDecrMonth(text, true, false, textElem);
+        incrDecrMonth(text, true, false, textElem, mainBtn, userClass);
     });
     leftBtn.addEventListener("click", ()=>{
-        incrDecrMonth(text, false, false, textElem);
+        incrDecrMonth(text, false, false, textElem, mainBtn, userClass);
     });
 }
 
-function incrDecrMonth(text, isIncr, onlyValue, textElem){
+function incrDecrMonth(text, isIncr, onlyValue, textElem, mainBtn, userClass){
     let [month, year] = text.innerText.split(" ");
     month = returnMonth(month)+1;
     const date = new Date(`${year}-${month}-1`);
@@ -195,18 +191,18 @@ function incrDecrMonth(text, isIncr, onlyValue, textElem){
         text.innerText = `${returnMonth(nextMonth.getMonth())} ${nextMonth.getFullYear()}`;
         [currentMonth, currentYear] = text.innerText.split(" ");
 
-        renderCalender(text.innerText.split(" "), text, textElem);
+        renderCalender(text.innerText.split(" "), text, textElem, mainBtn, userClass);
     }
     else{
         return `${returnMonth(nextMonth.getMonth())} ${nextMonth.getFullYear()}`;
     }
 }
-function renderCalender(date, text, textElem){
+function renderCalender(date, text, textElem, mainBtn, userClass){
     let calDiv = text.parentElement.parentElement;
-    const squares = calDiv.querySelectorAll(".cal-day-square");
-    const div = calDiv.querySelector(".calender-adder-div");
+    const squares = calDiv.querySelectorAll(".cal-square");
+    const div = calDiv.querySelector(".cal-main-div");
     squares.forEach(elem=>elem.remove());
-    createDaySquares(div, date, text, false, textElem);
+    createDaySquares(div, date, text, false, textElem, mainBtn, userClass);
 }
 
 

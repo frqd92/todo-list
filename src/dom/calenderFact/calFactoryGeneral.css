@@ -1,19 +1,14 @@
 .cal-general-div{
     position: absolute;
     border: 1px solid black;
-
     top: 300px;
     left: -30px;
-    
     z-index: 1000000;
 }
 /* ----------------------------------------calendar ----------------------------------------*/
 
-.cal-adder-div{
-    padding-top: 5px;
-}
 
-.calender-title-div{
+.cal-title-div{
     display: grid;
     grid-template-columns: 1fr 2fr 1fr;
     justify-items: stretch;
@@ -21,7 +16,7 @@
     width: 100%;
 
 }
-.calender-title-text{
+.cal-title-text{
     font-family: sofia;
     text-shadow: 0px 1px 3px rgba(0, 0, 0, 0.403);
     font-size: 1.4rem;
@@ -30,7 +25,7 @@
     text-align: center;
 
 }
-.arrow-div{
+.cal-arrow-div{
     display: flex;
     justify-content: center;
     align-items: center;
@@ -38,29 +33,29 @@
     height: 100%;
 }
 
-.add-cal-arrow{
+.cal-arrow{
     width: 20px;
 
     filter: invert(70%) brightness(1.6) drop-shadow(0px 0px 8px rgba(102, 100, 218, 0.472)) ;
     transition: filter, transform 0.1s linear;  
 }
-.add-arrow-clicked-left{
+.cal-arrow-clicked-left{
     filter: invert(60%) brightness(1.2) drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.972));
     transform: scale(1) rotate(180deg);
 }
-.add-arrow-clicked-right{
+.cal-arrow-clicked-right{
     filter: invert(60%) brightness(1.2) drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.972));
     transform: scale(1);
 }
 
-.add-arrow-right-hov{
+.cal-arrow-right-hov{
     transform: scale(1.2);
 
 }
-.add-arrow-left{
+.cal-arrow-left{
     transform: rotate(180deg) scale(1);
 }
-.add-arrow-left-hov{
+.cal-arrow-left-hov{
     transform: rotate(180deg) scale(1.2);
 }
 
@@ -69,24 +64,28 @@
 
 
 /* general calender div, for specific cal add type after div */
-.calender-adder-div{
+.cal-head-div{
+    padding-top: 5px;
+}
+
+.cal-main-div{
     display: grid;
     grid-template-columns: repeat(7, 1fr);
     grid-template-rows: 1fr repeat(6, 2fr);
     justify-items: center;
-    
-}
-
-/* the calender's div beneath arrows */
-.calender-adder-div-small{
     margin-top: 5px;
     width: 100%;
     height: 250px;
-
 }
 
+/* the calender's div beneath arrows */
+/* .calender-adder-div-small{
+    margin-top: 5px;
+    width: 100%;
+    height: 250px;
+} */
 
-.cal-header{
+.cal-calender-header{
     width: 100%;
     display: flex;
     justify-content: center;
@@ -96,7 +95,10 @@
     text-shadow: 0px 1px 5px rgba(0, 2, 57, 0.225) ;
 }
 
-.cal-day-square{
+
+
+
+.cal-square{
     font-size: 0.85rem;
     padding: 0px 3px;
     font-family: sofia;
@@ -111,37 +113,37 @@
     backdrop-filter: blur(10px);
     transition: 0.15s ease transform;
 }
-.valid-square:hover{
+.cal-valid-day:hover{
     transform: scale(1.07);
     z-index: 10000;
 }
-.cal-day-square:not(.cal-day-other-month, .current-day-cal){
+.cal-square:not(.cal-day-other-month, .current-day-cal){
     background-color: rgba(63, 164, 236, 0.146);
 }
-.cal-day-square:not(.cal-day-other-month, .current-day-cal):hover{
+.cal-square:not(.cal-day-other-month, .current-day-cal):hover{
     background-color: rgba(12, 109, 173, 0.415);
 }
-.cal-day-other-month{
+.cal-other-month{
     color: rgba(109, 109, 109, 0.761);
-    background-color: rgba(87, 100, 119, 0.186);
+    background-color: rgba(87, 100, 119, 0.186) !important;
 }
-.cal-day-other-month:hover{
+.cal-other-month:hover{
     color: rgba(201, 198, 198, 0.306);
     background-color: rgba(102, 97, 97, 0.353);
 
 }
 
-.cal-day-square:not(.valid-square){
+.cal-square:not(.cal-valid-day){
     cursor:no-drop;
 }
 
-.current-day-cal{
-    background-color: rgba(85, 212, 140, 0.302);
-    box-shadow: 0px 0px 7px rgb(153, 208, 222);
+.cal-current-day{
+    background: rgba(13, 71, 81, 0.262) !important;
+    box-shadow: 0px 0px 7px rgb(15, 133, 162);
 
 }
-.current-day-cal:hover{
-    background-color: rgba(175, 211, 108, 0.407);
+.cal-current-day:hover{
+    background: rgba(175, 211, 108, 0.407);
     box-shadow: 0px 0px 10px rgb(153, 208, 222);
 }
 
