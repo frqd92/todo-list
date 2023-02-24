@@ -1,9 +1,10 @@
 
 import { inputOnlyNum, traverseNumInputWithArrows, isOverflown } from "../../utilities/inputUtils";
 import { createRepeatOptions } from "../../dom/modal/addModal";
+import { elementCreator } from "../../utilities/elementCreator";
 import CalFactory from "../../dom/calenderFact/calFactory";
 let dueDateAdder;
-
+let arr, men, effectBtnText, btnfor, btnun,btnTim, dropdownDiv;
 export function repeatLogic(repeatDiv){
     inputLogic(repeatDiv);
     tabOptions(repeatDiv);
@@ -13,33 +14,107 @@ export function repeatLogic(repeatDiv){
 function effectiveDiv(div){
     const btn = div.querySelector(".effective-btn");
     const menu = div.querySelector(".effective-dropdown-div");
+    dropdownDiv = menu;
+    effectBtnText = document.querySelector(".effective-btn-text");
+    men = menu;
     const arrow = div.querySelector(".effective-arrow");
-    const [btnUntil, btnTimes] = div.querySelectorAll(".effective-dropdown-row");
+    arr=arrow;
+    const [btnforever, btnUntil, btnTimes] = div.querySelectorAll(".effective-dropdown-row");
+    btnTim = btnTimes;
+    btnfor = btnforever;
+    btnun = btnUntil;
     const otherText = div.querySelector(".effective-other-text");
     btn.addEventListener("click", showHideSelect);
-    div.addEventListener("click", hideSelect);
-    function hideSelect(e){
-  
+    div.addEventListener("click", hideSelectDiv);
+    function hideSelectDiv(e){
         if(!e.target.closest(".dropdown-div-shown") && !e.target.closest(".effective-btn")){
-            arrow.classList.remove("effective-arrow-toggle");
-            menu.classList.remove("dropdown-div-shown");
-    
+            hideSelect();
         }
     }
     function showHideSelect(){
         arrow.classList.toggle("effective-arrow-toggle");
         menu.classList.toggle("dropdown-div-shown");
-
+        if(document.querySelector(".cal-effective-div")){
+            document.querySelector(".cal-effective-div").remove();
+        }
     };
 
     btnUntil.addEventListener("click", generateCal);
     function generateCal(){
-        const cal = CalFactory(btnUntil,document.getElementById("form"), otherText, true, false, true, false,"effective");
+        removeSelectedAndAdd(btnUntil);
+        otherText.style.display="block";
+        otherText.innerText="";
+        if(document.querySelector(".cal-effective-div")===null){
+            const cal = CalFactory(btnUntil, document.getElementById("form"), otherText, true, false, true, false,"effective", menu);
+        }
+        // mainBtn, appendTo, textElem, returnInput, returnQuickBtns, returnCal, returnDay, userClass, toClose
+    }
+    btnforever.addEventListener("click", foreverClick);
+    function foreverClick(){
+        document.querySelector(".summary-text-3").innerText='forever.';
+        removeSelectedAndAdd(btnforever);
+        changeEffectiveBtn("forever");
+        otherText.style.display="none";
+    }
+    btnTimes.addEventListener("click", timesClick);
 
+}
+function timesClick(){
+    if(document.querySelector(".effective-times-input-div")===null){
+        removeSelectedAndAdd(btnTim);
+        const inputDiv = elementCreator("div", ["class", "effective-times-input-div", "effective-times-hidden"], false, dropdownDiv);
+        const input = elementCreator("input", false, "1-99", inputDiv, false, true);
+        const btn = elementCreator("div", false, "Enter", inputDiv);
+        input.focus()
+        if(document.querySelector(".cal-effective-div")){
+            document.querySelector(".cal-effective-div").remove()
+        }
+        input.addEventListener("input", (e)=>{inputOnlyNum(e, input, [1,99])});
+        btn.addEventListener("click", addTimes);
+
+        function addTimes(e){
+            if(Number(input.value)>0 && Number(input.value)<100){
+                effectBtnText.innerText = `x${input.value}`;
+                document.querySelector(".summary-text-3").innerText = `${input.value} times.`
+                document.querySelector(".effective-times-input-div").remove()
+                hideSelect();
+                e.stopPropagation();
+            }
+        }
+    };
+    document.addEventListener("click", removeTimes);
+    function removeTimes(e){
+        if(!e.target.closest(".effective-times-input-div") && e.target!==btnTim){
+            if(document.querySelector(".effective-times-input-div")!==null){
+                document.querySelector(".effective-times-input-div").remove()
+                document.removeEventListener("click", removeTimes);
+            }
+        }
     }
 }
 
+function removeSelectedAndAdd(btn){
+    const arr = [btnfor, btnun, btnTim];
+    arr.forEach(elem=>{
+        elem.classList.remove("selected-effective-row")
+    })
+    btn.classList.add("selected-effective-row")
+}
 
+
+
+
+export function changeEffectiveBtn(value){
+    effectBtnText.innerText=value;
+    hideSelect()
+}
+export function hideSelect(){
+    arr.classList.remove("effective-arrow-toggle");
+    men.classList.remove("dropdown-div-shown");
+    if(document.querySelector(".cal-effective-div")){
+        document.querySelector(".cal-effective-div").remove()
+    }
+}
 
 
 
@@ -124,13 +199,13 @@ function updateText2(text){
 function resizeTextField(field){
     const allChecked = document.querySelectorAll(".repeat-checked-visible");
     if(allChecked.length>5){
-        field.style.fontSize = "9px"
+        field.style.fontSize = "8.2px"
     }
     else if(allChecked.length>3){
-        field.style.fontSize = "10px";
+        field.style.fontSize = "9px";
     }
     else if(allChecked.length<3){
-        field.style.fontSize = "12px";
+        field.style.fontSize = "11.5px";
     }
 }
 

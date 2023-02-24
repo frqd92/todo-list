@@ -4,26 +4,27 @@ import {createIcon} from "/src/utilities/iconCreate";
 import { modalDateInputFunc } from "/src/header/modal/modalDateInput";
 import { quickAddBtnsFunc } from "/src/header/modal/quickAddBtns";
 import arrow from '/src/assets/images/arrow-simple.png';
+import { hideSelect, changeEffectiveBtn } from '../../header/modal/modalRepeat';
 import { getCurrentDateText, detectFirstDayMonth, daysInMonth, formatNumDate, returnMonth, getToday, isPast, addOneToMonth} from "/src/utilities/dateUtils";
 let typeCal, currentMonth, currentYear;
 let isInputValid = false;
 const weekArr = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
-export default function CalFactory(mainBtn, appendTo, textElem, returnInput, returnQuickBtns, returnCal, returnDay, userClass){
+export default function CalFactory(mainBtn, appendTo, textElem, returnInput, returnQuickBtns, returnCal, returnDay, userClass, toClose){
     const mainDiv = elementCreator("div", ["class", "cal-general-div", `cal-${userClass}-div`], false, appendTo)
-    if(returnInput){generateCalInput(mainDiv,textElem)};
+    if(returnInput){generateCalInput(mainDiv,textElem, userClass)};
     if(returnQuickBtns){generateQuickBtns(mainDiv,textElem)};
-    if(returnCal){generateCal(mainDiv, textElem, returnDay, mainBtn, userClass)};
+    if(returnCal){generateCal(mainDiv, textElem, returnDay, mainBtn, userClass, toClose)};
     removeCalDivOnOutsideClick(mainDiv, mainBtn, userClass);
     return {mainDiv};
 }
 // Makes the calender------------------------------------------------------------------------------
-function generateCal(div, textElem, returnDay, mainBtn, userClass){
+function generateCal(div, textElem, returnDay, mainBtn, userClass, toClose){
     const datePickCalDiv = elementCreator("div", ["class", "cal-head-div"], false, div);
     const calenderDiv = elementCreator("div", ["class", "cal-main-div"], false, datePickCalDiv);
-    const [date,titleText] = calArrowsTitle(datePickCalDiv, textElem, mainBtn, userClass);
+    const [date,titleText] = calArrowsTitle(datePickCalDiv, textElem, mainBtn, userClass, toClose);
     createCalHeader(calenderDiv,typeCal);
-    createDaySquares(calenderDiv, date, titleText, false, textElem, mainBtn, userClass);
+    createDaySquares(calenderDiv, date, titleText, false, textElem, mainBtn, userClass, toClose);
 }
 
 function createCalHeader(div){
@@ -32,7 +33,7 @@ function createCalHeader(div){
         elementCreator("div", ["class", `cal-calender-header`], weekArr[i],div);
     }
 }
-function createDaySquares(div, date, text, returnDay, textElem, mainBtn, userClass){
+function createDaySquares(div, date, text, returnDay, textElem, mainBtn, userClass, toClose){
     const [firstDayMonth, lastDayMonth] = firstLastDay(date);
     let prevMonth = prevMonthDays([firstDayMonth, lastDayMonth], date, text);
     let dayCount=1, nextMonthCount=1;
@@ -96,13 +97,16 @@ function createDaySquares(div, date, text, returnDay, textElem, mainBtn, userCla
         }
         else{
             div.parentElement.parentElement.remove();
+            if(toClose){
+                hideSelect();
+                changeEffectiveBtn("until");
+                if(userClass==="effective"){
+                    document.querySelector(".summary-text-3").innerText=`until ${document.querySelector(".effective-other-text").innerText}.`;
+                }
+            }
             e.stopPropagation();
         }
     }
-}
-
-function removeCalDivFromSquareClick(div){
-
 }
 
 
@@ -163,7 +167,7 @@ function firstLastDay(date){
 
 
 //the arrows and title
-function calArrowsTitle(div, textElem, mainBtn, userClass){
+function calArrowsTitle(div, textElem, mainBtn, userClass, toClose){
     const calenderTitleDiv = elementCreator("div", ["class", "cal-title-div"], false, div, true);
     const arrowDivLeft = elementCreator("div", ["class","cal-arrow-div"], false, calenderTitleDiv);
     const arrowLeft = imageCreator(arrow, ["class", "cal-arrow", "cal-arrow-left"], arrowDivLeft);
@@ -173,20 +177,20 @@ function calArrowsTitle(div, textElem, mainBtn, userClass){
     const arrowRight = imageCreator(arrow, ["class", "cal-arrow","cal-arrow-right"], arrowDivRight);
     arrowHoverEffect([arrowDivLeft, arrowLeft], ["cal-arrow-left-hov","cal-arrow-clicked-right"]);
     arrowHoverEffect([arrowDivRight, arrowRight], ["cal-arrow-right-hov","cal-arrow-clicked-right"]);
-    arrowChoose(arrowDivLeft, arrowDivRight, titleText, textElem);
+    arrowChoose(arrowDivLeft, arrowDivRight, titleText, textElem, mainBtn, userClass, toClose);
     return [titleText.innerText.split(" "), titleText];
 }
 
-function arrowChoose(leftBtn, rightBtn, text, textElem, mainBtn, userClass){
+function arrowChoose(leftBtn, rightBtn, text, textElem, mainBtn, userClass, toClose){
     rightBtn.addEventListener("click", ()=>{
-        incrDecrMonth(text, true, false, textElem, mainBtn, userClass);
+        incrDecrMonth(text, true, false, textElem, mainBtn, userClass, toClose);
     });
     leftBtn.addEventListener("click", ()=>{
-        incrDecrMonth(text, false, false, textElem, mainBtn, userClass);
+        incrDecrMonth(text, false, false, textElem, mainBtn, userClass, toClose);
     });
 }
 
-function incrDecrMonth(text, isIncr, onlyValue, textElem, mainBtn, userClass){
+function incrDecrMonth(text, isIncr, onlyValue, textElem, mainBtn, userClass, toClose){
     let [month, year] = text.innerText.split(" ");
     month = returnMonth(month)+1;
     const date = new Date(`${year}-${month}-1`);
@@ -197,18 +201,18 @@ function incrDecrMonth(text, isIncr, onlyValue, textElem, mainBtn, userClass){
         text.innerText = `${returnMonth(nextMonth.getMonth())} ${nextMonth.getFullYear()}`;
         [currentMonth, currentYear] = text.innerText.split(" ");
 
-        renderCalender(text.innerText.split(" "), text, textElem, mainBtn, userClass);
+        renderCalender(text.innerText.split(" "), text, textElem, mainBtn, userClass, toClose);
     }
     else{
         return `${returnMonth(nextMonth.getMonth())} ${nextMonth.getFullYear()}`;
     }
 }
-function renderCalender(date, text, textElem, mainBtn, userClass){
+function renderCalender(date, text, textElem, mainBtn, userClass, toClose){
     let calDiv = text.parentElement.parentElement;
     const squares = calDiv.querySelectorAll(".cal-square");
     const div = calDiv.querySelector(".cal-main-div");
     squares.forEach(elem=>elem.remove());
-    createDaySquares(div, date, text, false, textElem, mainBtn, userClass);
+    createDaySquares(div, date, text, false, textElem, mainBtn, userClass, toClose);
 }
 
 
@@ -248,13 +252,25 @@ function arrowHoverEffect(arr, classL){
 
 
 // Makes the smart input-----------------------------------------------------------------
-function generateCalInput(div,textElem){
+function generateCalInput(div,textElem, userClass){
     const enterDateDiv = elementCreator("div", ["class", "cal-general-date-div"], false, div);
     const enterDateInput = elementCreator("input", ["class", "cal-general-input"], false, enterDateDiv);
     enterDateInput.placeholder="Write your date & press enter";
     modalDateInputFunc(enterDateInput, textElem, false);
     const iconDiv = elementCreator("div", ["class", "cal-icon-div"], false, enterDateDiv )
     createIcon(iconDiv, "Hello", ["cal-i-div","cal-i-img", "cal-i-img-div"]);
+    enterDateInput.addEventListener("keypress", closeDiv);
+    function closeDiv(e){
+        if(e.key==="Enter" && isInputValid){
+            hideSelect();
+            div.remove();
+            enterDateInput.removeEventListener("keypress", closeDiv);
+            isInputValid=false;
+            if(userClass==="effective"){
+                document.querySelector(".summary-text-3").innerText=`until ${document.querySelector(".effective-other-text").innerText}.`;
+            }
+        }
+    }
 }
 // Makes the quickBtns-----------------------------------------------------------------
 function generateQuickBtns(div,textElem){

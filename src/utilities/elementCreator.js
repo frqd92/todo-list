@@ -1,4 +1,4 @@
-export function elementCreator(type, selector,text, parent, isPrepend){
+export function elementCreator(type, selector,text, parent, isPrepend, placeholder){
     const element = document.createElement(type);
     if(selector){
         if(selector[0]==="class"){
@@ -11,7 +11,12 @@ export function elementCreator(type, selector,text, parent, isPrepend){
     }
     if(text){
         if(type==="input"){
-            element.value = text;
+            if(placeholder){
+                element.placeholder = text;
+            }
+            else{
+                element.value = text;
+            }
         }
         else{
             element.innerText = text;

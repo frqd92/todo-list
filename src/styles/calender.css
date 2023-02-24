@@ -1,6 +1,6 @@
 /*calender in adder div to pick date*/
 
-/*  */
+/* cal-title-div */
 .calender-title-div{
     display: grid;
     grid-template-columns: 1fr 2fr 1fr;
@@ -9,6 +9,7 @@
     width: 100%;
 
 }
+/* cal-title-div */
 .calender-title-text{
     font-family: sofia;
     text-shadow: 0px 1px 3px rgba(0, 0, 0, 0.403);
@@ -62,7 +63,7 @@
     padding-top: 5px;
 
 }
-/* cal-calendar-div */
+/* cal-main-div */
 .calender-adder-div{
     display: grid;
     grid-template-columns: repeat(7, 1fr);

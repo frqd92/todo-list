@@ -696,19 +696,18 @@
     font-family: roboto;
     background: rgba(138, 135, 135, 1);
     backdrop-filter: blur(50px);
-    overflow: hidden;
-    
-    
+
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
 }
 /* tab */
 .repeat-tab-div{
     box-sizing:content-box;
     display: flex;
-    width: 100%;
+    width: 97%;
     height: 25px;
     justify-content: space-evenly;
     padding: 0px 5px;
-    box-shadow: 0px 0px 5px black;
+    box-shadow: 0px 0px 5px rgba(36, 36, 36, 0.428);
     
 }
 .repeat-tab-btn{
@@ -890,9 +889,9 @@
 .repeat-effective-div{
     display: flex;
     gap: 10px;
-    justify-content: space-between;
+    justify-content:center;
     align-items: center;
-    width: 50%;
+    width: 100%;
     padding: 5px 0px;
 }
 .effective-btn-div{
@@ -944,7 +943,7 @@
     display: flex;
     flex-direction: column;
     z-index: 1000;
-    backdrop-filter: blur(20px);
+    backdrop-filter: blur(15px);
     color: white;
     border-radius: 5px;
     font-size: 0.95rem;
@@ -954,27 +953,33 @@
     overflow: hidden;
     left: -30px;
     width: 150px;
-}
+    box-shadow: rgba(185, 185, 185, 0.25) 0px 2px 5px -1px, rgba(200, 194, 194, 0.3) 0px 1px 3px -1px;
 
+}
 
 .effective-dropdown-row{
     text-align: center;
     transition: 0.1s linear background-color;
     cursor: pointer;
-    padding: 3px 5px;
-    position: relative;
+    padding: 5px 5px;
 
 }
+
 .effective-dropdown-row:first-child{
-    border-bottom: 1px solid rgba(255, 255, 255, 0.276);
-    border-radius: 3px 3px 0px 0px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.147);
 }
 .effective-dropdown-row:nth-child(2){
-    border-radius: 0px 0px 3px 3px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.147);
+   
+}
+.effective-dropdown-row:nth-child(3){
+    position: relative;
 }
 .effective-dropdown-row:hover{
     background-color: rgba(86, 153, 187, 0.392);
-
+}
+.selected-effective-row{
+    background-color: rgba(86, 153, 187, 0.392);
 }
 .dropdown-div-shown{
     padding: 10px 10px;
@@ -987,9 +992,44 @@
 .effective-other-text{
 
 }
-.effect-other-hidden{
-    /* display: none; */
+
+
+.effective-times-input-div{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(86, 153, 187, 0.392);
+    text-align: center;
+    padding: 5px;
+    gap: 5px;
 }
+.effective-times-input-div input{
+    width: 50px;
+    height: 30px;
+    text-align: center;
+    border: 1px solid black;
+    outline: none;
+    font-size: 1.2rem;
+}
+.effective-times-input-div > div{
+    width: 100%;
+    padding: 5px 0px;
+    font-size: 1.2rem;
+    font-family: roboto-medium;
+    background-color: rgba(0, 0, 0, 0.469);
+    cursor: pointer;
+}
+.effective-times-input-div > div:hover{
+    background-color: rgba(4, 0, 50, 0.582);
+}
+.effective-times-hidden{
+
+}
+
+
+
+
 
 
 /* repeat summary */

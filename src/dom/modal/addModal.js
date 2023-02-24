@@ -114,6 +114,7 @@ export function createRepeatOptions(div){
     elementCreator("p", ["class", "effective-arrow"], "<", btn);
     elementCreator("div", ["class", "effective-other-text", "effect-other-hidden"], false, effectiveDiv);
     const effectiveDropdown = elementCreator("div", ["class", "effective-dropdown-div"], false, effectiveBtnDiv);
+    elementCreator("div", ["class", "effective-dropdown-row"], "forever", effectiveDropdown);
     elementCreator("div", ["class", "effective-dropdown-row"], "until a date", effectiveDropdown);
     elementCreator("div", ["class", "effective-dropdown-row"], "x number of times", effectiveDropdown);
 
@@ -121,7 +122,7 @@ export function createRepeatOptions(div){
     elementCreator("p", false ,"Repeat every", summaryDiv);
     elementCreator("p", ["class", "summary-text-1"], "week", summaryDiv);
     elementCreator("p", ["class", "summary-text-2"], "on", summaryDiv);
-    elementCreator("p", ["class", "summary-text-3"], "forever", summaryDiv);
+    elementCreator("p", ["class", "summary-text-3"], "forever.", summaryDiv);
 
     const btnDiv = elementCreator("div", ["class", "repeat-btn-div"], false, div);
     elementCreator("div", ["class", "no-repeat-btn"], "No repeat", btnDiv);
