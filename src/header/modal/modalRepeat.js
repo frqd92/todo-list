@@ -24,8 +24,8 @@ function effectiveDiv(div){
 
     btnUntil.addEventListener("click", generateCal);
     function generateCal(){
-        const cal = CalFactory("effective", document.getElementById("form"), otherText, true, false, true);
-     
+        const cal = CalFactory(btnUntil,document.getElementById("form"), otherText, true, false, true, false,"effective");
+
     }
 }
 

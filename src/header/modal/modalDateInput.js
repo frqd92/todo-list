@@ -1,6 +1,6 @@
 import { daysInMonth, chosenDayFunc } from "../../utilities/dateUtils";
 import { hideDiv } from "./showHideAdder";
-
+import { validateInputCal } from "../../dom/calenderFact/calFactory";
 import { errorMsg} from '/src/dom/modal/addModal';
 const compareArr = ["ja","fe" ,"mar", "ap", "may", "jun", "jul", "au", "se", "oc", "no", "de"];
 export const autoArr = ["January", "February", "March","April","May", "June", "July", "August", "September", "October", "November", "December"];
@@ -8,12 +8,12 @@ export const autoArr = ["January", "February", "March","April","May", "June", "J
 const date = new Date();
 
 
-export function modalDateInputFunc(input, btn){
+export function modalDateInputFunc(input, btn, changeText){
     autoCompleteMonth(input);
-    clickEnter(input, btn)
+    clickEnter(input, btn, changeText)
 }
 
-function clickEnter(input, btn){
+function clickEnter(input, btn, changeText){
     input.addEventListener("keydown", renderDate);
     let formatObj = {};
     function renderDate(e){
@@ -29,7 +29,7 @@ function clickEnter(input, btn){
             }
             if(!invalid){ //if date in input passes all the checks
                 console.log("works")
-                processDate(formatObj, btn, input);
+                processDate(formatObj, btn, input, changeText);
                 if(!btn)return true;
                 
             }
@@ -48,15 +48,22 @@ function clickEnter(input, btn){
 }
 
 
-function processDate(obj, btn, input){ //if it passes all the checks
+function processDate(obj, btn, input, changeText){ //if it passes all the checks
     obj.month=obj.month+1;
     let addZero = [obj.day, obj.month].map(elem=>elem<10?"0"+Number(elem):Number(elem));
     let value = `${addZero[0]}/${addZero[1]}/${obj.year}`;
     let day = chosenDayFunc(obj.year,obj.month,obj.day);
     if(btn){
         btn.textContent = value;
-        document.querySelector(".due-btn-day-text").innerText = day;   
-        hideDiv(document.querySelector(".date-picker-div"), "hidden-date-picker-div");
+        if(changeText){
+    
+            changeText.innerText = day;   
+            hideDiv(document.querySelector(".date-picker-div"), "hidden-date-picker-div");
+        }
+        else{
+
+           validateInputCal(true);
+        }
     }
     else{
         input.value = value;

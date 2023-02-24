@@ -1,5 +1,4 @@
 import '/src/dom/calenderFact/calFactoryGeneral.css';
-import '/src/dom/calenderFact/effectiveCal.css';
 import { elementCreator, imageCreator } from '../../utilities/elementCreator';
 import {createIcon} from "/src/utilities/iconCreate";
 import { modalDateInputFunc } from "/src/header/modal/modalDateInput";
@@ -7,25 +6,24 @@ import { quickAddBtnsFunc } from "/src/header/modal/quickAddBtns";
 import arrow from '/src/assets/images/arrow-simple.png';
 import { getCurrentDateText, detectFirstDayMonth, daysInMonth, formatNumDate, returnMonth, getToday, isPast, addOneToMonth} from "/src/utilities/dateUtils";
 let typeCal, currentMonth, currentYear;
+let isInputValid = false;
 const weekArr = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
-
-export default function CalFactory(userClass, appendTo, textElem, returnInput, returnQuickBtns, returnCal, returnDay){
+export default function CalFactory(mainBtn, appendTo, textElem, returnInput, returnQuickBtns, returnCal, returnDay, userClass){
     const mainDiv = elementCreator("div", ["class", "cal-general-div", `cal-${userClass}-div`], false, appendTo)
-    
-    if(returnInput){generateCalInput(mainDiv, userClass, textElem)};
-    if(returnQuickBtns){generateQuickBtns(mainDiv, userClass, textElem)};
-    if(returnCal){generateCal(mainDiv, textElem, returnDay)};
-
+    if(returnInput){generateCalInput(mainDiv,textElem)};
+    if(returnQuickBtns){generateQuickBtns(mainDiv,textElem)};
+    if(returnCal){generateCal(mainDiv, textElem, returnDay, mainBtn, userClass)};
+    removeCalDivOnOutsideClick(mainDiv, mainBtn, userClass);
     return {mainDiv};
 }
 // Makes the calender------------------------------------------------------------------------------
-function generateCal(div, textElem, returnDay){
+function generateCal(div, textElem, returnDay, mainBtn, userClass){
     const datePickCalDiv = elementCreator("div", ["class", "date-adder-calender-div"], false, div);
-    const calenderDiv = elementCreator("div", ["class", "calender-adder-div", `calender-adder-div-small`], false, datePickCalDiv);
+    const calenderDiv = elementCreator("div", ["class", "calender-adder-div"], false, datePickCalDiv);
     const [date,titleText] = calArrowsTitle(datePickCalDiv, textElem);
     createCalHeader(calenderDiv,typeCal);
-    createDaySquares(calenderDiv, date, titleText, false, textElem);
+    createDaySquares(calenderDiv, date, titleText, false, textElem, mainBtn, userClass);
 }
 
 function createCalHeader(div){
@@ -34,7 +32,7 @@ function createCalHeader(div){
         elementCreator("div", ["class", `cal-header`, `cal-header-${weekArr[i].toLowerCase()}-${typeCal}`], weekArr[i],div);
     }
 }
-function createDaySquares(div, date, text, returnDay, textElem){
+function createDaySquares(div, date, text, returnDay, textElem, mainBtn, userClass){
     const [firstDayMonth, lastDayMonth] = firstLastDay(date);
     let prevMonth = prevMonthDays([firstDayMonth, lastDayMonth], date, text);
     let dayCount=1, nextMonthCount=1;
@@ -93,15 +91,52 @@ function createDaySquares(div, date, text, returnDay, textElem){
         };
         let finalDate = addOneToMonth(date)
         textElem.innerText= finalDate;
-
         if(returnDay){
             document.querySelector(".due-btn-day-text").innerText = getCurrentDateText("day", `${year}-${month}-${day}`);
         }
+        else{
+        console.log("shitfartpiss");
+            removeCalDivOnOutsideClick(div, mainBtn, userClass)
+        }
         
-        const datePickerDiv = div.parentElement.parentElement;
-        //hideDiv(document.querySelector(".date-picker-div"), "hidden-date-picker-div");
+ 
     }
 }
+function removeCalDivOnOutsideClick(div, btn, userClass){
+    console.log(div);
+    console.log(btn);
+    console.log(userClass);
+    document.addEventListener("click", hideDivFromSquareClick);
+    document.addEventListener("keypress", hideDivFromInputKeypress);
+
+    function hideDivFromSquareClick(e){
+        const divClass = div.classList[0];
+        if(!e.target.closest(`.${divClass}`) && e.target!==btn){
+            resetShit()
+        }
+    }
+    function hideDivFromInputKeypress(e){
+        if(e.key==="Enter" && isInputValid===true){
+            resetShit();
+        }
+    }
+    function resetShit(){
+        document.removeEventListener("click",hideDivFromSquareClick);
+        document.removeEventListener("click",hideDivFromInputKeypress);
+        document.querySelector(`.cal-${userClass}-div`).remove();
+        isInputValid=false;
+    }
+}
+
+
+
+
+
+export function validateInputCal(isTrue){
+    isInputValid = isTrue?true:false;
+}
+
+
 
 
 function prevMonthDays(arr, date, text){
@@ -211,17 +246,17 @@ function arrowHoverEffect(arr, classL){
 
 
 // Makes the smart input-----------------------------------------------------------------
-function generateCalInput(div, userClass, textElem){
-    const enterDateDiv = elementCreator("div", ["class", "cal-general-date-div", `cal-${userClass}-date-div`], false, div);
-    const enterDateInput = elementCreator("input", ["class", "cal-general-input",`cal-${userClass}-input`], false, enterDateDiv);
+function generateCalInput(div,textElem){
+    const enterDateDiv = elementCreator("div", ["class", "cal-general-date-div"], false, div);
+    const enterDateInput = elementCreator("input", ["class", "cal-general-input"], false, enterDateDiv);
     enterDateInput.placeholder="Write your date & press enter";
-    modalDateInputFunc(enterDateInput, textElem);
+    modalDateInputFunc(enterDateInput, textElem, false);
     const iconDiv = elementCreator("div", ["class", "cal-icon-div"], false, enterDateDiv )
     createIcon(iconDiv, "Hello", ["cal-i-div","cal-i-img", "cal-i-img-div"]);
 }
 // Makes the quickBtns-----------------------------------------------------------------
-function generateQuickBtns(div, userClass, textElem){
-    const dateBtnsDiv = elementCreator("div", ["class", "cal-general-quick-div", `cal-${userClass}-quick-div`], false,div);
+function generateQuickBtns(div,textElem){
+    const dateBtnsDiv = elementCreator("div", ["class", "cal-general-quick-div"], false,div);
     if(document.querySelector(".due-btn-hover-div")===null){
         const hoverDiv = elementCreator("div",["class", "cal-due-btn-hover-div"], false,document.body);
         elementCreator("p", false, false, hoverDiv);
