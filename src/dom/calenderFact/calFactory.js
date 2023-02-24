@@ -95,16 +95,20 @@ function createDaySquares(div, date, text, returnDay, textElem, mainBtn, userCla
             document.querySelector(".due-btn-day-text").innerText = getCurrentDateText("day", `${year}-${month}-${day}`);
         }
         else{
-            removeCalDivOnOutsideClick(div, mainBtn, userClass)
+            div.parentElement.parentElement.remove();
+            e.stopPropagation();
         }
-        
- 
     }
 }
+
+function removeCalDivFromSquareClick(div){
+
+}
+
+
 function removeCalDivOnOutsideClick(div, btn, userClass){
     document.addEventListener("click", hideDivFromSquareClick);
     document.addEventListener("keypress", hideDivFromInputKeypress);
-
     function hideDivFromSquareClick(e){
         const divClass = div.classList[0];
         if(!e.target.closest(`.${divClass}`) && e.target!==btn){
@@ -117,9 +121,11 @@ function removeCalDivOnOutsideClick(div, btn, userClass){
         }
     }
     function resetShit(){
-        document.removeEventListener("click",hideDivFromSquareClick);
-        document.removeEventListener("click",hideDivFromInputKeypress);
-        document.querySelector(`.cal-${userClass}-div`).remove();
+        if(document.querySelector(`.cal-${userClass}-div`!==null)){
+            document.removeEventListener("click",hideDivFromSquareClick);
+            document.removeEventListener("click",hideDivFromInputKeypress);
+            document.querySelector(`.cal-${userClass}-div`).remove();
+        }
         isInputValid=false;
     }
 }

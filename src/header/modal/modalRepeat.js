@@ -17,9 +17,19 @@ function effectiveDiv(div){
     const [btnUntil, btnTimes] = div.querySelectorAll(".effective-dropdown-row");
     const otherText = div.querySelector(".effective-other-text");
     btn.addEventListener("click", showHideSelect);
+    div.addEventListener("click", hideSelect);
+    function hideSelect(e){
+  
+        if(!e.target.closest(".dropdown-div-shown") && !e.target.closest(".effective-btn")){
+            arrow.classList.remove("effective-arrow-toggle");
+            menu.classList.remove("dropdown-div-shown");
+    
+        }
+    }
     function showHideSelect(){
         arrow.classList.toggle("effective-arrow-toggle");
         menu.classList.toggle("dropdown-div-shown");
+
     };
 
     btnUntil.addEventListener("click", generateCal);

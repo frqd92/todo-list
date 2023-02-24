@@ -11,9 +11,9 @@ export function closeDivLogic(form, arr){
 
 function forBtns(div, classN, form, divClass, mainBtn){
     if(div.className.includes(classN)){
-
         div.classList.remove(classN);
         form.addEventListener("click", hide);
+        
 
         //focus the repeat input in repeat option when opened so it's clear it's an input because it doesn't look like one
         if(div.className.includes("modal-repeat-options")){
@@ -22,17 +22,26 @@ function forBtns(div, classN, form, divClass, mainBtn){
 
      }
      else{
+    
+
         div.classList.add(classN);
         form.removeEventListener("click", hide);
      }
      function hide(e){
+
         //remove third && after rework logic
         if(!e.target.closest(`.${divClass}`) && e.target!==mainBtn && !e.target.closest(".cal-general-div")){
-            hideDiv(div, classN);
+            if(!e.target.className.includes("cal-square")){
+                
+
+                hideDiv(div, classN);
+            }
        }
      }
 };
 
 export function hideDiv(div, className){
+    
+
     div.classList.add(className)
 };

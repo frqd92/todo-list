@@ -56,12 +56,10 @@ function processDate(obj, btn, input, changeText){ //if it passes all the checks
     if(btn){
         btn.textContent = value;
         if(changeText){
-    
             changeText.innerText = day;   
             hideDiv(document.querySelector(".date-picker-div"), "hidden-date-picker-div");
         }
         else{
-
            validateInputCal(true);
         }
     }
