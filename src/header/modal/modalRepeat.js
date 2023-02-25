@@ -1,19 +1,50 @@
 
 import { inputOnlyNum, traverseNumInputWithArrows, isOverflown } from "../../utilities/inputUtils";
+import { hideDiv } from "./showHideAdder";
 import { createRepeatOptions } from "../../dom/modal/addModal";
 import { elementCreator } from "../../utilities/elementCreator";
 import CalFactory from "../../dom/calenderFact/calFactory";
 let dueDateAdder;
-let arr, men, effectBtnText, btnfor, btnun,btnTim, dropdownDiv;
+let arr, men, effectBtnText, btnfor, btnun,btnTim, dropdownDiv, otherText;
 export function repeatLogic(repeatDiv){
     inputLogic(repeatDiv);
     tabOptions(repeatDiv);
     effectiveDiv(repeatDiv);
+    saveBtns(repeatDiv)
+}
+// save and no repeat btns--------------------------------------------------
+
+function saveBtns(div){
+    const saveBtn = div.querySelector(".repeat-save-btn");
+    const noRepeatBtn = div.querySelector(".no-repeat-btn");
+
+    saveBtn.addEventListener("click", saveRepeatData);
+    noRepeatBtn.addEventListener("click", noRepeatFunc)
+    function saveRepeatData(e){
+        const summary = div.querySelectorAll(".repeat-summary-div p");
+        let summaryArr = [];
+        summary.forEach((elem, i)=>{
+            if(i!==0){
+                summaryArr.push(elem.innerText);
+            }
+        })
+        document.querySelector(".modal-repeat-btn").innerText = "every " + summaryArr.join(" ");
+        hideDiv(div, "hidden-repeat-div")
+        e.stopPropagation()
+    }
+    function noRepeatFunc(){
+        document.querySelector(".modal-repeat-btn").innerText = "No repeat";
+        div.remove()
+    }
 }
 
+
+// Effective div
 function effectiveDiv(div){
     const btn = div.querySelector(".effective-btn");
     const menu = div.querySelector(".effective-dropdown-div");
+    const otherT = div.querySelector(".effective-other-text");
+    otherText = otherT;
     dropdownDiv = menu;
     effectBtnText = document.querySelector(".effective-btn-text");
     men = menu;
@@ -23,7 +54,7 @@ function effectiveDiv(div){
     btnTim = btnTimes;
     btnfor = btnforever;
     btnun = btnUntil;
-    const otherText = div.querySelector(".effective-other-text");
+
     btn.addEventListener("click", showHideSelect);
     div.addEventListener("click", hideSelectDiv);
     function hideSelectDiv(e){
@@ -35,6 +66,7 @@ function effectiveDiv(div){
         arrow.classList.toggle("effective-arrow-toggle");
         menu.classList.toggle("dropdown-div-shown");
         if(document.querySelector(".cal-effective-div")){
+            console.log("whaa");
             document.querySelector(".cal-effective-div").remove();
         }
     };
@@ -71,14 +103,19 @@ function timesClick(){
         }
         input.addEventListener("input", (e)=>{inputOnlyNum(e, input, [1,99])});
         btn.addEventListener("click", addTimes);
-
+        input.addEventListener("keydown", hitEnter);
+        function hitEnter(e){
+            if(e.key==="Enter")addTimes() 
+        }
         function addTimes(e){
             if(Number(input.value)>0 && Number(input.value)<100){
+                otherText.style.display="none";
+                otherText.innerText="";
                 effectBtnText.innerText = `x${input.value}`;
                 document.querySelector(".summary-text-3").innerText = `${input.value} times.`
                 document.querySelector(".effective-times-input-div").remove()
                 hideSelect();
-                e.stopPropagation();
+                if(e)e.stopPropagation();
             }
         }
     };
@@ -98,7 +135,7 @@ function removeSelectedAndAdd(btn){
     arr.forEach(elem=>{
         elem.classList.remove("selected-effective-row")
     })
-    btn.classList.add("selected-effective-row")
+    if(btn)btn.classList.add("selected-effective-row");
 }
 
 
@@ -114,6 +151,7 @@ export function hideSelect(){
     if(document.querySelector(".cal-effective-div")){
         document.querySelector(".cal-effective-div").remove()
     }
+    removeSelectedAndAdd()
 }
 
 
