@@ -261,7 +261,7 @@
 
 }
 
-.hidden-date-picker-div, .hidden-options-div,.hidden-priorities-div, .hidden-repeat-div, .hidden-notes-div{
+.hidden-options-div,.hidden-priorities-div, .hidden-repeat-div, .hidden-notes-div{
     transform: scale(0);
     transition: none;
     z-index: -10000;

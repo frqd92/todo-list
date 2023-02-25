@@ -8,12 +8,17 @@ import { hideSelect, changeEffectiveBtn } from '../../header/modal/modalRepeat';
 import { getCurrentDateText, detectFirstDayMonth, daysInMonth, formatNumDate, returnMonth, getToday, isPast, addOneToMonth} from "/src/utilities/dateUtils";
 let typeCal, currentMonth, currentYear;
 let isInputValid = false;
+let getInputDate;
 const weekArr = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
+export function changeInputDate(value){
+    getInputDate=value;
+}
+
 export default function CalFactory(mainBtn, appendTo, textElem, returnInput, returnQuickBtns, returnCal, returnDay, userClass, toClose){
-    const mainDiv = elementCreator("div", ["class", "cal-general-div", `cal-${userClass}-div`], false, appendTo)
+    const mainDiv = elementCreator("div", ["class", `cal-${userClass}-div`], false, appendTo)
     if(returnInput){generateCalInput(mainDiv,textElem, userClass)};
-    if(returnQuickBtns){generateQuickBtns(mainDiv,textElem)};
+    if(returnQuickBtns){generateQuickBtns(mainDiv, userClass)};
     if(returnCal){generateCal(mainDiv, textElem, returnDay, mainBtn, userClass, toClose)};
     removeCalDivOnOutsideClick(mainDiv, mainBtn, userClass);
     return {mainDiv};
@@ -24,7 +29,7 @@ function generateCal(div, textElem, returnDay, mainBtn, userClass, toClose){
     const calenderDiv = elementCreator("div", ["class", "cal-main-div"], false, datePickCalDiv);
     const [date,titleText] = calArrowsTitle(datePickCalDiv, textElem, mainBtn, userClass, toClose);
     createCalHeader(calenderDiv,typeCal);
-    createDaySquares(calenderDiv, date, titleText, false, textElem, mainBtn, userClass, toClose);
+    createDaySquares(calenderDiv, date, titleText, returnDay, textElem, mainBtn, userClass, toClose);
 }
 
 function createCalHeader(div){
@@ -126,6 +131,7 @@ function removeCalDivOnOutsideClick(div, btn, userClass){
     }
     function resetShit(){
         if(document.querySelector(`.cal-${userClass}-div`!==null)){
+            console.log(userClass);
             document.removeEventListener("click",hideDivFromSquareClick);
             document.removeEventListener("click",hideDivFromInputKeypress);
             document.querySelector(`.cal-${userClass}-div`).remove();
@@ -160,10 +166,6 @@ function firstLastDay(date){
     let lastDay = daysInMonth(mm,yy, true);
     return [firstDay, lastDay];
 }
-
-
-
-
 
 
 //the arrows and title
@@ -269,11 +271,15 @@ function generateCalInput(div,textElem, userClass){
             if(userClass==="effective"){
                 document.querySelector(".summary-text-3").innerText=`until ${document.querySelector(".effective-other-text").innerText}.`;
             }
+            if(userClass==="adder"){
+                document.querySelector(".due-btn-day-text").innerText = getInputDate;
+                getInputDate="";
+            }
         }
     }
 }
 // Makes the quickBtns-----------------------------------------------------------------
-function generateQuickBtns(div,textElem){
+function generateQuickBtns(div, userClass){
     const dateBtnsDiv = elementCreator("div", ["class", "cal-general-quick-div"], false,div);
     if(document.querySelector(".due-btn-hover-div")===null){
         const hoverDiv = elementCreator("div",["class", "cal-due-btn-hover-div"], false,document.body);
@@ -290,7 +296,7 @@ function generateQuickBtns(div,textElem){
             if (elem.hasOwnProperty(key)) {
                 const value = elem[key];
                 const btn = elementCreator("div", ["class", "cal-due-btn", `cal-due-btn-${key}`],value, dateBtnsDiv);
-                quickAddBtnsFunc(btn);
+                quickAddBtnsFunc(btn, userClass);
               }
         }
     })

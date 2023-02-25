@@ -1,6 +1,6 @@
-import { daysInMonth, chosenDayFunc } from "../../utilities/dateUtils";
+import { daysInMonth, chosenDayFunc, getCurrentDateText } from "../../utilities/dateUtils";
 import { hideDiv } from "./showHideAdder";
-import { validateInputCal } from "../../dom/calenderFact/calFactory";
+import { validateInputCal, changeInputDate } from "../../dom/calenderFact/calFactory";
 import { errorMsg} from '/src/dom/modal/addModal';
 const compareArr = ["ja","fe" ,"mar", "ap", "may", "jun", "jul", "au", "se", "oc", "no", "de"];
 export const autoArr = ["January", "February", "March","April","May", "June", "July", "August", "September", "October", "November", "December"];
@@ -53,11 +53,14 @@ function processDate(obj, btn, input, changeText){ //if it passes all the checks
     let addZero = [obj.day, obj.month].map(elem=>elem<10?"0"+Number(elem):Number(elem));
     let value = `${addZero[0]}/${addZero[1]}/${obj.year}`;
     let day = chosenDayFunc(obj.year,obj.month,obj.day);
+    let weekDay = getCurrentDateText("day", `${obj.year}-${obj.month}-${obj.day}`);
+    changeInputDate(weekDay)
     if(btn){
         btn.textContent = value;
         if(changeText){
             changeText.innerText = day;   
-            hideDiv(document.querySelector(".date-picker-div"), "hidden-date-picker-div");
+
+            //hideDiv(document.querySelector(".date-picker-div"), "hidden-date-picker-div");
         }
         else{
            validateInputCal(true);

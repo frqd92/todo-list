@@ -32,9 +32,10 @@ function saveBtns(div){
         hideDiv(div, "hidden-repeat-div")
         e.stopPropagation()
     }
-    function noRepeatFunc(){
+    function noRepeatFunc(e){
         document.querySelector(".modal-repeat-btn").innerText = "No repeat";
-        div.remove()
+        hideDiv(div, "hidden-repeat-div")
+        e.stopPropagation()
     }
 }
 
@@ -59,6 +60,7 @@ function effectiveDiv(div){
     div.addEventListener("click", hideSelectDiv);
     function hideSelectDiv(e){
         if(!e.target.closest(".dropdown-div-shown") && !e.target.closest(".effective-btn")){
+
             hideSelect();
         }
     }
@@ -66,7 +68,6 @@ function effectiveDiv(div){
         arrow.classList.toggle("effective-arrow-toggle");
         menu.classList.toggle("dropdown-div-shown");
         if(document.querySelector(".cal-effective-div")){
-            console.log("whaa");
             document.querySelector(".cal-effective-div").remove();
         }
     };
@@ -105,7 +106,7 @@ function timesClick(){
         btn.addEventListener("click", addTimes);
         input.addEventListener("keydown", hitEnter);
         function hitEnter(e){
-            if(e.key==="Enter")addTimes() 
+            if(e.key==="s")addTimes(false) 
         }
         function addTimes(e){
             if(Number(input.value)>0 && Number(input.value)<100){

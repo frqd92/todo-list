@@ -1,23 +1,24 @@
 import { chosenDayFunc } from "/src/utilities/dateUtils";
 import { hideDiv } from "./showHideAdder";
 
-export function quickAddBtnsFunc(btn){
+export function quickAddBtnsFunc(btn, userClass){
     quickBtnHover(btn);
 
-    btn.addEventListener("click", ()=>{
-        btnToDate(btn.innerText)
+    btn.addEventListener("click", (e)=>{
+        btnToDate(btn.innerText, userClass)
+        e.stopPropagation()
     })
 }
 
-function btnToDate(text){
+function btnToDate(text, userClass){
     const mainBtn = document.querySelector(".modal-due-btn");
     if(text!=="None"){
         const [date, [dd,mm,yy]] = textToDate(text);
         let day = chosenDayFunc(yy,mm,dd);
         document.querySelector(".due-btn-day-text").innerText = day;
         mainBtn.innerText = date;
-        hideDiv(document.querySelector(".date-picker-div"), "hidden-date-picker-div");
-
+        document.querySelector(`.cal-${userClass}-div`).remove();
+        document.querySelector(`.cal-due-btn-hover-div`).remove();
     }
     else{
         document.querySelector(".due-btn-day-text").innerText = "";
@@ -47,8 +48,8 @@ function textToDate(text){
 
 function quickBtnHover(btn){
     if(btn.innerText==="None")return;
-    const hoverDiv = document.querySelector(".due-btn-hover-div");
-    const [dayDiv, dateDiv] =  document.querySelectorAll(".due-btn-hover-div p");
+    const hoverDiv = document.querySelector(".cal-due-btn-hover-div");
+    const [dayDiv, dateDiv] =  document.querySelectorAll(".cal-due-btn-hover-div p");
     btn.addEventListener("mouseover", makeVisible, {once:true});
 
 

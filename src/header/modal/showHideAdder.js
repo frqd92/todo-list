@@ -25,17 +25,14 @@ function forBtns(div, classN, form, divClass, mainBtn){
      function hide(e){
         //remove third && after rework logic
         if(!e.target.closest(`.${divClass}`) && e.target!==mainBtn && !e.target.closest(".cal-general-div")){
-            if(!e.target.className.includes("cal-square")){
+            if(!e.target.closest(".cal-effective-div")){
                 hideDiv(div, classN);
-                if(document.querySelector(".cal-general-div"))document.querySelector(".cal-general-div").remove()
-
+                if(document.querySelector(".cal-effective-div"))document.querySelector(".cal-effective-div").remove()
             }
        }
      }
 };
 
 export function hideDiv(div, className){
-
-
     div.classList.add(className)
 };

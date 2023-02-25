@@ -2,7 +2,6 @@ import { elementCreator} from '/src/utilities/elementCreator'
 import {createIcon} from "/src/utilities/iconCreate";
 import { modalDateInputFunc } from "/src/header/modal/modalDateInput";
 import { quickAddBtnsFunc } from "/src/header/modal/quickAddBtns";
-import { calenderFact} from "../calender";
 import { closeDivLogic} from '../../header/modal/showHideAdder';
 import { adderOptionsFunc } from '../../header/modal/groups';
 import { hideDiv } from '../../header/modal/showHideAdder';
@@ -10,7 +9,8 @@ import { repeatLogic } from '../../header/modal/modalRepeat';
 import { modalNotesLogic } from '../../header/modal/modalNotes';
 import addNewTask from '/src/header/modal/addNewTask';
 import { getCurrentDateText, addSuffixToDay, whichWeekDayOfMonth } from '../../utilities/dateUtils';
-
+//import { calenderFact} from "../calender";
+import CalFactory from '../calenderFact/calFactory';
 
 export function addModal(content){
     const form = elementCreator("div", ["id", "form"], false, content);
@@ -23,8 +23,18 @@ export function addModal(content){
     const dueDateText = elementCreator("p", ["class", "modal-due-text"], "Due date", dueDateDiv);
     const dueBtn = elementCreator("div", ["class", "modal-due-btn", "adder-value"], "Today", dueDateDiv);
     const dayWeekText = elementCreator("p", ["class", "due-btn-day-text"], getCurrentDateText("day"), dueDateDiv);
-    const datePickerDiv = elementCreator("div", ["class", "date-picker-div", "hidden-date-picker-div"],false, dueDateDiv);
-    createDueDateDiv(datePickerDiv, dueBtn, dayWeekText);
+    dueBtn.addEventListener("click", showHideAdderCal);
+    function showHideAdderCal(){
+        if(document.querySelector(".cal-adder-div")===null){
+            const cal = CalFactory(dueBtn, document.getElementById("form"), dueBtn, true, true, true, true,"adder", false);
+        }
+        else{
+            document.querySelector(".cal-adder-div").remove();
+        }
+
+    }
+    // const datePickerDiv = elementCreator("div", ["class", "date-picker-div", "hidden-date-picker-div"],false, dueDateDiv);
+    // createDueDateDiv(datePickerDiv, dueBtn, dayWeekText);
 
     //Add to group div
     const groupDiv = elementCreator("div", ["class", "modal-group-div"], false, form);
@@ -54,14 +64,14 @@ export function addModal(content){
     const notesText = elementCreator("div", ["class", "modal-notes-text"], "Add notes", notesDiv);
     const notesBtn = elementCreator("div", ["class", "modal-notes-btn", "adder-value"], "No notes", notesDiv);
     const notesOptions = elementCreator("div", ["class", "modal-notes-options", "hidden-notes-div"], false, notesDiv);
-    createNotesOptions(notesOptions,notesBtn )
+    createNotesOptions(notesOptions,notesBtn);
 
     //save button
     const saveAdderBtn = elementCreator("button", ["class", "save-adder-btn"], "Save task", form)
     addNewTask(saveAdderBtn);
     //logic to close/open the divs
     const infoArray = [
-        [dueBtn, datePickerDiv, "date-picker-div", "hidden-date-picker-div"],
+        //[dueBtn, datePickerDiv, "date-picker-div", "hidden-date-picker-div"],
         [groupBtn, groupOptions, "modal-group-options", "hidden-options-div",],
         [priorityBtn, priorityOptions, "modal-group-priorities","hidden-priorities-div"],
         [repeatBtn, repeatOptions, "modal-repeat-options","hidden-repeat-div"],
@@ -181,37 +191,40 @@ function createGroupOptions(div){
 
 //due date div: date-input, quick buttons and calender to pick date
 function createDueDateDiv(datePickerDiv, dueBtn, dayWeekText){
-    //input to enter a date-------------------------------------------
-    const enterDateDiv = elementCreator("div", ["class", "enter-date-div"], false, datePickerDiv);
-    const enterDateInput = elementCreator("input", ["class", "enter-date-input"], false, enterDateDiv);
-    enterDateInput.placeholder="Write your date & press enter";
-    modalDateInputFunc(enterDateInput, dueBtn, dayWeekText);
-    const iconDiv = elementCreator("div", ["class", "modal-icon-div"], false, enterDateDiv )
-    createIcon(iconDiv, "Hello", ["modal-i-div","modal-i-img", "modal-i-img-div"]);
+
+
+    // //input to enter a date-------------------------------------------
+    // const enterDateDiv = elementCreator("div", ["class", "enter-date-div"], false, datePickerDiv);
+    // const enterDateInput = elementCreator("input", ["class", "enter-date-input"], false, enterDateDiv);
+    // enterDateInput.placeholder="Write your date & press enter";
+    // modalDateInputFunc(enterDateInput, dueBtn, dayWeekText);
+    // const iconDiv = elementCreator("div", ["class", "modal-icon-div"], false, enterDateDiv )
+    // createIcon(iconDiv, "Hello", ["modal-i-div","modal-i-img", "modal-i-img-div"]);
 
     // buttons where you quick add a due date-------------------------
-    const dateBtnsDiv = elementCreator("div", ["class", "date-picker-btn-div"], false,datePickerDiv);
-    if(document.querySelector(".due-btn-hover-div")===null){
-        const hoverDiv = elementCreator("div",["class", "due-btn-hover-div"], false,document.body);
-        elementCreator("p", false, false, hoverDiv);
-        elementCreator("p", false, false, hoverDiv);
-    }
+    // const dateBtnsDiv = elementCreator("div", ["class", "date-picker-btn-div"], false,datePickerDiv);
+    // if(document.querySelector(".due-btn-hover-div")===null){
+    //     const hoverDiv = elementCreator("div",["class", "due-btn-hover-div"], false,document.body);
+    //     elementCreator("p", false, false, hoverDiv);
+    //     elementCreator("p", false, false, hoverDiv);
+    // }
 
-    const btnArray = [
-        {none:"None"}, {today:"Today"}, {tomorrow:"Tomorrow"}, 
-        {afterTomorrow:"After tomorrow"},{week:"Next week"}, {month:"Next month"}
-    ]
-    btnArray.forEach((elem)=>{   
-        for(const key in elem){
-            if (elem.hasOwnProperty(key)) {
-                const value = elem[key];
-                const btn = elementCreator("div", ["class", "due-btn", `due-btn-${key}`],value, dateBtnsDiv);
-                quickAddBtnsFunc(btn);
-              }
-        }
-    })
-    //calender from calender factory 
-    const pickDateCal = calenderFact(datePickerDiv, "small");
+    // const btnArray = [
+    //     {none:"None"}, {today:"Today"}, {tomorrow:"Tomorrow"}, 
+    //     {afterTomorrow:"After tomorrow"},{week:"Next week"}, {month:"Next month"}
+    // ]
+    // btnArray.forEach((elem)=>{   
+    //     for(const key in elem){
+    //         if (elem.hasOwnProperty(key)) {
+    //             const value = elem[key];
+    //             const btn = elementCreator("div", ["class", "due-btn", `due-btn-${key}`],value, dateBtnsDiv);
+    //             quickAddBtnsFunc(btn);
+    //           }
+    //     }
+    // })
+
+    //actual calender
+    //const pickDateCal = calenderFact(datePickerDiv, "small");
 }
 
 

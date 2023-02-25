@@ -1,10 +1,11 @@
 .cal-general-div{
-    position: absolute;
-   z-index: 1000000;
+
 
 }
 
 .cal-effective-div{
+    position: absolute;
+    z-index: 1000000;
     border: 1px solid black;
     padding: 10px;
     top: 300px;
@@ -13,6 +14,17 @@
     background-color: rgba(0, 0, 0, 0.918);
     width: 310px;
     box-shadow: rgba(185, 185, 185, 0.25) 0px 2px 5px -1px, rgba(200, 194, 194, 0.3) 0px 1px 3px -1px;
+}
+.cal-adder-div{
+    position: absolute;
+    z-index: 1000000;
+    background-color: rgba(0, 0, 0, 0.918);
+    padding: 10px;
+    border-radius: 10px;
+    width: 400px;
+    top: 157px;
+    left: 50px;
+
 }
 /* ----------------------------------------calendar ----------------------------------------*/
 
