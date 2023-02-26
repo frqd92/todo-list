@@ -9,6 +9,8 @@ import { getCurrentDateText, detectFirstDayMonth, daysInMonth, formatNumDate, re
 let typeCal, currentMonth, currentYear;
 let isInputValid = false;
 let getInputDate;
+
+
 const weekArr = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
 export function changeInputDate(value){
@@ -30,6 +32,7 @@ function generateCal(div, textElem, returnDay, mainBtn, userClass, toClose){
     const [date,titleText] = calArrowsTitle(datePickCalDiv, textElem, mainBtn, userClass, toClose);
     createCalHeader(calenderDiv,typeCal);
     createDaySquares(calenderDiv, date, titleText, returnDay, textElem, mainBtn, userClass, toClose);
+    if(userClass==="adder"){hideAdder(div, mainBtn);}
 }
 
 function createCalHeader(div){
@@ -101,16 +104,16 @@ function createDaySquares(div, date, text, returnDay, textElem, mainBtn, userCla
             document.querySelector(".due-btn-day-text").innerText = getCurrentDateText("day", `${year}-${month}-${day}`);
         }
         else{
-            div.parentElement.parentElement.remove();
             if(toClose){
                 hideSelect();
                 changeEffectiveBtn("until");
                 if(userClass==="effective"){
-                    document.querySelector(".summary-text-3").innerText=`until ${document.querySelector(".effective-other-text").innerText}.`;
+                    document.querySelector(".summary-text-3").innerText=`until ${document.querySelector(".effective-other-text").innerText}`;
                 }
             }
-            e.stopPropagation();
         }
+        div.parentElement.parentElement.remove();
+        e.stopPropagation();
     }
 }
 
@@ -214,7 +217,12 @@ function renderCalender(date, text, textElem, mainBtn, userClass, toClose){
     const squares = calDiv.querySelectorAll(".cal-square");
     const div = calDiv.querySelector(".cal-main-div");
     squares.forEach(elem=>elem.remove());
-    createDaySquares(div, date, text, false, textElem, mainBtn, userClass, toClose);
+    if(userClass==="adder"){
+        createDaySquares(div, date, text, true, textElem, mainBtn, userClass, false);
+    }
+    else if(userClass==="effective"){
+        createDaySquares(div, date, text, false, textElem, mainBtn, userClass, toClose);
+    }
 }
 
 
@@ -269,7 +277,7 @@ function generateCalInput(div,textElem, userClass){
             enterDateInput.removeEventListener("keypress", closeDiv);
             isInputValid=false;
             if(userClass==="effective"){
-                document.querySelector(".summary-text-3").innerText=`until ${document.querySelector(".effective-other-text").innerText}.`;
+                document.querySelector(".summary-text-3").innerText=`until ${document.querySelector(".effective-other-text").innerText}`;
             }
             if(userClass==="adder"){
                 document.querySelector(".due-btn-day-text").innerText = getInputDate;
@@ -300,4 +308,16 @@ function generateQuickBtns(div, userClass){
               }
         }
     })
+}
+
+function hideAdder(div, btn){
+    const form = document.getElementById("form");
+    form.addEventListener("click", removeAddCal);
+
+    function removeAddCal(e){
+        if(e.target!==btn && !e.target.closest(".cal-adder-div")){
+        div.remove();
+        form.removeEventListener("click", removeAddCal);
+        }
+    }
 }

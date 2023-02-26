@@ -10,10 +10,23 @@ export function repeatLogic(repeatDiv){
     inputLogic(repeatDiv);
     tabOptions(repeatDiv);
     effectiveDiv(repeatDiv);
-    saveBtns(repeatDiv)
+    saveBtns(repeatDiv);
+    repeatBtnCloseCal();
+
 }
 // save and no repeat btns--------------------------------------------------
+function repeatBtnCloseCal(){
+    const repeatMainBtn = document.querySelector(".modal-repeat-btn");
+    repeatMainBtn.addEventListener("click", removeCal, {once:true});
+    function removeCal(){
+        if(document.querySelector(".cal-effective-div")!==null){
+            document.querySelector(".cal-effective-div").remove();
+            repeatMainBtn.addEventListener("click", removeCal, {once:true});
+        }
+    }
 
+
+}
 function saveBtns(div){
     const saveBtn = div.querySelector(".repeat-save-btn");
     const noRepeatBtn = div.querySelector(".no-repeat-btn");
@@ -29,13 +42,22 @@ function saveBtns(div){
             }
         })
         document.querySelector(".modal-repeat-btn").innerText = "every " + summaryArr.join(" ");
-        hideDiv(div, "hidden-repeat-div")
+        hideDiv(div, "hidden-repeat-div");
+        resizeDiv();
         e.stopPropagation()
     }
     function noRepeatFunc(e){
         document.querySelector(".modal-repeat-btn").innerText = "No repeat";
         hideDiv(div, "hidden-repeat-div")
         e.stopPropagation()
+    }
+    function resizeDiv(){
+        const mainRepeatBtn = document.querySelector(".modal-repeat-btn");
+        const btnHeight = getComputedStyle(mainRepeatBtn).height.replaceAll(/[a-z]/g, "");
+        let difference = Number(btnHeight) - 20;
+        const divHeight = 22 + difference;
+        div.style.top = divHeight + "px";
+
     }
 }
 
@@ -77,14 +99,14 @@ function effectiveDiv(div){
         removeSelectedAndAdd(btnUntil);
         otherText.style.display="block";
         otherText.innerText="";
-        if(document.querySelector(".cal-effective-div")===null){
-            const cal = CalFactory(btnUntil, document.getElementById("form"), otherText, true, false, true, false,"effective", menu);
-        }
-        // mainBtn, appendTo, textElem, returnInput, returnQuickBtns, returnCal, returnDay, userClass, toClose
+        if(document.querySelector(".cal-effective-div")){document.querySelector(".cal-effective-div").remove()}
+        const cal = CalFactory(btnUntil, document.getElementById("form"), otherText, true, false, true, false,"effective", menu);
+
+        //(mainBtn, appendTo, textElem, returnInput, returnQuickBtns, returnCal, returnDay, userClass, toClose)
     }
     btnforever.addEventListener("click", foreverClick);
     function foreverClick(){
-        document.querySelector(".summary-text-3").innerText='forever.';
+        document.querySelector(".summary-text-3").innerText='forever';
         removeSelectedAndAdd(btnforever);
         changeEffectiveBtn("forever");
         otherText.style.display="none";
@@ -113,7 +135,8 @@ function timesClick(){
                 otherText.style.display="none";
                 otherText.innerText="";
                 effectBtnText.innerText = `x${input.value}`;
-                document.querySelector(".summary-text-3").innerText = `${input.value} times.`
+                let timeOrTimes = Number(input.value)>1?"times":"time";
+                document.querySelector(".summary-text-3").innerText = `${input.value} ${timeOrTimes}`
                 document.querySelector(".effective-times-input-div").remove()
                 hideSelect();
                 if(e)e.stopPropagation();

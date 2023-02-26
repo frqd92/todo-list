@@ -1,7 +1,4 @@
 import { elementCreator} from '/src/utilities/elementCreator'
-import {createIcon} from "/src/utilities/iconCreate";
-import { modalDateInputFunc } from "/src/header/modal/modalDateInput";
-import { quickAddBtnsFunc } from "/src/header/modal/quickAddBtns";
 import { closeDivLogic} from '../../header/modal/showHideAdder';
 import { adderOptionsFunc } from '../../header/modal/groups';
 import { hideDiv } from '../../header/modal/showHideAdder';
@@ -9,7 +6,6 @@ import { repeatLogic } from '../../header/modal/modalRepeat';
 import { modalNotesLogic } from '../../header/modal/modalNotes';
 import addNewTask from '/src/header/modal/addNewTask';
 import { getCurrentDateText, addSuffixToDay, whichWeekDayOfMonth } from '../../utilities/dateUtils';
-//import { calenderFact} from "../calender";
 import CalFactory from '../calenderFact/calFactory';
 
 export function addModal(content){
@@ -27,14 +23,12 @@ export function addModal(content){
     function showHideAdderCal(){
         if(document.querySelector(".cal-adder-div")===null){
             const cal = CalFactory(dueBtn, document.getElementById("form"), dueBtn, true, true, true, true,"adder", false);
-        }
+        }   
         else{
             document.querySelector(".cal-adder-div").remove();
         }
 
     }
-    // const datePickerDiv = elementCreator("div", ["class", "date-picker-div", "hidden-date-picker-div"],false, dueDateDiv);
-    // createDueDateDiv(datePickerDiv, dueBtn, dayWeekText);
 
     //Add to group div
     const groupDiv = elementCreator("div", ["class", "modal-group-div"], false, form);
@@ -132,7 +126,7 @@ export function createRepeatOptions(div){
     elementCreator("p", false ,"Repeat every", summaryDiv);
     elementCreator("p", ["class", "summary-text-1"], "week", summaryDiv);
     elementCreator("p", ["class", "summary-text-2"], "on", summaryDiv);
-    elementCreator("p", ["class", "summary-text-3"], "forever.", summaryDiv);
+    elementCreator("p", ["class", "summary-text-3"], "forever", summaryDiv);
 
     const btnDiv = elementCreator("div", ["class", "repeat-btn-div"], false, div);
     elementCreator("div", ["class", "no-repeat-btn"], "No repeat", btnDiv);
@@ -188,44 +182,6 @@ function createGroupOptions(div){
 
 }
 
-
-//due date div: date-input, quick buttons and calender to pick date
-function createDueDateDiv(datePickerDiv, dueBtn, dayWeekText){
-
-
-    // //input to enter a date-------------------------------------------
-    // const enterDateDiv = elementCreator("div", ["class", "enter-date-div"], false, datePickerDiv);
-    // const enterDateInput = elementCreator("input", ["class", "enter-date-input"], false, enterDateDiv);
-    // enterDateInput.placeholder="Write your date & press enter";
-    // modalDateInputFunc(enterDateInput, dueBtn, dayWeekText);
-    // const iconDiv = elementCreator("div", ["class", "modal-icon-div"], false, enterDateDiv )
-    // createIcon(iconDiv, "Hello", ["modal-i-div","modal-i-img", "modal-i-img-div"]);
-
-    // buttons where you quick add a due date-------------------------
-    // const dateBtnsDiv = elementCreator("div", ["class", "date-picker-btn-div"], false,datePickerDiv);
-    // if(document.querySelector(".due-btn-hover-div")===null){
-    //     const hoverDiv = elementCreator("div",["class", "due-btn-hover-div"], false,document.body);
-    //     elementCreator("p", false, false, hoverDiv);
-    //     elementCreator("p", false, false, hoverDiv);
-    // }
-
-    // const btnArray = [
-    //     {none:"None"}, {today:"Today"}, {tomorrow:"Tomorrow"}, 
-    //     {afterTomorrow:"After tomorrow"},{week:"Next week"}, {month:"Next month"}
-    // ]
-    // btnArray.forEach((elem)=>{   
-    //     for(const key in elem){
-    //         if (elem.hasOwnProperty(key)) {
-    //             const value = elem[key];
-    //             const btn = elementCreator("div", ["class", "due-btn", `due-btn-${key}`],value, dateBtnsDiv);
-    //             quickAddBtnsFunc(btn);
-    //           }
-    //     }
-    // })
-
-    //actual calender
-    //const pickDateCal = calenderFact(datePickerDiv, "small");
-}
 
 
 
@@ -292,4 +248,12 @@ export function errorMsg(value, input){ //move to dom folder after
         }
     }
 
+}
+
+
+export function sucessMsgTask(){
+    const div = elementCreator("div", ["class", "sucess-msg-task"], "Task successfully added", document.querySelector(".header-options-middle"));
+    div.addEventListener("click", ()=>div.remove(), {once: true});
+    setTimeout(()=>{div.classList.add("success-hidden")}, 2000);
+    setTimeout(()=>{div.remove()}, 3000);
 }

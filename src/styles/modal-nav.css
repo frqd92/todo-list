@@ -680,13 +680,14 @@
 
 /* ------------------------------Repeat--------------------------------------- */
 .modal-repeat-btn{
-    white-space: nowrap;
-   
+    text-align: center;
+    min-height: 21.5px;
+    font-family: roboto-medium ;
 }
 .modal-repeat-options{
     position: absolute;
     z-index: 100000;
-    top: 22px;
+    top: 22.5px;
     right: -33px;
     width: 300px;
     display: flex;
@@ -1103,7 +1104,7 @@
 }
  
 /* ----------------------------------------------Notes-----------------------------*/
-.modal-notes-btn, .modal-repeat-btn{
+.modal-notes-btn{
     overflow: hidden;
     text-overflow: ellipsis;
     max-height: 21px;
@@ -1200,6 +1201,33 @@ textarea::-webkit-scrollbar-thumb{/*theme*/
     animation: placeholderRed infinite 0.6s linear;
     text-align: center;
 }
+
+
+
+.sucess-msg-task{
+    color: white;
+    position: absolute;
+    top: 47px;
+    right: 0;
+    font-family: ptserif;
+    padding: 3px 15px;
+    border-radius: 15px;
+    opacity:0.8;
+    transition: 1s opacity linear;
+    white-space: nowrap;
+    background-color: rgba(232, 232, 232, 0.203);
+    backdrop-filter: blur(10px);
+
+
+}
+.success-hidden{
+    opacity: 0;
+}
+
+
+
+
+
 @keyframes placeholderRed {
     from{
         opacity: 1;
