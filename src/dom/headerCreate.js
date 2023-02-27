@@ -6,7 +6,7 @@ import { bulbFunc } from "../header/lightBulb";
 import addPng from '/src/assets/images/plus.png';
 import profilePng from '/src/assets/images/empty-user.png';
 import menuPng from '/src/assets/images/menu-line.png';
-import { searchLoupe, importBehaviour, inputBehaviour } from "../header/searchLogic";
+import { searchLoupe, inputBehaviour } from "../header/searchLogic";
 import githubPng from '/src/assets/images/github.png'
 import { menuButtonFunc } from "../header/menuBtnMobile";
 import { makeModal } from "/src/dom/modal/modal";
@@ -27,12 +27,12 @@ export default function createHeader(){
     searchLoupe(loupeImg, input);
     inputBehaviour(input)
     const headerOptionsDiv = elementCreator("div", false, false, header);
-    window.innerWidth>650?headerOptions():headerOptionsMobile();
 
-    window.addEventListener("resize", ()=>{
-        window.innerWidth>650?headerOptions():headerOptionsMobile();
-    
-    })
+     //for mobile
+    window.innerWidth>650?headerOptions():headerOptionsMobile();
+    // window.addEventListener("resize", ()=>{
+    //     window.innerWidth>650?headerOptions():headerOptionsMobile();
+    // })
 
 
 

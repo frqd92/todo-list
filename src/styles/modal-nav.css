@@ -970,8 +970,8 @@
     border-bottom: 1px solid rgba(255, 255, 255, 0.147);
 }
 .effective-dropdown-row:nth-child(2){
+    position: relative;
     border-bottom: 1px solid rgba(255, 255, 255, 0.147);
-   
 }
 .effective-dropdown-row:nth-child(3){
     position: relative;
@@ -986,12 +986,14 @@
     padding: 10px 10px;
     height: fit-content;
     background-color: rgba(1, 1, 1, 0.467);
+    overflow: visible;
+
 
 }
 
 
 .effective-other-text{
-
+    
 }
 
 

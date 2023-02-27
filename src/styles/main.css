@@ -11,7 +11,7 @@ body img{
 
 body{
     display: grid;
-    grid-template-columns: calc(70px + 6vw) 1fr;
+    grid-template-columns: calc(90px + 6vw) 1fr;
     grid-template-rows: 50px 1fr;
 }
 
@@ -32,4 +32,11 @@ header{
 main{
     grid-row: 2 / 3;
     grid-column: 2 / 3;
+}
+
+@media (max-width:900px) {
+    body{
+        grid-template-columns: calc(70px + 5vw) 1fr;
+
+    }
 }

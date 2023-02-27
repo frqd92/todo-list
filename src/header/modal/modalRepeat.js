@@ -17,12 +17,12 @@ export function repeatLogic(repeatDiv){
 // save and no repeat btns--------------------------------------------------
 function repeatBtnCloseCal(){
     const repeatMainBtn = document.querySelector(".modal-repeat-btn");
-    repeatMainBtn.addEventListener("click", removeCal, {once:true});
+    //repeatMainBtn.addEventListener("click", removeCal, {once:true});
     function removeCal(){
-        if(document.querySelector(".cal-effective-div")!==null){
-            document.querySelector(".cal-effective-div").remove();
-            repeatMainBtn.addEventListener("click", removeCal, {once:true});
-        }
+        //if(document.querySelector(".cal-effective-div")!==null){
+            // document.querySelector(".cal-effective-div").remove();
+            //repeatMainBtn.addEventListener("click", removeCal, {once:true});
+        //}
     }
 
 
@@ -82,34 +82,37 @@ function effectiveDiv(div){
     div.addEventListener("click", hideSelectDiv);
     function hideSelectDiv(e){
         if(!e.target.closest(".dropdown-div-shown") && !e.target.closest(".effective-btn")){
-
-            hideSelect();
+            //hideSelect();
         }
     }
     function showHideSelect(){
         arrow.classList.toggle("effective-arrow-toggle");
         menu.classList.toggle("dropdown-div-shown");
-        if(document.querySelector(".cal-effective-div")){
-            document.querySelector(".cal-effective-div").remove();
-        }
+        if(document.querySelector(".cal-effective-div")!==null) document.querySelector(".cal-effective-div").remove()
+        removeSelectedAndAdd()
     };
 
     btnUntil.addEventListener("click", generateCal);
     function generateCal(){
         removeSelectedAndAdd(btnUntil);
-        otherText.style.display="block";
+        otherText.style.visibility="visible";
         otherText.innerText="";
-        if(document.querySelector(".cal-effective-div")){document.querySelector(".cal-effective-div").remove()}
-        const cal = CalFactory(btnUntil, document.getElementById("form"), otherText, true, false, true, false,"effective", menu);
+        if(document.querySelector(".cal-effective-div")===null){
+            const cal = CalFactory(btnUntil, btnUntil, otherText, true, false, true, false,"effective", menu);
+            //(mainBtn, appendTo, textElem, returnInput, returnQuickBtns, returnCal, returnDay, userClass, toClose)
 
-        //(mainBtn, appendTo, textElem, returnInput, returnQuickBtns, returnCal, returnDay, userClass, toClose)
+        }
+
     }
     btnforever.addEventListener("click", foreverClick);
     function foreverClick(){
         document.querySelector(".summary-text-3").innerText='forever';
         removeSelectedAndAdd(btnforever);
         changeEffectiveBtn("forever");
-        otherText.style.display="none";
+        otherText.style.visibility="hidden";
+        if(document.querySelector(".cal-effective-div")){
+            document.querySelector(".cal-effective-div").remove()
+        }
     }
     btnTimes.addEventListener("click", timesClick);
 
@@ -132,7 +135,7 @@ function timesClick(){
         }
         function addTimes(e){
             if(Number(input.value)>0 && Number(input.value)<100){
-                otherText.style.display="none";
+                otherText.style.visibility="hidden";
                 otherText.innerText="";
                 effectBtnText.innerText = `x${input.value}`;
                 let timeOrTimes = Number(input.value)>1?"times":"time";
@@ -172,15 +175,8 @@ export function changeEffectiveBtn(value){
 export function hideSelect(){
     arr.classList.remove("effective-arrow-toggle");
     men.classList.remove("dropdown-div-shown");
-    if(document.querySelector(".cal-effective-div")){
-        document.querySelector(".cal-effective-div").remove()
-    }
     removeSelectedAndAdd()
 }
-
-
-
-
 
 
 

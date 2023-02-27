@@ -118,7 +118,7 @@ function createDaySquares(div, date, text, returnDay, textElem, mainBtn, userCla
 }
 
 
-function removeCalDivOnOutsideClick(div, btn, userClass){
+ function removeCalDivOnOutsideClick(div, btn, userClass){
     document.addEventListener("click", hideDivFromSquareClick);
     document.addEventListener("keypress", hideDivFromInputKeypress);
     function hideDivFromSquareClick(e){
@@ -130,16 +130,17 @@ function removeCalDivOnOutsideClick(div, btn, userClass){
     function hideDivFromInputKeypress(e){
         if(e.key==="Enter" && isInputValid===true){
             resetShit();
+            isInputValid=false;
         }
     }
     function resetShit(){
         if(document.querySelector(`.cal-${userClass}-div`!==null)){
-            console.log(userClass);
             document.removeEventListener("click",hideDivFromSquareClick);
             document.removeEventListener("click",hideDivFromInputKeypress);
             document.querySelector(`.cal-${userClass}-div`).remove();
+
         }
-        isInputValid=false;
+
     }
 }
 
@@ -204,6 +205,7 @@ function incrDecrMonth(text, isIncr, onlyValue, textElem, mainBtn, userClass, to
     nextMonth.setMonth(action ,1);
     if(!onlyValue){
         text.innerText = `${returnMonth(nextMonth.getMonth())} ${nextMonth.getFullYear()}`;
+        console.log(text.parentElement.parentElement.parentElement);
         [currentMonth, currentYear] = text.innerText.split(" ");
 
         renderCalender(text.innerText.split(" "), text, textElem, mainBtn, userClass, toClose);

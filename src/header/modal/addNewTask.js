@@ -18,12 +18,10 @@ function formatForObj(){
         return;
     }
     const obj = {};
-    let day, desc, group,repeat, notes;
+    let day, desc, group, notes;
     values[1].innerText===""?desc=false:desc=values[1].innerText;
     values[2].innerText==="Today"?day=getToday():day=values[2].innerText;
     values[3].innerText==="None"?group=false:group=values[3].innerText;
-    repeat = processRepeat(values[5].innerText);
-    //values[5].innerText==="No repeat"?repeat=false:repeat=values[5].innerText;
     values[6].innerText==="No notes"?notes=false:notes=values[6].innerHTML;
 
 
@@ -33,12 +31,12 @@ function formatForObj(){
     obj.due=day;
     obj.group=group;
     obj.priority= values[4].innerText;
-    //obj.repeat = ;
+    obj.repeat = processRepeat(values[5].innerText);;
     obj.notes = notes;
     obj.isPast = false;
     taskArray.push(obj)
     loggedIn?pushToServer(taskArray):pushToLocal(taskArray);
-    //document.getElementById("form").remove()
+    document.getElementById("form").remove()
     sucessMsgTask();
 }
 
@@ -104,5 +102,5 @@ function processRepeat(val){
         obj.repeatFactor = "times";
         obj.repeatNumOfTimes = Number(arr[arr.length-2]);
     }
-    console.log(obj);
+    return obj
 }

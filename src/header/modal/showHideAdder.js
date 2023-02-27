@@ -19,7 +19,7 @@ function forBtns(div, classN, form, divClass, mainBtn){
         }
      }
      else{
-        div.classList.add(classN);
+        // div.classList.add(classN);
         form.removeEventListener("click", hide);
      }
      function hide(e){
@@ -27,7 +27,7 @@ function forBtns(div, classN, form, divClass, mainBtn){
         if(!e.target.closest(`.${divClass}`) && e.target!==mainBtn && !e.target.closest(".cal-general-div")){
             if(!e.target.closest(".cal-effective-div")){
                 hideDiv(div, classN);
-                if(document.querySelector(".cal-effective-div"))document.querySelector(".cal-effective-div").remove()
+                //if(document.querySelector(".cal-effective-div"))document.querySelector(".cal-effective-div").remove()
             }
        }
      }

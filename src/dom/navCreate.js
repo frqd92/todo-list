@@ -1,9 +1,9 @@
 import { elementCreator, imageCreator } from "../utilities/elementCreator";
 import githubImg from "/src/assets/images/github.png"
 import homePng from '/src/assets/images/home.png';
-import tasksPng from '/src/assets/images/tasks.png';
+import groupsPng from '/src/assets/images/layers.png';
 import arrowCircle from '/src/assets/images/arrow-circle.png';
-import gearPng from '/src/assets/images/gear.png';
+import taskExplorerImg from '/src/assets/images/explore.png';
 import { hideMenFunc } from "../nav/hideMenu";
 import taskPage from "/src/dom/taskPage/taskPageCreate";
 import createHomePage from "./homeCreate";
@@ -26,13 +26,13 @@ function makeNavItems(div, main){
     imageCreator(homePng, ["class", "nav-icon", "nav-icon-home"], homeDivBtn);
     elementCreator("p", false, "Home", homeDivBtn);
 
-    const tasksDiv = elementCreator("div", ["class", "nav-item"], false, div);
-    const tasksDivBtn = elementCreator("div", ["class", "nav-item"], false, tasksDiv)
-    imageCreator(tasksPng, ["class","nav-icon","nav-icon-tasks"], tasksDivBtn);
-    elementCreator("p", false, "Tasks", tasksDivBtn);
-    const arrowDropDown = imageCreator(arrowCircle, ["class", "tasks-arrow"], tasksDiv);
-    const tasksSubDiv = elementCreator("div", ["class", "nav-tasks-sub"], false, div);
-    const ul = elementCreator("ul", false, false, tasksSubDiv);
+    const groupsDiv = elementCreator("div", ["class", "nav-item"], false, div);
+    const groupsDivBtn = elementCreator("div", ["class", "nav-item"], false, groupsDiv)
+    imageCreator(groupsPng, ["class","nav-icon","nav-icon-groups"], groupsDivBtn);
+    elementCreator("p", false, "Groups", groupsDivBtn);
+    const arrowDropDown = imageCreator(arrowCircle, ["class", "groups-arrow"], groupsDiv);
+    const groupsSubDiv = elementCreator("div", ["class", "nav-groups-sub"], false, div);
+    const ul = elementCreator("ul", false, false, groupsSubDiv);
 
     elementCreator("li", ["class", "li-title"], "items", ul);
     elementCreator("li", ["class", "li-title"], "items", ul);
@@ -40,12 +40,12 @@ function makeNavItems(div, main){
 
 
 
-    const settingsDivBtn = elementCreator("div", ["class", "nav-item"], false, div);
-    imageCreator(gearPng, ["class", "nav-icon", "nav-icon-settings"], settingsDivBtn);
-    elementCreator("p", false, "Settings", settingsDivBtn)
-    navSelectMenu(arrowDropDown, tasksSubDiv,settingsDivBtn );
-    tasksDiv.addEventListener("click", (e)=>{
-        if(!e.target.className.includes("tasks-arrow") && isHome){
+    const taskExplorerBtn = elementCreator("div", ["class", "nav-item"], false, div);
+    imageCreator(taskExplorerImg, ["class", "nav-icon", "nav-icon-task-explorer"], taskExplorerBtn);
+    elementCreator("p", false, "Task Explorer", taskExplorerBtn)
+    navSelectMenu(arrowDropDown, groupsSubDiv);
+    groupsDiv.addEventListener("click", (e)=>{
+        if(!e.target.className.includes("groups-arrow") && isHome){
             taskPage(main);
         }
     });
@@ -60,10 +60,9 @@ const makeTasks=()=>{ //not in DOM folder though, move it to a task.js outside o
 
 }
 
-function navSelectMenu(arrowBtn, div, settingsBtn){
+function navSelectMenu(arrowBtn, div){
     arrowBtn.addEventListener("click", ()=>{
         arrowBtn.classList.toggle("arrow-rotate")
         div.classList.toggle("hidden-select");
-        settingsBtn.classList.toggle("nav-icon-settings-margin")
     })
 }

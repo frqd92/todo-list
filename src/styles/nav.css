@@ -32,6 +32,7 @@ nav{
         transform: scaleX(1);
     }
 }
+
 .nav-title{
     font-family: berkshire;
     align-self: self-start;
@@ -56,7 +57,7 @@ nav{
     cursor: pointer;
 
 }
-.nav-tasks-sub{
+.nav-groups-sub{
     margin-top: -35px;
     border: 1px solid rgba(0, 0, 0, 0.235);
     text-align: center;
@@ -65,17 +66,15 @@ nav{
 .nav-icon-home{
     filter: hue-rotate(40deg);
 }
-.nav-icon-home, .nav-icon-tasks{
+.nav-icon-home, .nav-icon-groups{
     margin-left: 10px;
 }
 
-.nav-icon-settings{
+.nav-icon-task-explorer{
     margin-left: 8px;
     margin-right: 2px;
 }
-.nav-icon-settings-margin{
-    
-}
+
 .nav-item p{
     margin-left: 10px;
     font-size: calc(0.9rem + 0.3vw);
@@ -101,10 +100,10 @@ nav{
 
 
 .nav-icon {
-    width: 20px;
+    width: 30px;
 }
 
-.tasks-arrow{
+.groups-arrow{
     margin-left: 4px;
     width: 20px;
     filter: hue-rotate(130deg);
@@ -116,10 +115,6 @@ nav{
     transform: rotate(-90deg);
 }
 
-.nav-settings{
-    filter: brightness(1.23) contrast(0.9) hue-rotate(91deg) invert(0.11) opacity(0.63) sepia(0.03) ;
-    width: 24px;
-}
 
 
 .hidden-select{
@@ -128,16 +123,13 @@ nav{
 
 
 
-.nav-tasks-sub{
+.nav-groups-sub{
 
 
 }
-.nav-tasks-sub ul{
+.nav-groups-sub ul{
     list-style: none;
 }
-
-
-
 
 
 
