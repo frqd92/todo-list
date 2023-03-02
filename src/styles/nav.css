@@ -5,6 +5,8 @@ nav{
     grid-template-rows: 1fr 10fr 1fr 1fr;
     grid-template-columns: 100%;
     transition: 0.1 all ease-in;
+    z-index: 999;
+    backdrop-filter: blur(10px);
 }
 .hidden-nav-items{
     display: none;

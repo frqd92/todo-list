@@ -42,6 +42,7 @@ function saveBtns(div){
             }
         })
         document.querySelector(".modal-repeat-btn").innerText = "every " + summaryArr.join(" ");
+        console.log(summaryArr.join(" "));
         hideDiv(div, "hidden-repeat-div");
         resizeDiv();
         e.stopPropagation()

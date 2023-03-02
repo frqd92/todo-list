@@ -11,14 +11,13 @@ function taskboxTraversal(e, defaultChoice){
     let val = e?e.target.innerText.toLowerCase():defaultChoice;
     //the absolute positioned container that has the daily/weekly/montly divs
     const movingContainer = document.getElementById("taskbox-sub-container");
-
     switch(val){
         case "daily":
             movingContainer.style.left = "0%"; break;
         case "weekly":
-            movingContainer.style.left = "-100%"; break;
+            movingContainer.style.left = "-200%"; break;
         case "monthly":
-            movingContainer.style.left = "-200%";
+            movingContainer.style.left = "-400%";
     }
 }
 

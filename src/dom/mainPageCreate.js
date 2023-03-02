@@ -1,6 +1,6 @@
 import createNav from "./navCreate";
 import createHeader from "./headerCreate";
-import createHomePage from "./homeCreate";
+import createHomePage from "/src/dom/homePage/homeCreate";
 import { elementCreator, imageCreator } from "../utilities/elementCreator";
 import { testShit } from "../state";
 import { updateDataLocal, loggedIn, taskArray} from '../state';

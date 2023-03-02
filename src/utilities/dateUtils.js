@@ -101,7 +101,9 @@ export function detectFirstDayMonth(selectDate){
 //ex. arr [2,2,2023] returns string 02/02/2023
 export function formatNumDate(arr){
   for(let i=0;i<2;i++){
-    arr[i] = arr[i]<10?"0"+(arr[i]):arr[i];
+    if(arr[i]<10 && arr[i][0]!=="0"){
+      arr[i] = "0"+(arr[i]);
+    }
   }
 
   return `${arr[0]}/${arr[1]}/${arr[2]}`
@@ -166,18 +168,22 @@ export function whichWeekDayOfMonth(val){
 
 
 
-/*
 
-    if(overallCount===daysInChosenMonth){
-      console.log(weekDayCount)
-      return;
-    }
-    if(weekDays[i]===dueWeekDay){
-      weekDayCount++;
-    }
-    if(i===6){
-      i=0;
-    }
-    overallCount++;
+//displays full text formatted date
+//ex. string "2/2/2023" returns 2nd of march, 2023
+export function fullFormattedDate(date){
+  const [dd,mm,yy] = date.split("/");
+  return `${addSuffixToDay(Number(dd))} of ${returnMonth(Number(mm))}, ${yy}`
+}
 
-*/
+
+//ex enter a date as a string "2/2/2023" and num 7
+//finds date 7 days from that date.. if negative then goes back 7
+
+export function findRelativeDate(date, num){
+  const [dd,mm,yy] = date.split("/");
+  const inputDate = new Date(yy,mm,dd);
+  const nextDate = new Date(inputDate.getTime()+ num * 24 * 60 * 60 * 1000);
+  return `${nextDate.getDate()}/${nextDate.getMonth()}/${nextDate.getFullYear()}`
+}
+
