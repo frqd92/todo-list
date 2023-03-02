@@ -39,29 +39,27 @@ function dateProcess(type){
     }
     function formatForWeek(){
         const [day,month,year] = getToday().split("/");
-        let index = -1;
-        let from;
+        const from = chosenDayFunc(year,month,day)!=="Monday"? recursiveFunc(getToday(), false): getToday();
+        const to = chosenDayFunc(year,month,day)!=="Friday"? recursiveFunc(getToday(), true): getToday();
+        console.log(from + " to " + to );
+        
 
-        if(chosenDayFunc(day,month,year)!=="Monday"){
+       console.log(recursiveFunc("21/2/2023", true));
 
-            console.log(recursiveFunc(getToday(), false));
-        }
-        else{
-            from = getToday();
-        }
-        //const to = recursiveFunc(getToday(), true);
+
+
         function recursiveFunc(date, isIncrement){
+            const step = isIncrement?1:-1;
             const [dd,mm,yy] = date.split("/");
-            const newDate = findRelativeDate(`${dd}/${mm}/${yy}`, -1);
+            const newDate = findRelativeDate(`${dd}/${mm}/${yy}`, step);
             const [newD, newM, newY] = newDate.split("/");
-            const weekDay = chosenDayFunc(newY, newM, newD);
-
+     
+            const weekDay = chosenDayFunc(newY, Number(newM)+1, newD);
             if(weekDay==="Monday"){
                 return newDate;
             }
             else{
-                index=-1;
-                recursiveFunc(newDate, isIncrement);
+                return recursiveFunc(newDate, isIncrement);
             }
 
         }

@@ -14,7 +14,8 @@ function btnToDate(text, userClass){
     const mainBtn = document.querySelector(".modal-due-btn");
     if(text!=="None"){
         const [date, [dd,mm,yy]] = textToDate(text);
-        let day = chosenDayFunc(yy,mm-1,dd);
+
+        const day = chosenDayFunc(yy,mm-1,dd);
         document.querySelector(".due-btn-day-text").innerText = day;
         mainBtn.innerText = date;
         document.querySelector(`.cal-${userClass}-div`).remove();

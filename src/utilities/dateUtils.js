@@ -40,10 +40,13 @@ export function strDateToArr(str){
 
 
 //gets day of a date as a string
-export function chosenDayFunc(year, month, day) { 
-    let chosenDay = new Date(year,month,day);
+
+export function chosenDayFunc(year, month, day) {
+    const chosenDay = new Date(`${year}/${month}/${day}`);
     return chosenDay.toLocaleString('en-us', {weekday: 'long'})
 }
+
+
 
 
 //if today is mon feb 2023... "day" returns Monday.... "month" returns February...year 2023
