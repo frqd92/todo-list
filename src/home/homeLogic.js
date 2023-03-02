@@ -5,6 +5,23 @@ let pickedDiv;
 let timeframeBtns;
 let daily, weekly, monthly;
 
+
+
+function taskboxTraversal(e, defaultChoice){
+    let val = e?e.target.innerText.toLowerCase():defaultChoice;
+    //the absolute positioned container that has the daily/weekly/montly divs
+    const movingContainer = document.getElementById("taskbox-sub-container");
+
+    switch(val){
+        case "daily":
+            movingContainer.style.left = "0%"; break;
+        case "weekly":
+            movingContainer.style.left = "-100%"; break;
+        case "monthly":
+            movingContainer.style.left = "-200%";
+    }
+}
+
 export function chooseTimeframeFunc(div){
     pickedDiv = div.querySelector(".picked-timeframe");
     timeframeBtns = div.querySelectorAll(".home-timeframe-btn");
@@ -16,6 +33,7 @@ export function chooseTimeframeFunc(div){
     })
 
     function timeframeBtnFunc(e){
+        taskboxTraversal(e);
         saveToLocalStorage(e)
         userViewChoice = e.target;
         pickedDiv.style.width = `calc(${getWidth(e.target)} + 10px)` ;
@@ -36,6 +54,7 @@ export function chooseTimeframeFunc(div){
     //when user/guest enters website, their last picked item is saved. "picked div" follows that item
     function userDefaultViewOptions(followDiv){
         let choice = timeframeUserChoice();
+        taskboxTraversal(false, homeViewChoice);
         //console.log(choice);
         choice.classList.add("picked-timeframe-elem")
         followDiv.style.width = `calc(${getWidth(choice)} + 10px)` ;

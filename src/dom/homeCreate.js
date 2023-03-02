@@ -23,19 +23,25 @@ function createHomeHead(div){
             elementCreator("span", false, "/", chooseTimeframeDiv)
         }
     }
+    const container = elementCreator("div", ["id", "home-taskbox-container"], false, document.getElementById("main-home-div"))
+    const subContainer = elementCreator("div", ["id", "taskbox-sub-container"], false, container);
+    const dailyBox = TaskBoxFact("daily");
+    const weeklyBox = TaskBoxFact("weekly");
+    const monthlyBox = TaskBoxFact("monthly");
     chooseTimeframeFunc(chooseTimeframeDiv);
-    //const dailyBox = TaskBoxFact("daily");
+
 }
 
 const TaskBoxFact = (type)=>{
-
-    const container = elementCreator("div", ["class", "home-taskbox-container"], false, document.getElementById("main-home-div"))
-    const containerHead = elementCreator("div", ["class", "taskbox-head"], false, container);
+    
+    const taskboxDiv = elementCreator("div", ["class", "taskbox-div", `taskbox-div-${type}`], false, document.getElementById("taskbox-sub-container"));
+    const containerHead = elementCreator("div", ["class", "taskbox-head"], false, taskboxDiv);
     const arrowLeft = createArrow(containerHead, true);
-    const date = elementCreator("p", false, "Monday, 28th of February 2023", containerHead)
+    const date = elementCreator("p", false, type, containerHead);
+    //"Monday, 28th of February 2023"
     const arrowRight= createArrow(containerHead);
     arrowEffect([arrowLeft, arrowRight]);
-    return { container }
+    return { taskboxDiv  }
 }
 
 

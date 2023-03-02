@@ -76,26 +76,37 @@ main{
 
 /* containers for daily/weekly/montly */
 
-.taskbox-container{
-  user-select: none;
-  border: 1px solid white;
-  top: 0;
-  left: -200px;
-
+nav{
+  z-index: 999;
+  backdrop-filter: blur(10px);
 }
-
-
-.main-taskbox∂-div{
-
+#home-taskbox-container{
+  position: relative;
   width: 100%;
 
 }
-
-
-.main-taskbox-div{
-  position: absolute;
+#taskbox-sub-container{
+  display: flex;
+  position: relative;
+  transition: left 0.2s ease;
+  left: 0%;
 }
+.taskbox-div{
+  position: absolute;
+  width: 100%;
+  top: 0;
 
+}
+.taskbox-div-daily{
+  left: 0;
+}
+.taskbox-div-weekly{
+  left: 100%;
+}
+.taskbox-div-monthly{
+  left: 200%;
+  
+}
 
 .taskbox-head{
   display: grid;
@@ -132,6 +143,7 @@ main{
   font-size: 25px ;
   font-family: oxygen;
   pointer-events: none;
+  user-select: none;
 }
 .taskbox-animate{
   animation: arrowboop 0.3s ease-in-out;
