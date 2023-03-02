@@ -51,7 +51,6 @@ function processRepeat(val){
     const obj = {};
     if (val==="No repeat") return false;
     const arr = val.split(" ");
-    console.log(val);
     if((arr.includes("day") || arr.includes("days")) && (!arr.includes("month") && !arr.includes("months"))){
         obj.every = "day";
         !isNaN(Number(arr[1]))?obj.numRepeatsEvery = Number(arr[1]):obj.numRepeatsEvery = 1;

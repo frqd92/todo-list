@@ -157,7 +157,6 @@ function createPrioritiesOptions(div, btn){
             btn.innerText = e.target.innerText;
             const colorCircle = elementCreator("div", ["class", "priority-circle", `circle-${e.target.innerText.toLowerCase()}`], false, btn);
             hideDiv(div, "hidden-priorities-div");
-            console.log(div);
         })
     }
 }

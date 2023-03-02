@@ -1,7 +1,7 @@
 import { initializeApp } from "firebase/app";
 import { getAuth, GoogleAuthProvider,signInWithPopup } from "firebase/auth";
 import { createMain } from "./login";
-
+import { displayUsername } from "../state";
 export const firebaseConfig = {
     apiKey: "AIzaSyCH2K_CyIvRMF-lWQXAMbFGliumaN3MWcM",
     authDomain: "todoer-a680e.firebaseapp.com",
@@ -27,6 +27,7 @@ export function firebaseAuthen(){
       const token = credential.accessToken;
       // The signed-in user info.
       const user = result.user;
+      displayUsername(user.displayName);
         createMain(true);
       // IdP data available using getAdditionalUserInfo(result)
       // ...

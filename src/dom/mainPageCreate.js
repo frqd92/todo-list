@@ -5,7 +5,6 @@ import { elementCreator, imageCreator } from "../utilities/elementCreator";
 import { testShit } from "../state";
 import { updateDataLocal, loggedIn, taskArray} from '../state';
 import { readUserGroups, readUserTasks } from "../rtDatabase";
-
 import '/src/styles/homePage.css'
 import arrow from '/src/assets/images/arrow-empty.png';
 

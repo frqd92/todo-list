@@ -1,7 +1,7 @@
+import { relocatePickedDivNavMenu } from "../home/homeLogic";
 export function hideMenFunc(btn, nav){
-    const allNav = document.querySelectorAll("nav *")
+    const allNav = document.querySelectorAll("nav *");
     btn.addEventListener("click", hide);
-
 
     function hide(e){
         allNav.forEach(elem=>{
@@ -10,12 +10,11 @@ export function hideMenFunc(btn, nav){
         document.querySelector(".nav-github").style.display="none";
         nav.classList.add("hidden-nav");
         document.body.classList.add("hidden-nav-body");
+        relocatePickedDivNavMenu()
         e.stopPropagation();
-
         document.querySelector(".hidden-nav").addEventListener("click", show);
+
     }
-
-
     function show(e){
         setTimeout(()=>{
             allNav.forEach(elem=>{
@@ -25,15 +24,11 @@ export function hideMenFunc(btn, nav){
         }, 100)
         nav.classList.remove("hidden-nav");
         document.body.classList.remove("hidden-nav-body");
-
+        relocatePickedDivNavMenu()
         e.stopPropagation();
     }
 
-
-
-
-
-
-
+    
 
 }
+

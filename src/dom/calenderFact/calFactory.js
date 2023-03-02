@@ -47,6 +47,7 @@ function createDaySquares(div, date, text, returnDay, textElem, mainBtn, userCla
     let dayCount=1, nextMonthCount=1;
     for(let i=0;i<42;i++){
         const square = elementCreator("div", ["class", "cal-square"], false, div);
+
         if(i<firstDayMonth){
             square.innerText = (prevMonth-((firstDayMonth-1)-i));
             square.classList.add("cal-other-month");
@@ -62,7 +63,7 @@ function createDaySquares(div, date, text, returnDay, textElem, mainBtn, userCla
             square.classList.add("cal-other-month");
             square.classList.add("cal-next");
         }
-        if(dayCount===getToday("day")+1 && date[0]===returnMonth(getToday("month")) &&Number(date[1])===getToday("year")){
+        if(dayCount===getToday("day") + 1 && date[0]===returnMonth(getToday("month")) &&Number(date[1])===getToday("year") && nextMonthCount===1){
             square.classList.add("cal-current-day")
         }
         if(inputCalDay(false, square)){
@@ -205,7 +206,6 @@ function incrDecrMonth(text, isIncr, onlyValue, textElem, mainBtn, userClass, to
     nextMonth.setMonth(action ,1);
     if(!onlyValue){
         text.innerText = `${returnMonth(nextMonth.getMonth())} ${nextMonth.getFullYear()}`;
-        console.log(text.parentElement.parentElement.parentElement);
         [currentMonth, currentYear] = text.innerText.split(" ");
 
         renderCalender(text.innerText.split(" "), text, textElem, mainBtn, userClass, toClose);

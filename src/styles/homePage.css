@@ -1,41 +1,208 @@
 main{
+  padding: 5px 0px; 
+
+}
+
+#main-home-div{
+  padding: 20px 0px;
+  position: relative;
+
+}
+
+.home-head-div{
+  position: relative;
+  user-select: none;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+
+}
+.home-welcome{
+
+  font-family: roboto;
+  font-size: 1.5rem;
+  color: rgba(255, 255, 255, 0.672);
+}
+
+.home-timeframe-div{
+  width: 100%;
+  font-family: roboto-medium;
+  font-size: 1.2rem;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  border-top:1px solid rgba(255, 255, 255, 0.08);
+  border-bottom:1px solid rgba(255, 255, 255, 0.08);
+  
+}
+.home-timeframe-div span{ 
+  color: rgb(204, 193, 193);
+  text-shadow: 0px 0px 2px rgb(186, 186, 192);
+  font-size: 1.8rem;
+  font-family: sofia;
+}
+
+.picked-timeframe{
+  position: absolute;
+  border: 2px solid rgba(24, 162, 172, 0.555);
+  border-radius: 2px;
+  border-left: none;
+  border-right: none;
+  height: 100%;
+  padding:0px 0px;
+  transition: all 0.2s linear;
+}
+.home-timeframe-btn{
+  transform: scale(1);
+  cursor: pointer;
+  transition: all 0.2s linear;
+  color: rgba(255, 255, 255, 0.279);
+
+
+
+}
+.picked-timeframe-elem{
+  transform: scale(1.25);
+  color: rgb(209, 209, 209);
+  text-shadow: 0px 0px 4px rgb(65, 218, 220, 0.5);
+}
+
+
+
+
+/* containers for daily/weekly/montly */
+
+.taskbox-container{
+  user-select: none;
+  border: 1px solid white;
+  top: 0;
+  left: -200px;
+
+}
+
+
+.main-taskbox∂-div{
+
+  width: 100%;
+
+}
+
+
+.main-taskbox-div{
+  position: absolute;
+}
+
+
+.taskbox-head{
+  display: grid;
+  grid-template-columns: 2fr 1fr 2fr;
+  justify-items: center;
+  align-items: center;
+  gap: 15px;
+  padding: 15px 0px;
+}
+.taskbox-head p{
+  color: white;
+  font-family: roboto-medium;
+  white-space: nowrap;
+  font-size: 1.5rem;
+}
+
+
+
+.taskbox-arrow-div{
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  
+
+  color:rgba(24, 162, 172, 0.555);
+  text-shadow: 0px 0px 2px rgb(143, 140, 140);
+  height: 40px;
+  cursor: pointer;
+  border-radius: 20px;
+  transition: background-color 0.1s linear;
+
 }
+.taskbox-arrow-div p{
+  font-size: 25px ;
+  font-family: oxygen;
+  pointer-events: none;
+}
+.taskbox-animate{
+  animation: arrowboop 0.3s ease-in-out;
+}
+@keyframes arrowboop {
+  0%{
+    font-size: 25px;
+    text-shadow: 0px 0px 0px white;
+
+  }
+  50%{
+    font-size: 35px;
+    text-shadow: 0px 0px 13px rgb(30, 185, 177);
+
+  }
+  100%{
+    font-size: 25px;
+    text-shadow: 0px 0px 0px white;
+
+  }
+}
+.taskbox-arrow-div:hover{
+  box-shadow: rgba(225, 225, 225, 0.1) 0px 1px 2px, rgba(218, 220, 222, 0.05) 0px 1px 3px inset;
+  background-color: rgb(65, 218, 220, 0.1);
+
+}
+
+.taskbox-arrow-div:active{
+  box-shadow: rgba(245, 243, 243, 0.2) 0px 0px 2px, rgba(218, 220, 222, 0.1) 0px 0px 2px;
+
+}
+
+
+
+
+
+
 
 
 /* if user has no stored tasks */
 
 .no-tasks-div{
+  z-index: 10000;
   position: absolute;
-  top: 18px;
-  right: 110px;
+  top: -23px;
+  right: 140px;
   display: flex;
-  align-items: end;
-  animation: noTaskDivAnim infinite 2s ease;
+  align-items: center;
+  animation: noTaskDivAnim infinite 3s ease-in-out;
 
 }
 .no-task-text{
   color: white;
   font-family: kalam;
   font-size: 1.2rem;
-  margin: 0px 0px 10px 0px;
+  margin: 12px 0px 10px 0px;
   white-space: nowrap;
 
 }
 .empty-arrow{
   width: 100px;
   filter: invert(100%);
+  transform: rotate(40deg);
  
 }
       
 
 @keyframes noTaskDivAnim {
   0%{
-    opacity: 1;
-    text-shadow: 0px 1px 8px rgba(72, 130, 210, 0.3);
+    opacity: 0.4;
+    text-shadow: 0px 1px 12px rgba(72, 130, 210);
 
   }
   50%{
@@ -43,8 +210,8 @@ main{
     text-shadow: 0px 0px 1px rgb(183, 183, 211);
   }
   100%{
-    opacity: 1;
-    text-shadow: 0px 1px 8px rgb(72, 130, 210, 0.3);
+    opacity: 0.4;
+    text-shadow: 0px 1px 12px rgb(72, 130, 210);
 
   }
 }

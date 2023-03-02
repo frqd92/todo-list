@@ -5,6 +5,8 @@
     right:-34px;
     display: none;
     transition: width 0.2s ease-in;
+    background-color: rgba(0, 0, 0, 0.857);
+
 }
 
 .triangle{
@@ -41,7 +43,6 @@
 
 .modal-content, .add-modal-arrowThing{
 
-    
     background-color: rgba(255, 255, 255, 0.234);
 }
 
@@ -75,12 +76,11 @@
 
 
 .modal-content{ 
-    
     border-radius: 10px;
     width: 100%;
     transition: height 0.2s ease-in;
     height: 300px;
-   
+
 }
 
 .content-add{
@@ -110,6 +110,7 @@
     gap: 25px;
     top: 0;
     left: 0;
+    z-index: 100;
 
 }
 
@@ -119,6 +120,7 @@
     border-bottom: 1px solid rgba(185, 185, 185, 0.299); 
     color: rgba(0, 0, 0, 0.914); /*theme*/
     text-shadow: 0px 1px 1px rgba(0, 5, 40, 0.349);/*theme*/
+    
 }
 .form-placeholder{
     z-index:-1;
@@ -224,7 +226,7 @@
     background-color: rgba(56, 107, 249, 0.287);
     color: rgba(255, 255, 255, 0.563);
     transform: scale(1.05);
-    z-index: 1000000;
+    z-index: 100;
 }
 .modal-due-btn:active,.modal-group-btn:active,.modal-priority-btn:active,.modal-repeat-btn:active, .modal-notes-btn:active{
     transform: scale(1);
@@ -256,7 +258,7 @@
     width: 100%;
     background-color: rgba(1, 2, 12, 0.9);
     transition: transform 0.2s ease-in-out;
-    z-index: 1000000;
+    z-index: 10;
     backdrop-filter: blur(50px);
 
 }
@@ -264,7 +266,7 @@
 .hidden-options-div,.hidden-priorities-div, .hidden-repeat-div, .hidden-notes-div{
     transform: scale(0);
     transition: none;
-    z-index: -10000;
+    z-index: -10;
 }
 
 
@@ -448,7 +450,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    z-index: 1000000000;
+    z-index: 998;
     color: white;
     font-family: roboto;
     font-size: 1rem;
@@ -618,7 +620,7 @@
     justify-content: center;
     align-items: center;
     gap: 5px;
-    z-index: 10000;
+    z-index: 998;
 }
 
 .modal-group-priorities{
@@ -686,7 +688,7 @@
 }
 .modal-repeat-options{
     position: absolute;
-    z-index: 100000;
+    z-index: 996;
     top: 22.5px;
     right: -33px;
     width: 300px;
@@ -794,7 +796,7 @@
     transition: transform 0.1s ease;
     transform:translateY(-130px) scale(0);
     position: absolute;
-    z-index: -1000;
+    z-index: -100;
 
 }
 .show-week-repeat{
@@ -808,7 +810,7 @@
     transition: transform 0.1s ease;
     transform:translateY(-130px) scale(0);
     position: absolute;
-    z-index: -1000;
+    z-index: -100;
     display: flex;
     width: 100%;
     white-space: nowrap;
@@ -943,7 +945,7 @@
     position: absolute;
     display: flex;
     flex-direction: column;
-    z-index: 1000;
+    z-index: 999;
     backdrop-filter: blur(15px);
     color: white;
     border-radius: 5px;

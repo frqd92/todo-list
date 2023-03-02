@@ -82,7 +82,7 @@ function effectiveDiv(div){
     div.addEventListener("click", hideSelectDiv);
     function hideSelectDiv(e){
         if(!e.target.closest(".dropdown-div-shown") && !e.target.closest(".effective-btn")){
-            //hideSelect();
+            hideSelect();
         }
     }
     function showHideSelect(){
