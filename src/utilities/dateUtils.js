@@ -102,14 +102,18 @@ export function detectFirstDayMonth(selectDate){
 
 //adds a zero to nums less than 10
 //ex. arr [2,2,2023] returns string 02/02/2023
-export function formatNumDate(arr){
+export function formatNumDate(date){
+  let val = date;
+  if(typeof date==="string"){
+    val = date.split("/");
+  }
   for(let i=0;i<2;i++){
-    if(arr[i]<10 && arr[i][0]!=="0"){
-      arr[i] = "0"+(arr[i]);
+    if(val[i]<10 && val[i][0]!=="0"){
+      val[i] = "0"+(val[i]);
     }
   }
 
-  return `${arr[0]}/${arr[1]}/${arr[2]}`
+  return `${val[0]}/${val[1]}/${val[2]}`
 }
 
 
@@ -118,6 +122,7 @@ export function formatNumDate(arr){
 export function addOneToMonth(date, isSub){
   let arr = date.split("/");
   const num = isSub?-1:1;
+  console.log(num);
   arr[1] = Number(arr[1])<9?"0" + (Number(arr[1])+num):(Number(arr[1])+num);
   return arr.join("/");
 }
@@ -189,7 +194,10 @@ export function fullFormattedDate(date){
 export function findRelativeDate(date, num){
   let [dd,mm,yy] = date.split("/");
   const inputDate = new Date(yy,mm,dd);
-  const nextDate = new Date(inputDate.getTime()+ num * 24 * 60 * 60 * 1000);
+  const nextDate = new Date();
+  nextDate.setDate(inputDate.getDate()+num);
+  //const nextDate = new Date(inputDate.getTime()+ num * 24 * 60 * 60 * 1000);
+
   return `${nextDate.getDate()}/${nextDate.getMonth()}/${nextDate.getFullYear()}`
 }
 
@@ -203,6 +211,7 @@ export function chosenDayFunc2(str) {
 // recursive function that looks for the date range of a specific date
 // also messed up because of the 0-11 month shenanigans
 export function recursiveFunc(date, isIncrement){
+  const isIn = isIncrement;
   const limit = isIncrement?"Sunday":"Monday";
   const step = isIncrement?1:-1;
   if(chosenDayFunc2(date)===limit) return date;
@@ -211,7 +220,7 @@ export function recursiveFunc(date, isIncrement){
   const newDate = findRelativeDate(`${dd}/${mm}/${yy}`, step);
   const weekDay = chosenDayFunc2(newDate);
   if(weekDay===limit) return newDate;
-  else return recursiveFunc(newDate, isIncrement);
+  else return recursiveFunc(newDate, isIn);
 }
 
 

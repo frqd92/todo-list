@@ -1,5 +1,5 @@
 import { elementCreator, imageCreator } from "../../utilities/elementCreator";
-import { getToday, fullFormattedDate, addOneToMonth, findRelativeDate, formatNumDate, returnMonth, chosenDayFunc2, recursiveFunc, textDateToNum} from '../../utilities/dateUtils';
+import { getToday, fullFormattedDate, addOneToMonth, findRelativeDate, formatNumDate, returnMonth, recursiveFunc, textDateToNum} from '../../utilities/dateUtils';
 import rangeArrow from '/src/assets/images/neat-arrow.png'
 
 export default function TaskBoxFact(type){
@@ -36,11 +36,8 @@ function arrowFunc(div, type){
     }
 }
 
-
 function arrowDailyFunc(left, right){
-    [left,right].forEach(btn=>{
-        btn.addEventListener("click", incrDecrDay);
-    })
+    [left,right].forEach(btn=>{btn.addEventListener("click", incrDecrDay);})
     function incrDecrDay(){
         const text = left.nextSibling;
         const date = textDateToNum(text.innerText);
@@ -54,35 +51,41 @@ function arrowDailyFunc(left, right){
 }
 
 function arrowWeeklyFunc(left,right){
-    [left,right].forEach(btn=>{
-        btn.addEventListener("click", incrDecrWeek);
-    })
+    [left,right].forEach(btn=>{btn.addEventListener("click", incrDecrWeek);})
     function incrDecrWeek(){
         const text = left.nextSibling;
         const date = text.querySelectorAll("p");
         const from = date[0];
         const to = date[1];
+
+
         if(this.className.includes("taskbox-right-div")){
             let rDateFrom = addOneToMonth(to.innerText, true);
-            from.innerText = addOneToMonth(findRelativeDate(rDateFrom,1));
-            let rDateTo = addOneToMonth(from.innerText, true);
-            to.innerText = addOneToMonth(findRelativeDate(rDateTo,6));
+            from.innerText = formatNumDate(addOneToMonth(findRelativeDate(rDateFrom,1)));
+            to.innerText = formatNumDate(addOneToMonth(findRelativeDate(rDateFrom,7)));
+
         }
         else{
             let rDateTo = addOneToMonth(from.innerText, true);
-            to.innerText = addOneToMonth(findRelativeDate(rDateTo,-1));
+            to.innerText = formatNumDate(addOneToMonth(findRelativeDate(rDateTo,-1)));
             let rDateFrom = addOneToMonth(to.innerText, true);
-            from.innerText = addOneToMonth(findRelativeDate(rDateFrom,-6));
+            from.innerText = formatNumDate(addOneToMonth(findRelativeDate(rDateFrom,-6)));
         }
     }
 }
 function arrowMonthlyFunc(left,right){
+    [left,right].forEach(btn=>{btn.addEventListener("click", incrDecrMonth);})
+    function incrDecrMonth(){
+       const text = left.nextSibling;
+       const dateText = text.innerText.split(" ");
+       const date = new Date(`1 ${dateText[0]} ${dateText[1]}`);
+       this.className.includes("taskbox-right-div")?calc(1, 11, "January"):calc(-1, 0, "December");
 
+       function calc(num, month, str){
+        date.getMonth()!==month?text.innerText = `${returnMonth(date.getMonth() + num)} ${date.getFullYear()}`: text.innerText = `${str} ${Number(dateText[1])+num}`
+       }
+    }
 }
-
-
-
-
 
 
 function dateProcess(type){
