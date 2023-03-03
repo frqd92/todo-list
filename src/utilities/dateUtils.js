@@ -115,9 +115,10 @@ export function formatNumDate(arr){
 
 //adds one to the month when it's displayed since months are 0-11 in date object
 // ex. string 19/0/2023 becomes 19/01/2023
-export function addOneToMonth(date){
+export function addOneToMonth(date, isSub){
   let arr = date.split("/");
-  arr[1] = Number(arr[1])<9?"0" + (Number(arr[1])+1):(Number(arr[1])+1);
+  const num = isSub?-1:1;
+  arr[1] = Number(arr[1])<9?"0" + (Number(arr[1])+num):(Number(arr[1])+num);
   return arr.join("/");
 }
 
@@ -126,6 +127,9 @@ export function addOneToMonth(date){
 export function addSuffixToDay(num){
   num = Number(num);
   let day = Number(num)<9?("0"+num).split(""):num.toString().split("");
+  if(Number(day.join(""))===13){
+    return num+"th"
+  }
   if(Number(day[1])===1){
     return num+"st";
   }
@@ -183,9 +187,42 @@ export function fullFormattedDate(date){
 //ex enter a date as a string "2/2/2023" and num 7
 //finds date 7 days from that date.. if negative then goes back 7
 export function findRelativeDate(date, num){
-  const [dd,mm,yy] = date.split("/");
+  let [dd,mm,yy] = date.split("/");
   const inputDate = new Date(yy,mm,dd);
   const nextDate = new Date(inputDate.getTime()+ num * 24 * 60 * 60 * 1000);
   return `${nextDate.getDate()}/${nextDate.getMonth()}/${nextDate.getFullYear()}`
 }
 
+//taskBoxFact
+//can't use the one in dateUtil because I fucked up and used a bad date format (month 0-11) but there's already a bunch of other functions using it... Plan shit better next time kunt
+export function chosenDayFunc2(str) {
+  const [day,month,year] = str.split("/"); 
+  const chosenDay = new Date(year, month, day);
+  return chosenDay.toLocaleString('en-us', {weekday: 'long'})
+}
+// recursive function that looks for the date range of a specific date
+// also messed up because of the 0-11 month shenanigans
+export function recursiveFunc(date, isIncrement){
+  const limit = isIncrement?"Sunday":"Monday";
+  const step = isIncrement?1:-1;
+  if(chosenDayFunc2(date)===limit) return date;
+
+  const [dd,mm,yy] = date.split("/");
+  const newDate = findRelativeDate(`${dd}/${mm}/${yy}`, step);
+  const weekDay = chosenDayFunc2(newDate);
+  if(weekDay===limit) return newDate;
+  else return recursiveFunc(newDate, isIncrement);
+}
+
+
+//"3rd of march, 2023" becomes 3/2/2023
+export function textDateToNum(str){
+  const arr = str.split(" ");
+  const day = arr[0].split("").filter(elem=>!isNaN(elem)).join("")
+  const monthComma = arr[arr.length-2].split("");
+  monthComma.pop()
+  const month = returnMonth(monthComma.join(""));
+  const year = arr[arr.length-1];
+  return `${day}/${month}/${year}`
+
+}

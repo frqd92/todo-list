@@ -1,5 +1,5 @@
 import { elementCreator, imageCreator } from "../../utilities/elementCreator";
-import { getToday, fullFormattedDate, addOneToMonth, findRelativeDate, formatNumDate, returnMonth } from '../../utilities/dateUtils';
+import { getToday, fullFormattedDate, addOneToMonth, findRelativeDate, formatNumDate, returnMonth, chosenDayFunc2, recursiveFunc, textDateToNum} from '../../utilities/dateUtils';
 import rangeArrow from '/src/assets/images/neat-arrow.png'
 
 export default function TaskBoxFact(type){
@@ -22,8 +22,68 @@ function createElements(type, text){
     containerHead.appendChild(text);
     const arrowRight= createArrow(containerHead);
     arrowEffect([arrowLeft, arrowRight]);
+    arrowFunc(containerHead, type);
     return taskboxDiv;
 }
+
+function arrowFunc(div, type){
+    const [leftArr,text,rightArr] = div.childNodes;
+
+    switch(type){
+        case "daily": arrowDailyFunc(leftArr,rightArr);break;
+        case "weekly": arrowWeeklyFunc(leftArr, rightArr);break;
+        case "monthly": arrowMonthlyFunc(leftArr, rightArr);
+    }
+}
+
+
+function arrowDailyFunc(left, right){
+    [left,right].forEach(btn=>{
+        btn.addEventListener("click", incrDecrDay);
+    })
+    function incrDecrDay(){
+        const text = left.nextSibling;
+        const date = textDateToNum(text.innerText);
+        if(this.className.includes("taskbox-left-div")){
+            text.innerText = fullFormattedDate(findRelativeDate(date,-1));
+        }
+        else{
+            text.innerText = fullFormattedDate(findRelativeDate(date,1));
+        }
+    }
+}
+
+function arrowWeeklyFunc(left,right){
+    [left,right].forEach(btn=>{
+        btn.addEventListener("click", incrDecrWeek);
+    })
+    function incrDecrWeek(){
+        const text = left.nextSibling;
+        const date = text.querySelectorAll("p");
+        const from = date[0];
+        const to = date[1];
+        if(this.className.includes("taskbox-right-div")){
+            let rDateFrom = addOneToMonth(to.innerText, true);
+            from.innerText = addOneToMonth(findRelativeDate(rDateFrom,1));
+            let rDateTo = addOneToMonth(from.innerText, true);
+            to.innerText = addOneToMonth(findRelativeDate(rDateTo,6));
+        }
+        else{
+            let rDateTo = addOneToMonth(from.innerText, true);
+            to.innerText = addOneToMonth(findRelativeDate(rDateTo,-1));
+            let rDateFrom = addOneToMonth(to.innerText, true);
+            from.innerText = addOneToMonth(findRelativeDate(rDateFrom,-6));
+        }
+    }
+}
+function arrowMonthlyFunc(left,right){
+
+}
+
+
+
+
+
 
 function dateProcess(type){
     const div = elementCreator("div", ["class", `${type}-date-range`])
@@ -42,39 +102,12 @@ function dateProcess(type){
         div.innerText = returnMonth(getToday("month")) + " " + getToday("year");
     }
     return div;
-
     function formatForWeek(){
-  
        const from = recursiveFunc(getToday(), false);
        const to = recursiveFunc(getToday(), true);
-        return [
-            addOneToMonth(formatNumDate(from.split("/"))),
-            addOneToMonth(formatNumDate(to.split("/")))
-        ]
+        return [addOneToMonth(formatNumDate(from.split("/"))), addOneToMonth(formatNumDate(to.split("/")))]
     }
 }
-
-
-//can't use the one in dateUtil because I fucked up and used a bad date format (month 0-11) but there's already a bunch of other functions using it... Plan shit better next time kunt
-function chosenDayFunc2(str) {
-    const [day,month,year] = str.split("/"); 
-    const chosenDay = new Date(year, month, day);
-    return chosenDay.toLocaleString('en-us', {weekday: 'long'})
-}
-// recursive function that looks for the date range of a specific date
-// also messed up because of the 0-11 month shenanigans
-function recursiveFunc(date, isIncrement){
-    const limit = isIncrement?"Sunday":"Monday";
-    const step = isIncrement?1:-1;
-    if(chosenDayFunc2(date)===limit) return date;
-
-    const [dd,mm,yy] = date.split("/");
-    const newDate = findRelativeDate(`${dd}/${mm}/${yy}`, step);
-    const weekDay = chosenDayFunc2(newDate);
-    if(weekDay===limit) return newDate;
-    else return recursiveFunc(newDate, isIncrement);
-}
-
 
 
 
@@ -104,7 +137,8 @@ function recursiveFunc(date, isIncrement){
 //arrow stuff
 function createArrow(div, isLeft){
     const arrow = isLeft?"<":">";
-    const arrowDiv = elementCreator("div", ["class", "taskbox-arrow-div"], false, div);
+    const arrClass = isLeft?"taskbox-left-div":"taskbox-right-div";
+    const arrowDiv = elementCreator("div", ["class", "taskbox-arrow-div", arrClass], false, div);
     for(let i=0;i<3;i++){elementCreator("p", ["class", `arrow-${arrow}`], arrow, arrowDiv);}
     return arrowDiv
 }
