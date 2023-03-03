@@ -182,7 +182,6 @@ export function fullFormattedDate(date){
 
 //ex enter a date as a string "2/2/2023" and num 7
 //finds date 7 days from that date.. if negative then goes back 7
-
 export function findRelativeDate(date, num){
   const [dd,mm,yy] = date.split("/");
   const inputDate = new Date(yy,mm,dd);

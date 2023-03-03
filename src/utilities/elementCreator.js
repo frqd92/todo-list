@@ -23,7 +23,9 @@ export function elementCreator(type, selector,text, parent, isPrepend, placehold
 
         }
     }
-    !isPrepend?parent.appendChild(element):parent.prepend(element);
+    if(parent){
+        !isPrepend?parent.appendChild(element):parent.prepend(element);
+    }
 
     return element;
 }
@@ -40,6 +42,8 @@ export function imageCreator(source, selector, parent){
             img.id=selector[1];
         }
     }
-    parent.appendChild(img)
+    if(parent){
+        parent.appendChild(img)
+    }
     return img;
 }

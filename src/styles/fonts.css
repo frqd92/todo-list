@@ -34,3 +34,7 @@
     font-family: "kalam";
     src: url(/src/assets/fonts/kalam.ttf);
 }
+@font-face {
+    font-family: "korean";
+    src: url(/src/assets/fonts/noto-korean.otf);
+}
