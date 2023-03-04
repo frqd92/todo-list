@@ -21,7 +21,7 @@ function createDropdown(type, div){
     const dropdownDiv = elementCreator("div", ["class", "tb-dropdown"], false, div);
     const upperDiv = elementCreator("div", ["class", "tb-dropdown-upper", "tb-upper-hidden"], false, dropdownDiv);
     const autoHideCont = elementCreator("div", ["class", "tb-autohide"], false, upperDiv);
-    const autohideCheck = elementCreator("div", false, false, autoHideCont);
+    const autohideCheck = elementCreator("div", ["class", "tb-check"], false, autoHideCont);
     autohideCheck.innerHTML ="&#x2713";
     const autoLabel = elementCreator("span",["class", "autohide-label"], "Disable autohide", upperDiv);
     autoHideFunc();
@@ -71,29 +71,53 @@ function createDropdown(type, div){
         autoHideCont.addEventListener("click", autohideState);
         function getHideState(){
             const state = localStorage.getItem("dropdown-hide");
-            if(state!==null)state==="no-hide"?showDrop():hideDrop;
+            if(state!==null){
+                state==="no-hide"?showDrop(false):hideDrop(false);
+            }
         }
         function autohideState(){
             if(isAutoHide==="autohide"){
-                showDrop();
+                showDrop(true);
                 localStorage.setItem("dropdown-hide", "no-hide");
             }
             else{
-                hideDrop()
+                hideDrop(true)
                 localStorage.setItem("dropdown-hide", "autohide");
             }
         }
     }
-    function showDrop(){
-        autohideCheck.style.display="none";
-        autoLabel.innerText = "Enable autohide";
-        autoLabel.style.right = "-94px";
+    function showDrop(bool){
+        if(bool){
+            const checks = document.querySelectorAll(".tb-check");
+            const labels = document.querySelectorAll(".autohide-label");
+            for(let i=0;i<3;i++){
+                checks[i].style.display="none";
+                labels[i].innerText = "Enable autohide";
+                labels[i].style.right = "-94px";
+            }
+        }
+        else{
+            autohideCheck.style.display="none";
+            autoLabel.innerText = "Enable autohide";
+            autoLabel.style.right = "-94px";
+        }
         changeAutoHide("no-hide");
     }
-    function hideDrop(){
-        autohideCheck.style.display="block";
-        autoLabel.innerText = "Disable autohide";
-        autoLabel.style.right = "-98px";
+    function hideDrop(bool){
+        if(bool){
+            const checks = document.querySelectorAll(".tb-check");
+            const labels = document.querySelectorAll(".autohide-label");
+            for(let i=0;i<3;i++){
+                checks[i].style.display="block";
+                labels[i].innerText = "Disable autohide";
+                labels[i].style.right = "-98px";
+            }    
+        }
+        else{
+            autohideCheck.style.display="block";
+            autoLabel.innerText = "Disable autohide";
+            autoLabel.style.right = "-98px";
+        }
         changeAutoHide("autohide");
     }
     function showHideDropdown(){

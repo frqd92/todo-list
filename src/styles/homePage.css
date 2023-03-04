@@ -153,6 +153,7 @@ main{
   align-items: center;
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-top: none;
+  border-right: none;
   position: absolute;
   right: 0;
   top: 0;
@@ -201,7 +202,6 @@ main{
 }
 .tb-lower-hidden{
   transform: rotate(225deg) !important;
-
 }
 
 
