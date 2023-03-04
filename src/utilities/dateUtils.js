@@ -122,7 +122,6 @@ export function formatNumDate(date){
 export function addOneToMonth(date, isSub){
   let arr = date.split("/");
   const num = isSub?-1:1;
-  console.log(num);
   arr[1] = Number(arr[1])<9?"0" + (Number(arr[1])+num):(Number(arr[1])+num);
   return arr.join("/");
 }
@@ -194,10 +193,8 @@ export function fullFormattedDate(date){
 export function findRelativeDate(date, num){
   let [dd,mm,yy] = date.split("/");
   const inputDate = new Date(yy,mm,dd);
-  const nextDate = new Date();
-  nextDate.setDate(inputDate.getDate()+num);
-  //const nextDate = new Date(inputDate.getTime()+ num * 24 * 60 * 60 * 1000);
-
+  const nextDate = new Date(inputDate);
+  nextDate.setDate(inputDate.getDate() + num);
   return `${nextDate.getDate()}/${nextDate.getMonth()}/${nextDate.getFullYear()}`
 }
 

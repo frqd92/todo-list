@@ -30,6 +30,12 @@ export function themeFunc(theme){
 }
 
 
+//homepage taskbox autohide
+export let isAutoHide = "autohide";
+export function changeAutoHide(val){
+    isAutoHide = val;
+}
+
 //task obj
 export let groupArray = [];
 export let taskArray = [];

@@ -1,29 +1,145 @@
 import { elementCreator, imageCreator } from "../../utilities/elementCreator";
 import { getToday, fullFormattedDate, addOneToMonth, findRelativeDate, formatNumDate, returnMonth, recursiveFunc, textDateToNum} from '../../utilities/dateUtils';
+import { isAutoHide, changeAutoHide } from "../../state";
 import rangeArrow from '/src/assets/images/neat-arrow.png'
 
 export default function TaskBoxFact(type){
     
     const textDateElem = dateProcess(type);
+    //creating the taskbox head elements;
+    const taskboxDiv = elementCreator("div", ["class", "taskbox-div", `taskbox-div-${type}`], false, document.getElementById("taskbox-sub-container"));
+    createHeadElements(type, textDateElem, taskboxDiv);
+    //dropdown menu
+    createDropdown(type, taskboxDiv);
 
-    //creating the elements in the dom;
-    const taskboxElements = createElements(type, textDateElem);
+    return { taskboxDiv  }
+}
 
 
-    return { taskboxElements  }
+//Dropdown menu----------------------------------------------------------------------------
+function createDropdown(type, div){
+    const dropdownDiv = elementCreator("div", ["class", "tb-dropdown"], false, div);
+    const upperDiv = elementCreator("div", ["class", "tb-dropdown-upper", "tb-upper-hidden"], false, dropdownDiv);
+    const autoHideCont = elementCreator("div", ["class", "tb-autohide"], false, upperDiv);
+    const autohideCheck = elementCreator("div", false, false, autoHideCont);
+    autohideCheck.innerHTML ="&#x2713";
+    const autoLabel = elementCreator("span",["class", "autohide-label"], "Disable autohide", upperDiv);
+    autoHideFunc();
+
+    const thisBtn = elementCreator("div", ["class", "tb-dropdown-this"], thisText()[0], upperDiv)
+    const goToBtn = elementCreator("div", ["class", "tb-dropdown-go"],thisText()[1], upperDiv);
+
+    const progressDiv = elementCreator("div", ["class", "tb-progress"], false, upperDiv);
+    const graph = elementCreator("div", ["class", "graph-div"], false, progressDiv);
+
+
+    const lowerDiv = elementCreator("div", ["class", "tb-dropdown-lower"], false, dropdownDiv);
+    const container = elementCreator("div", ["class", "tb-arrow-div"], false, lowerDiv);
+    const arrow = elementCreator("div", ["class", "tb-lower-hidden"],">", container);
+    lowerDiv.addEventListener("click", showHideDropdown);
+
+    dropdownDiv.addEventListener("mouseover",showMain);
+
+
+    function showMain(){
+        if(isAutoHide==="no-hide"){
+            return
+        }
+        upperDiv.classList.remove("tb-upper-hidden");
+        arrow.classList.remove("tb-lower-hidden")
+        dropdownDiv.removeEventListener("mouseover",showMain);
+        dropdownDiv.addEventListener("mouseleave",hideMain)
+    }
+    function hideMain(e){
+        if(isAutoHide==="no-hide"){
+            return
+        }
+        upperDiv.classList.add("tb-upper-hidden");
+        arrow.classList.add("tb-lower-hidden")
+        dropdownDiv.addEventListener("mouseover",showMain);
+        dropdownDiv.removeEventListener("mouseleave",hideMain)
+    }
+
+
+
+
+    function autoHideFunc(){
+        autoHideCont.addEventListener("mouseover", ()=>{autoLabel.style.display = "block";});
+        autoHideCont.addEventListener("mouseleave", ()=>{autoLabel.style.display = "none";});
+
+        getHideState()
+        autoHideCont.addEventListener("click", autohideState);
+        function getHideState(){
+            const state = localStorage.getItem("dropdown-hide");
+            if(state!==null)state==="no-hide"?showDrop():hideDrop;
+        }
+        function autohideState(){
+            if(isAutoHide==="autohide"){
+                showDrop();
+                localStorage.setItem("dropdown-hide", "no-hide");
+            }
+            else{
+                hideDrop()
+                localStorage.setItem("dropdown-hide", "autohide");
+            }
+        }
+    }
+    function showDrop(){
+        autohideCheck.style.display="none";
+        autoLabel.innerText = "Enable autohide";
+        autoLabel.style.right = "-94px";
+        changeAutoHide("no-hide");
+    }
+    function hideDrop(){
+        autohideCheck.style.display="block";
+        autoLabel.innerText = "Disable autohide";
+        autoLabel.style.right = "-98px";
+        changeAutoHide("autohide");
+    }
+    function showHideDropdown(){
+        if(upperDiv.className.includes("tb-upper-hidden")){
+            upperDiv.classList.remove("tb-upper-hidden");
+            arrow.classList.remove("tb-lower-hidden")
+        }
+        else{
+            upperDiv.classList.add("tb-upper-hidden");
+            arrow.classList.add("tb-lower-hidden")
+        }
+    }
+    
+
+    function thisText(){
+        switch(type){
+            case "daily": return ["Today", "Go to day"];
+            case "weekly": return ["This week", "Go to week"];
+            case "monthly": return ["This month", "Go to month"];
+        }
+        
+    }
+
 }
 
 
 
-function createElements(type, text){
-    const taskboxDiv = elementCreator("div", ["class", "taskbox-div", `taskbox-div-${type}`], false, document.getElementById("taskbox-sub-container"));
-    const containerHead = elementCreator("div", ["class", "taskbox-head"], false, taskboxDiv);
+
+
+
+
+
+
+
+
+
+
+//Head Elements----------------------------------------------------------------------------
+function createHeadElements(type, text, div){
+    const containerHead = elementCreator("div", ["class", "taskbox-head"], false, div);
     const arrowLeft = createArrow(containerHead, true);
     containerHead.appendChild(text);
     const arrowRight= createArrow(containerHead);
     arrowEffect([arrowLeft, arrowRight]);
     arrowFunc(containerHead, type);
-    return taskboxDiv;
+    return containerHead;
 }
 
 function arrowFunc(div, type){
@@ -60,15 +176,15 @@ function arrowWeeklyFunc(left,right){
 
 
         if(this.className.includes("taskbox-right-div")){
-            let rDateFrom = addOneToMonth(to.innerText, true);
+            const rDateFrom = addOneToMonth(to.innerText, true);
             from.innerText = formatNumDate(addOneToMonth(findRelativeDate(rDateFrom,1)));
             to.innerText = formatNumDate(addOneToMonth(findRelativeDate(rDateFrom,7)));
 
         }
         else{
-            let rDateTo = addOneToMonth(from.innerText, true);
+            const rDateTo = addOneToMonth(from.innerText, true);
             to.innerText = formatNumDate(addOneToMonth(findRelativeDate(rDateTo,-1)));
-            let rDateFrom = addOneToMonth(to.innerText, true);
+            const rDateFrom = addOneToMonth(to.innerText, true);
             from.innerText = formatNumDate(addOneToMonth(findRelativeDate(rDateFrom,-6)));
         }
     }
@@ -81,8 +197,9 @@ function arrowMonthlyFunc(left,right){
        const date = new Date(`1 ${dateText[0]} ${dateText[1]}`);
        this.className.includes("taskbox-right-div")?calc(1, 11, "January"):calc(-1, 0, "December");
 
-       function calc(num, month, str){
-        date.getMonth()!==month?text.innerText = `${returnMonth(date.getMonth() + num)} ${date.getFullYear()}`: text.innerText = `${str} ${Number(dateText[1])+num}`
+        function calc(num, month, str){
+            date.getMonth()!==month?text.innerText = 
+            `${returnMonth(date.getMonth() + num)} ${date.getFullYear()}`: text.innerText = `${str} ${Number(dateText[1])+num}`;
        }
     }
 }
