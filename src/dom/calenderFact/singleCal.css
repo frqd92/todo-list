@@ -3,13 +3,13 @@
     width: 100%;
     height: clamp(80px, 12vw, 150px);
     border-bottom: 1px solid rgba(255, 255, 255, 0.01);
-    transition: all 0.35s linear;
+    transition: all 0.35s ease;
     background: linear-gradient(to right, #0c1f1b, #112523, #0c1d18); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 
 
 
-.hidden-onerow{
+.hidden-onerow-weekly, .hidden-onerow-monthly{
     width: 40px;
     display: flex;
     align-items: center;
@@ -29,9 +29,10 @@
     white-space: nowrap;
     box-shadow: rgba(182, 185, 184, 0.2) 0px 1px 2px 0px, rgba(182, 182, 182, 0.05) 0px 1px 3px 1px;
     padding-left: 2px;
+    overflow: hidden;
 }
 
-.hidden-onerow p{
+.hidden-onerow-weekly p, .hidden-onerow-monthly p{
     font-size: 0.7rem;
     position: absolute;
     margin-left: 5px;
@@ -56,6 +57,7 @@
     font-size: 0.7rem;
     box-shadow: rgba(100, 204, 182, 0.2) 0px 1px 2px 0px, rgba(70, 179, 148, 0.05) 0px 1px 3px 1px;
     cursor: pointer;
+    z-index: 20;
 }
 
 .onerow-hide-btn:active{
@@ -72,13 +74,30 @@
  
 }
 .week-square{
+    position: relative;
     display: flex;
     border-right: 1px solid rgba(255, 255, 255, 0.068);
-    background: rgba(0, 0, 0, 0.454);
+    background: rgba(255, 255, 255, 0.029);
+    transition: background-color 0.2s linear;
+}
+.week-square:hover{
+    background: rgba(0, 0, 0, 0.029);
 
-    
 }
 .week-square:last-child{
     border: none;
 }
 
+.week-square-day{
+    position: absolute;
+    right: 0;
+    margin: 5px 8px;
+    color: rgba(255, 255, 255, 0.722);
+    font-size: calc(1vw + 7px);
+    font-family: oxygen;
+    text-shadow: 0px 0px 2px rgba(255, 255, 255, 0.351);
+}
+.week-today{
+    background: rgba(255, 255, 255, 0.077);
+    
+}

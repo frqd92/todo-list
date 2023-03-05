@@ -24,15 +24,9 @@ nav{
     box-shadow: 0px 1px 7px rgba(255, 255, 255, 0.198);
 }
 @keyframes hoverNav {
-    0%{
-        transform: scaleX(1);
-    }
-    50%{
-        transform: scaleX(1.2);
-    }
-    100%{
-        transform: scaleX(1);
-    }
+    0%{transform: scaleX(1);}
+    50%{transform: scaleX(1.2);}
+    100%{transform: scaleX(1);}
 }
 
 .nav-title{
@@ -63,10 +57,14 @@ nav{
     margin-top: -35px;
     border: 1px solid rgba(0, 0, 0, 0.235);
     text-align: center;
-
 }
+
 .nav-icon-home{
-    filter: hue-rotate(40deg);
+    filter: hue-rotate(340deg) contrast(0.5);
+}
+.nav-icon-groups{
+    filter: hue-rotate(200deg);
+
 }
 .nav-icon-home, .nav-icon-groups{
     margin-left: 10px;

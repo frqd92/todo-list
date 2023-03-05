@@ -190,8 +190,9 @@ export function fullFormattedDate(date){
 
 //ex enter a date as a string "2/2/2023" and num 7
 //finds date 7 days from that date.. if negative then goes back 7
-export function findRelativeDate(date, num){
+export function findRelativeDate(date, num, isMonth){
   let [dd,mm,yy] = date.split("/");
+  if(isMonth) mm = Number(mm-1);
   const inputDate = new Date(yy,mm,dd);
   const nextDate = new Date(inputDate);
   nextDate.setDate(inputDate.getDate() + num);
@@ -205,7 +206,7 @@ export function chosenDayFunc2(str) {
   const chosenDay = new Date(year, month, day);
   return chosenDay.toLocaleString('en-us', {weekday: 'long'})
 }
-// recursive function that looks for the date range of a specific date
+// recursive function that looks for the week date range of a specific date
 // also messed up because of the 0-11 month shenanigans
 export function recursiveFunc(date, isIncrement){
   const isIn = isIncrement;
