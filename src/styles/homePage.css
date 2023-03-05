@@ -1,5 +1,5 @@
 main{
-  padding: 5px 0px; 
+
 
 }
 
@@ -61,7 +61,7 @@ main{
   transition: all 0.2s linear;
   color: rgba(255, 255, 255, 0.279);
 
-
+  
 
 }
 .picked-timeframe-elem{
@@ -84,7 +84,6 @@ main{
   display: flex;
   position: relative;
   transition: left 0.3s ease-in;
-
   
 }
 .taskbox-div{
@@ -130,7 +129,7 @@ main{
 /* dropdown ------------------------------------------------*/
 .tb-dropdown{
   align-self: center;
-  width: 20%;
+  width: clamp(160px, 20%, 300px);
   color: white;
   display: flex;
   flex-direction: column;
@@ -139,14 +138,48 @@ main{
 }
 .tb-dropdown-upper{
   position: relative;
-  padding: 10px;
+  padding: 0px;
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-top: none;
   border-radius: 0px 0px 10px 10px;
   transition: all 0.2s ease;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 3fr 1fr;
+  align-items: center;
 }
-
-
+.tb-dropdown-this, .tb-dropdown-go{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* border: 1px solid white; */
+  white-space: nowrap;
+  font-size: 0.95rem;
+  font-family: ptserif;
+  padding: 2px;
+  background: rgba(158, 232, 221, 0.132);
+  box-shadow: rgba(115, 115, 116, 0.3) 0px 1px 2px 0px, rgba(107, 162, 139, 0.15) 0px 1px 3px 1px;
+  color: rgba(255, 255, 255, 0.679);
+  cursor: pointer;
+  transition: background-color, color 0.13s linear;
+}
+.tb-dropdown-this:hover, .tb-dropdown-go:hover{
+  background: rgba(16, 129, 123, 0.332);
+  color: rgba(255, 255, 255, 0.779);
+}
+.tb-dropdown-this:active, .tb-dropdown-go:active{
+  box-shadow: rgba(155, 155, 158, 0.25) 0px 30px 60px -12px inset, rgba(143, 140, 140, 0.3) 0px 18px 36px -18px inset;
+}
+.tb-dropdown-this{
+  border-radius: 0px 0px 0px 10px;
+}
+.tb-dropdown-go{
+  border-radius: 0px 0px 10px 0px;
+}
+.tb-progress{
+  background-color: rgb(40, 99, 133);
+  grid-column: 1 / 3;
+}
 .tb-autohide{
   display: flex;
   justify-content: center;
@@ -220,7 +253,6 @@ main{
   justify-content: center;
   align-items: center;
   gap: 20px;
-  transition: all 1s linear;
   
 }
 .weekly-date-range img{
@@ -229,7 +261,7 @@ main{
   opacity: 0.7;
   -webkit-user-drag: none;
   user-select: none;
-  transition: width, transform 0.2s linear;
+  transition: width, transform 0.1s linear;
 }
 .weekly-date-range p {
   letter-spacing: 0.05rem;
@@ -237,7 +269,7 @@ main{
 }
 /* month-box */
 .monthly-date-range{
-
+  white-space: nowrap;
 }
 
 /* arrows */

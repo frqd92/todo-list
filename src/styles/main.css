@@ -3,6 +3,9 @@
     padding: 0;
     box-sizing: border-box;
 }
+main{
+    padding: 0px 1px;
+}
 body img{
     -webkit-user-drag: none;
 

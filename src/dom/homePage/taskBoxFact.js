@@ -2,13 +2,23 @@ import { elementCreator, imageCreator } from "../../utilities/elementCreator";
 import { getToday, fullFormattedDate, addOneToMonth, findRelativeDate, formatNumDate, returnMonth, recursiveFunc, textDateToNum} from '../../utilities/dateUtils';
 import { isAutoHide, changeAutoHide } from "../../state";
 import rangeArrow from '/src/assets/images/neat-arrow.png'
+import { OneRowCalFact } from "/src/dom/calenderFact/singleRowCal";
 
 export default function TaskBoxFact(type){
     
     const textDateElem = dateProcess(type);
+
+
     //creating the taskbox head elements;
     const taskboxDiv = elementCreator("div", ["class", "taskbox-div", `taskbox-div-${type}`], false, document.getElementById("taskbox-sub-container"));
     createHeadElements(type, textDateElem, taskboxDiv);
+
+    //if weekly or monthly add the single row cal
+    if(type==="weekly" || type==="monthly"){
+
+        const weeklyRowCal = OneRowCalFact(type, taskboxDiv);
+    };
+
     //dropdown menu
     createDropdown(type, taskboxDiv);
 
@@ -26,20 +36,20 @@ function createDropdown(type, div){
     const autoLabel = elementCreator("span",["class", "autohide-label"], "Disable autohide", upperDiv);
     autoHideFunc();
 
+    const progressDiv = elementCreator("div", ["class", "tb-progress"], false, upperDiv);
+    const graph = elementCreator("div", ["class", "graph-div"], false, progressDiv);
+
     const thisBtn = elementCreator("div", ["class", "tb-dropdown-this"], thisText()[0], upperDiv)
     const goToBtn = elementCreator("div", ["class", "tb-dropdown-go"],thisText()[1], upperDiv);
 
-    const progressDiv = elementCreator("div", ["class", "tb-progress"], false, upperDiv);
-    const graph = elementCreator("div", ["class", "graph-div"], false, progressDiv);
 
 
     const lowerDiv = elementCreator("div", ["class", "tb-dropdown-lower"], false, dropdownDiv);
     const container = elementCreator("div", ["class", "tb-arrow-div"], false, lowerDiv);
     const arrow = elementCreator("div", ["class", "tb-lower-hidden"],">", container);
+
     lowerDiv.addEventListener("click", showHideDropdown);
-
     dropdownDiv.addEventListener("mouseover",showMain);
-
 
     function showMain(){
         if(isAutoHide==="no-hide"){
@@ -59,8 +69,6 @@ function createDropdown(type, div){
         dropdownDiv.addEventListener("mouseover",showMain);
         dropdownDiv.removeEventListener("mouseleave",hideMain)
     }
-
-
 
 
     function autoHideFunc(){
@@ -157,7 +165,7 @@ function createDropdown(type, div){
 
 //Head Elements----------------------------------------------------------------------------
 function createHeadElements(type, text, div){
-    const containerHead = elementCreator("div", ["class", "taskbox-head"], false, div);
+    const containerHead = elementCreator("div", ["class", "taskbox-head", `taskbox-head-${type}`], false, div);
     const arrowLeft = createArrow(containerHead, true);
     containerHead.appendChild(text);
     const arrowRight= createArrow(containerHead);
