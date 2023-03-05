@@ -3,7 +3,7 @@ import { getToday, fullFormattedDate, addOneToMonth, findRelativeDate, formatNum
 import { isAutoHide, changeAutoHide } from "../../state";
 import rangeArrow from '/src/assets/images/neat-arrow.png'
 import { OneRowCalFact } from "/src/dom/calenderFact/singleRowCal";
-import { newDateSquaresWeek } from "../calenderFact/singleRowCal";
+import { newDateSquaresWeek, newDateSquaresMonth } from "../calenderFact/singleRowCal";
 export default function TaskBoxFact(type){
     
     const textDateElem = dateProcess(type);
@@ -15,7 +15,6 @@ export default function TaskBoxFact(type){
 
     //if weekly or monthly add the single row cal
     if(type==="weekly" || type==="monthly"){
-
         const weeklyRowCal = OneRowCalFact(type, taskboxDiv);
     };
 
@@ -219,10 +218,7 @@ function arrowWeeklyFunc(left,right){
             from.innerText = formatNumDate(addOneToMonth(findRelativeDate(rDateFrom,-6)));
         }
         //clicking on arrows to generate new squares from singleRowCal
-        if(document.querySelector(".hidden-onerow-weekly")===null){
-            newDateSquaresWeek()
-        }
-
+        if(document.querySelector(".hidden-onerow-weekly")===null)newDateSquaresWeek()
     }
 }
 function arrowMonthlyFunc(left,right){
@@ -237,11 +233,9 @@ function arrowMonthlyFunc(left,right){
             date.getMonth()!==month?text.innerText = 
             `${returnMonth(date.getMonth() + num)} ${date.getFullYear()}`: text.innerText = `${str} ${Number(dateText[1])+num}`;
        }
+       if(document.querySelector(".hidden-onerow-monthly")===null)newDateSquaresMonth()
     }
 
-    if(document.querySelector(".hidden-onerow-weekly")===null){
-        newDateSquaresWeek()
-    }
 }
 
 

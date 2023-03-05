@@ -1,5 +1,5 @@
 import { elementCreator } from "../../utilities/elementCreator";
-import { findRelativeDate, getToday, returnMonth} from "../../utilities/dateUtils";
+import { findRelativeDate, getToday, returnMonth, daysInMonth} from "../../utilities/dateUtils";
 import './singleCal.css'
 
 export function OneRowCalFact(type, parentDiv){
@@ -7,18 +7,42 @@ export function OneRowCalFact(type, parentDiv){
     const mainDiv = elementCreator("div", ["class", `onerow-cal-${type}`], false, parentDiv);
     const hideBtn = elementCreator("div", ["class", "onerow-hide-btn"], "Hide", mainDiv);
     hideBtnFunc(hideBtn, mainDiv, type);
-    // if(type==="weekly") createWeekCal(mainDiv); //already runs in taskboxfact arrowWeeklyFunc
+    if(type==="weekly") createWeekCal(mainDiv);
     if(type==="monthly") createMonthCal(mainDiv);
 
 
     return {mainDiv};
 }
 
+
+//month--------------------------------------------------------------------------------
+function createMonthCal(div){
+    const [mm,yy] = document.querySelector(".monthly-date-range").innerText.split(" ");
+    const monthDays = daysInMonth(mm,yy);
+    for(let i=0;i<monthDays;i++){
+        const monthSquare = elementCreator("div", ["class", "month-square"], false, div);
+        elementCreator("p", ["class", "month-square-day"], i+1, monthSquare);
+
+    }
+ 
+}
+export function newDateSquaresMonth(){
+    const allSquares = document.querySelectorAll(".month-square");
+    allSquares.forEach(square=>{square.remove();})
+    createMonthCal(document.querySelector(".onerow-cal-monthly"));
+}
+
+
+
+
+
+
+
+//week--------------------------------------------------------------------------------
 function createWeekCal(div){
     const dateStart = document.querySelector(".weekly-date-range p").innerText;
     const [todayDD, todayMM, todayYY] = getToday().split("/");
 
-    console.log("fart");
     for(let i=0;i<7;i++){
         const square = elementCreator("div", ["class", "week-square"], false,div);
         const num = findRelativeDate(dateStart, i, true).split("/");
@@ -41,20 +65,12 @@ function createWeekCal(div){
 }
 
 export function newDateSquaresWeek(){
-
         const allSquares = document.querySelectorAll(".week-square");
         allSquares.forEach(square=>{square.remove();})
         createWeekCal(document.querySelector(".onerow-cal-weekly"));
-
-
 }
 
 
-
-
-function createMonthCal(div){
-    
-}
 
 
 
@@ -87,7 +103,7 @@ function hideBtnFunc(btn, div, type){
             div.classList.remove(`hidden-onerow-${type}`);
             div.style.top="0px";
             if(div.querySelector(".hidden-onerow-text")!==null){div.querySelector(".hidden-onerow-text").remove()}
-            if(type==="weekly")newDateSquaresWeek()
+            if(type==="weekly")newDateSquaresWeek();
         }
     }
     function relocateShowCal(){
