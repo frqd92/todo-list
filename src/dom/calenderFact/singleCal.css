@@ -2,34 +2,47 @@
     position: relative;
     width: 100%;
     height: clamp(80px, 12vw, 150px);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-    top: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.01);
+    transition: all 0.35s linear;
+    background: linear-gradient(to right, #0c1f1b, #112523, #0c1d18); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
+
+
+
 .hidden-onerow{
-    width: 110px;
+    width: 40px;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: rgba(255, 255, 255, 0.686);
+    color: rgba(255, 255, 255, 0.486);
     font-size: 0.8rem;
     height: 30px;
     border: 1px solid white;
     position: absolute;
     cursor: pointer;
-    background: rgba(36, 158, 117, 0.209);
+    background: rgba(6, 182, 192, 0.139);
     border-radius: 0px 0px 10px 0px;
     font-family: open;
     border: 1px solid rgba(255, 255, 255, 0.08);
     border-top: none;
     border-left: none;
     white-space: nowrap;
-    transition: all 0.3s linear;
-
+    box-shadow: rgba(182, 185, 184, 0.2) 0px 1px 2px 0px, rgba(182, 182, 182, 0.05) 0px 1px 3px 1px;
+    padding-left: 2px;
 }
+
+.hidden-onerow p{
+    font-size: 0.7rem;
+    position: absolute;
+    margin-left: 5px;
+    color: rgba(255, 255, 255, 0.572);
+}
+
 .onerow-allHide{
     display: none;
 }
 .onerow-hide-btn{
+    background: rgba(6, 182, 192, 0.139);
     position: absolute;
     border: 1px solid rgba(255, 255, 255, 0.08);
     border-left: none;
@@ -38,8 +51,8 @@
     top: 0;
     left: 0;
     padding: 3px 10px;
-    color: rgba(54, 197, 161, 0.29);
-    font-family: korean;
+    color: rgba(255, 255, 255, 0.586);
+    font-family: open;
     font-size: 0.7rem;
     box-shadow: rgba(100, 204, 182, 0.2) 0px 1px 2px 0px, rgba(70, 179, 148, 0.05) 0px 1px 3px 1px;
     cursor: pointer;
@@ -49,3 +62,23 @@
     box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
     font-size: 0.68rem;
 }
+
+
+/* week cal-------------------------------------------------------------------------------- */
+.onerow-cal-weekly{
+    display: grid;
+    grid-template-columns: repeat(7, minmax(60px, 1fr));
+    grid-template-rows: 1fr;
+ 
+}
+.week-square{
+    display: flex;
+    border-right: 1px solid rgba(255, 255, 255, 0.068);
+    background: rgba(0, 0, 0, 0.454);
+
+    
+}
+.week-square:last-child{
+    border: none;
+}
+

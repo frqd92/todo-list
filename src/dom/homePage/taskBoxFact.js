@@ -46,7 +46,7 @@ function createDropdown(type, div){
 
     const lowerDiv = elementCreator("div", ["class", "tb-dropdown-lower"], false, dropdownDiv);
     const container = elementCreator("div", ["class", "tb-arrow-div"], false, lowerDiv);
-    const arrow = elementCreator("div", ["class", "tb-lower-hidden"],">", container);
+    const arrow = elementCreator("div", ["class", "tb-lower-hidden"],"^", container);
 
     lowerDiv.addEventListener("click", showHideDropdown);
     dropdownDiv.addEventListener("mouseover",showMain);
