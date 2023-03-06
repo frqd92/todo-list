@@ -11,7 +11,6 @@ export function displayUsername(val){
 }
 
 
-
 //website location and choices
 export let isHome = true;
 export let homeViewChoice = "daily";
@@ -49,7 +48,6 @@ export function updateDataLocal(){
         taskArray=tasks;
     }
 }
-
 export function updateDataServer(taskFromSer, groupFromSer){
     let arrFromServer;
     if(taskFromSer){//for tasks
@@ -70,9 +68,9 @@ export function updateDataServer(taskFromSer, groupFromSer){
 //for testing in mainPageCreate.js
 export function testShit(){
     document.querySelector(".nav-title").addEventListener("click", ()=>{
-        // console.log("task array: ", taskArray);
-        // console.log("group array: ", groupArray);
+         console.log("task array: ", taskArray);
+         console.log("group array: ", groupArray);
         // console.log("logged in: ", loggedIn);
-        console.log("view choice: ", homeViewChoice);
+        //console.log("view choice: ", homeViewChoice);
     })
 }

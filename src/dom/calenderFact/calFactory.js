@@ -102,7 +102,6 @@ function createDaySquares(div, date, text, returnDay, textElem, mainBtn, userCla
         let finalDate = addOneToMonth(date)
         textElem.innerText= finalDate;
         if(returnDay){
-            console.log(year, month, day);
             document.querySelector(".due-btn-day-text").innerText = getCurrentDateText("day", `${day}/${month}/${year}`);
         }
         else{

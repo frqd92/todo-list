@@ -1,4 +1,6 @@
-import { homeViewChoice, viewChoice } from '/src/state';
+import { homeViewChoice, viewChoice, taskArray } from '/src/state';
+import { homeTaskDisplay } from '../dom/homePage/taskBoxFact';
+import { groupArray } from '../state';
 let userViewChoice;
 //selected timeframe effect thing
 let pickedDiv;
@@ -43,6 +45,7 @@ export function chooseTimeframeFunc(div){
                 elem.classList.remove("picked-timeframe-elem")
             }
         })
+        homeTaskDisplay(taskArray)
     }
     //when window is resized, the "picked div" follows the button options as they change position
     window.addEventListener("resize", relocatePickedDiv);

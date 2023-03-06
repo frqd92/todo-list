@@ -1,9 +1,11 @@
 import { elementCreator, imageCreator } from "../../utilities/elementCreator";
 import { getToday, fullFormattedDate, addOneToMonth, findRelativeDate, formatNumDate, returnMonth, recursiveFunc, textDateToNum} from '../../utilities/dateUtils';
-import { isAutoHide, changeAutoHide } from "../../state";
+import { isAutoHide, changeAutoHide, taskArray, groupArray, homeViewChoice } from "../../state";
 import rangeArrow from '/src/assets/images/neat-arrow.png'
 import { OneRowCalFact } from "/src/dom/calenderFact/singleRowCal";
 import { newDateSquaresWeek, newDateSquaresMonth } from "../calenderFact/singleRowCal";
+
+
 export default function TaskBoxFact(type){
     
     const textDateElem = dateProcess(type);
@@ -13,16 +15,74 @@ export default function TaskBoxFact(type){
     const taskboxDiv = elementCreator("div", ["class", "taskbox-div", `taskbox-div-${type}`], false, document.getElementById("taskbox-sub-container"));
     createHeadElements(type, textDateElem, taskboxDiv);
 
+
     //if weekly or monthly add the single row cal
     if(type==="weekly" || type==="monthly"){
         const weeklyRowCal = OneRowCalFact(type, taskboxDiv);
     };
 
-    //dropdown menu
-    createDropdown(type, taskboxDiv);
+    //task processing
+    //findDateFromTask(textDateElem, type);
+
+
+    
 
     return { taskboxDiv  }
 }
+
+
+
+//tasks-------------------------------------------------------------------------------------------
+//takes the array from taskboxDateArray and compares it to the user's task array due date, compares the dates and if they match adds the task to array tasksToDisplay
+export function homeTaskDisplay(taskObj){
+    const chosenDate = taskboxDateArray(document.querySelector(`.${homeViewChoice}-date-range`), homeViewChoice);
+    const tasksToDisplay = [];
+    taskObj.forEach(elem=>{
+        const [taskD, taskM, taskY] = elem.due;
+        for(let date of chosenDate){
+            if(taskD===date[0] && taskM===date[1] && taskY===date[2]){
+                tasksToDisplay.push(elem);
+            }
+        }
+    });
+    renderTaskRow(tasksToDisplay);
+}
+function renderTaskRow(tasks){
+    
+}
+
+
+//takes the selected range of time, and displays all the dates in an array
+function taskboxDateArray(dateDiv, type){
+    if(type==="daily"){
+        const [dd,mm,yy] = textDateToNum(dateDiv.innerText).split("/");
+        return [[Number(dd), Number(mm), Number(yy)]];
+    }
+    else if(type==="weekly"){
+        const allArr = [];
+        const dateStart = dateDiv.querySelector(".weekly-date-range p").innerText;
+        for(let i=0;i<7;i++){
+            const [dd,mm,yy] = findRelativeDate(dateStart, i, true).split("/");
+            allArr.push([Number(dd), Number(mm), Number(yy)])
+        }
+        return allArr;
+    }
+    else if(type==="monthly"){
+        const allArr = [];
+        const monthSquares = document.querySelectorAll(".month-square");
+        let [mm,yy] = dateDiv.innerText.split(" ");
+        mm = returnMonth(mm);
+        for(let i=1;i<=monthSquares.length;i++){
+            allArr.push([i,mm,Number(yy)]);
+        }
+        return allArr;
+    }
+}
+
+
+
+
+
 
 
 //Dropdown menu----------------------------------------------------------------------------
@@ -170,6 +230,8 @@ function createHeadElements(type, text, div){
     const arrowRight= createArrow(containerHead);
     arrowEffect([arrowLeft, arrowRight]);
     arrowFunc(containerHead, type);
+    const dropDownMasterCont = elementCreator("div", ["class", "drop-master-cont"], false, containerHead)
+    createDropdown(type, dropDownMasterCont);
     return containerHead;
 }
 

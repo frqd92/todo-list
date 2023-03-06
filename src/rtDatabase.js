@@ -3,6 +3,7 @@ import { getDatabase, ref, set, get, child } from "firebase/database";
 import { firebaseConfig, auth } from "./login-page/authen";
 import { updateDataServer } from "./state";
 import { emptyDOM } from "./dom/mainPageCreate";
+import { homeTaskDisplay } from "./dom/homePage/taskBoxFact";
 const app = initializeApp(firebaseConfig);
 
 
@@ -29,6 +30,7 @@ export function readUserTasks(){
     get(child(dbRef, `users/${userID}/tasks`)).then((snapshot) => {
       if (snapshot.exists()) {
             updateDataServer(snapshot.val(), false);
+            homeTaskDisplay(snapshot.val());
             emptyDOM();
       } else {
         console.log("No data available");

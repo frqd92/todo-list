@@ -32,7 +32,7 @@ export function createMainPage(){
 }
 
 export function emptyDOM(){
-   if(taskArray.length<17){
+   if(taskArray.length<1){
       const options = document.querySelector(".header-options-middle");
 
       const noTasksDiv = elementCreator("div", ["class","no-tasks-div"], false, options);

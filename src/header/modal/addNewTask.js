@@ -18,13 +18,11 @@ function formatForObj(){
         return;
     }
     const obj = {};
-    let day, desc, group, notes;
+    let desc, group, notes;
     values[1].innerText===""?desc=false:desc=values[1].innerText;
-    values[2].innerText==="Today"?day=getToday():day=values[2].innerText;
+    const day = processDay(values[2]);
     values[3].innerText==="None"?group=false:group=values[3].innerText;
     values[6].innerText==="No notes"?notes=false:notes=values[6].innerHTML;
-
-
 
     obj.title=values[0].innerText;
     obj.description=desc;
@@ -102,4 +100,16 @@ function processRepeat(val){
         obj.repeatNumOfTimes = Number(arr[arr.length-2]);
     }
     return obj
+}
+
+
+function processDay(val){
+    if(val.innerText==="Today"){
+        let [dd,mm,yy] = getToday().split("/");
+        return [Number(dd),Number(mm),Number(yy)];
+    }
+    else{
+        let [dd,mm,yy] = val.innerText.split("/");
+        return [Number(dd),Number(mm)-1,Number(yy)];
+    }
 }
