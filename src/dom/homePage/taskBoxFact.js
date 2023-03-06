@@ -22,10 +22,8 @@ export default function TaskBoxFact(type){
     };
 
     //task processing
-    //findDateFromTask(textDateElem, type);
+    const dispTasksDiv = elementCreator("div", ["class", `disp-${type}-taskdiv`], false, taskboxDiv )
 
-
-    
 
     return { taskboxDiv  }
 }
@@ -45,11 +43,29 @@ export function homeTaskDisplay(taskObj){
             }
         }
     });
-    renderTaskRow(tasksToDisplay);
+    renderTaskRows(tasksToDisplay);
 }
-function renderTaskRow(tasks){
-    
+function renderTaskRows(tasks){
+    tasks.forEach(elem=>{
+        const taskRow = TaskrowFact(elem);
+    })
 }
+//actually makes the task row in the dom
+function TaskrowFact(taskObj){
+    const taskDiv = elementCreator("div", ["class", "home-task-row"], false, document.querySelector(`.disp-${homeViewChoice}-taskdiv`));
+    elementCreator("p", false, "jkfldsjfkldsfjdsklasasasasasasafjdskfjdsl", taskDiv)
+
+    return {taskDiv}
+}
+
+
+
+
+
+
+
+
+
 
 
 //takes the selected range of time, and displays all the dates in an array
@@ -237,7 +253,6 @@ function createHeadElements(type, text, div){
 
 function arrowFunc(div, type){
     const [leftArr,text,rightArr] = div.childNodes;
-
     switch(type){
         case "daily": arrowDailyFunc(leftArr,rightArr);break;
         case "weekly": arrowWeeklyFunc(leftArr, rightArr);break;

@@ -71,8 +71,9 @@
     display: grid;
     grid-template-columns: repeat(7, minmax(60px, 1fr));
     grid-template-rows: 1fr;
- 
+
 }
+
 .week-square{
     position: relative;
     display: flex;
@@ -105,8 +106,8 @@
 .onerow-cal-monthly{
     display: flex;
     justify-content: space-around;
-
-
+    
+    z-index: 5;
 }
 .month-square{
     position: relative;
