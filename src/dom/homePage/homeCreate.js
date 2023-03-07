@@ -13,8 +13,27 @@ export default function createHomePage(main){
     isHomeFunc(true); 
     const homeDiv = elementCreator("div", ["id", "main-home-div"], false, main)
     createHomeHead(homeDiv);
+    const displayedTasks = elementCreator("div", ["class", "disp-task-div"],false, homeDiv)
+    resizeTaskDiv();
+}
+export function resizeTaskDiv(){
+    const taskDiv = document.querySelector(".disp-task-div");
+    const height = getComputedStyle(taskDiv).height;
+    if(homeViewChoice==="daily"){
+        taskDiv.style.maxHeight = "650px";
+    }
+    else{
+        if(document.querySelector(`.hidden-onerow-${homeViewChoice}`)!==null){
+            taskDiv.style.maxHeight="700px";
+        }
+        else{
+            taskDiv.style.maxHeight="560px";
+        }
+    }
 
 }
+
+
 
 function createHomeHead(div){
     const headDiv = elementCreator("div", ["class", "home-head-div"], false, div);
@@ -45,10 +64,7 @@ function resizableMainPage(){
     document.querySelectorAll(".home-timeframe-btn").forEach(btn=>{
         btn.addEventListener("click",resizeAbs);
     })
-    //  document.querySelectorAll(".onerow-hide-btn").forEach(btn=>{
-    //     btn.addEventListener("click", resizeAbs);
-    //  }) 
-    // document.querySelector(".hidden-onerow-weekly").addEventListener("click", resizeAbs);
+
 }
 
 

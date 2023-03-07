@@ -1,6 +1,6 @@
 import { elementCreator } from "../../utilities/elementCreator";
 import { findRelativeDate, getToday, returnMonth, daysInMonth} from "../../utilities/dateUtils";
-import { resizeAbs } from "../homePage/homeCreate";
+import { resizeAbs,resizeTaskDiv } from "../homePage/homeCreate";
 import './singleCal.css'
 
 export function OneRowCalFact(type, parentDiv){
@@ -99,6 +99,7 @@ function hideBtnFunc(btn, div, type){
             div.classList.add(`hidden-onerow-${type}`);
             elementCreator("p", ["class", `hidden-onerow-text`], "Show", div);
             resizeAbs()
+            resizeTaskDiv()
         }
         else{
             all.forEach(elem=>{elem.style.display = "flex"})
@@ -107,6 +108,7 @@ function hideBtnFunc(btn, div, type){
             if(div.querySelector(".hidden-onerow-text")!==null){div.querySelector(".hidden-onerow-text").remove()}
             if(type==="weekly")newDateSquaresWeek();
             resizeAbs()
+            resizeTaskDiv()
         }
     }
     function relocateShowCal(){

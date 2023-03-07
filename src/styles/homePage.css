@@ -1,11 +1,13 @@
 main{
 
+
 }
 
 #main-home-div{
-  
   display: flex;
   flex-direction: column;
+  height: 100%;
+  overflow: hidden;
 }
 .home-head-div{
   position: relative;
@@ -18,7 +20,6 @@ main{
 }
 #home-taskbox-container{
 
-  border: 1px solid white;
 
   /* flex-grow: 1; */
 
@@ -86,7 +87,6 @@ main{
 /* containers for daily/weekly/montly */
 
 #home-taskbox-container{
- overflow: hidden;
 }
 #taskbox-sub-container{
   display: flex;
@@ -121,13 +121,13 @@ main{
 /* displayed tasks */
 
 
-.disp-daily-taskdiv, .disp-weekly-taskdiv,.disp-monthly-taskdiv{
+.disp-task-div{
   color: white;
-  z-index: 1;
-  
+  height: 100%;
+  overflow-y: auto;
+  margin-top: 5px;
+  max-height: 500px;
 }
-
-
 
 
 

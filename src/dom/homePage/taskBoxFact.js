@@ -49,7 +49,7 @@ function renderTaskRows(tasks){
 }
 //actually makes the task row in the dom
 function TaskrowFact(taskObj){
-    const taskDiv = elementCreator("div", ["class", "home-task-row"], false, document.querySelector(".disp-taskdiv"));
+    const taskDiv = elementCreator("div", ["class", "home-task-row"], false, document.querySelector(".disp-task-div"));
     elementCreator("p", false, "jkfldsjfkldsfjdsklfjdskfjdsl", taskDiv)
 
     return {taskDiv}

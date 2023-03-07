@@ -4,7 +4,7 @@
     box-sizing: border-box;
 }
 main{
-    
+
 }
 body img{
     -webkit-user-drag: none;
@@ -14,7 +14,6 @@ body img{
 
 body{
     display: grid;
-
     grid-template-columns: calc(90px + 6vw) 1fr;
     grid-template-rows: 50px 1fr;
 }
