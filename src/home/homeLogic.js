@@ -46,7 +46,7 @@ export function chooseTimeframeFunc(div){
             }
         })
         /////////
-        homeTaskDisplay(taskArray)
+        //homeTaskDisplay(taskArray)
     }
     //when window is resized, the "picked div" follows the button options as they change position
     window.addEventListener("resize", relocatePickedDiv);

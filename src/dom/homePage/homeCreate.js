@@ -1,4 +1,4 @@
-import { isHomeFunc, loggedIn, userN, displayUsername} from '/src/state';
+import { isHomeFunc, loggedIn, userN, displayUsername, homeViewChoice} from '/src/state';
 import '/src/styles/homePage.css';
 import { elementCreator, imageCreator } from '../../utilities/elementCreator';
 import { chooseTimeframeFunc } from '/src/home/homeLogic' 
@@ -33,8 +33,43 @@ function createHomeHead(div){
     const dailyBox = TaskBoxFact("daily");
     const weeklyBox = TaskBoxFact("weekly");
     const monthlyBox = TaskBoxFact("monthly");
-    const tasksDisplay = elementCreator("div", ["class", "disp-taskdiv"], false, div);
     chooseTimeframeFunc(chooseTimeframeDiv);
+    //absolute positioned, so this adds a window event resize listener to adjust the divs height to window width
+    resizableMainPage();
+    resizeAbs();
 
 }
 
+function resizableMainPage(){
+    window.addEventListener("resize", resizeAbs)
+    document.querySelectorAll(".home-timeframe-btn").forEach(btn=>{
+        btn.addEventListener("click",resizeAbs);
+    })
+    //  document.querySelectorAll(".onerow-hide-btn").forEach(btn=>{
+    //     btn.addEventListener("click", resizeAbs);
+    //  }) 
+    // document.querySelector(".hidden-onerow-weekly").addEventListener("click", resizeAbs);
+}
+
+
+export function resizeAbs(){
+  
+    let headHeight;
+    let calHeight;
+    switch(homeViewChoice){
+        case "daily": 
+            headHeight = document.querySelector(".taskbox-head-daily");
+            calHeight = null;
+            break;
+        case "weekly":
+            headHeight = document.querySelector(".taskbox-head-weekly");
+            calHeight = document.querySelector(".onerow-cal-weekly");
+            break;
+        case "monthly":
+            headHeight = document.querySelector(".taskbox-head-monthly");
+            calHeight = document.querySelector(".onerow-cal-monthly");
+    }
+    const heightH = getComputedStyle(headHeight).height;
+    const heightC = calHeight?getComputedStyle(calHeight).height:"0px";
+    document.getElementById("home-taskbox-container").style.height = `calc(${heightH} + ${heightC} + 10px)`
+}

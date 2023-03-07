@@ -3,7 +3,7 @@
     width: 100%;
     height: clamp(80px, 12vw, 150px);
     border-bottom: 1px solid rgba(255, 255, 255, 0.01);
-    transition: all 0.35s ease;
+
     background: linear-gradient(to right, #0c1f1bba, #112523cb, #0c1d18bf);
     backdrop-filter: blur(10px);
 }
@@ -72,14 +72,9 @@
     display: grid;
     grid-template-columns: repeat(7, minmax(60px, 1fr));
     grid-template-rows: 1fr;
-    z-index: 5;
+    z-index: 2;
 
-    
-}
-@media (max-width: 600px) {
-    .onerow-cal-weekly{
-        /* top: 137px; */
-    }
+
 }
 
 .week-square{

@@ -4,16 +4,8 @@ main{
 
 #main-home-div{
   
-  position: relative;
-  border: 1px solid white;
   display: flex;
   flex-direction: column;
-
-
-
-
-
-  
 }
 .home-head-div{
   position: relative;
@@ -25,7 +17,9 @@ main{
   align-items: center;
 }
 #home-taskbox-container{
-  height: 240px;
+
+  border: 1px solid white;
+
   /* flex-grow: 1; */
 
 }
@@ -174,8 +168,8 @@ main{
   flex-direction: column;
   transition: height 1s linear;
   bottom: 50px;
+  z-index: 20;
 
-  
 }
 .tb-dropdown-upper{
   position: relative;
@@ -190,6 +184,8 @@ main{
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 3fr 1fr;
   align-items: center;
+
+
 }
 .tb-dropdown-this, .tb-dropdown-go{
   display: flex;
