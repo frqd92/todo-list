@@ -3,7 +3,7 @@ import { getDatabase, ref, set, get, child } from "firebase/database";
 import { firebaseConfig, auth } from "./login-page/authen";
 import { updateDataServer } from "./state";
 import { emptyDOM } from "./dom/mainPageCreate";
-import { homeTaskDisplay } from "./dom/homePage/taskBoxFact";
+import { homeTaskDisplay } from "./dom/homePage/taskRowFact";
 const app = initializeApp(firebaseConfig);
 
 

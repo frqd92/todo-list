@@ -1,0 +1,31 @@
+.home-task-row{
+    border: 1px solid white;
+    padding:  10px 20px;
+    display: flex;
+    align-items: center;
+    gap: 20px; 
+}
+.tr-title{
+    width: calc(10vw + 100px);
+    align-self: stretch;
+    display: flex;
+    align-items: center;
+
+
+}
+.tr-title p{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.tr-due-div{
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+.tr-due-div img{
+    width: 20px;
+}
+.tr-due-div p{
+
+}
