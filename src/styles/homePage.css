@@ -5,10 +5,11 @@ main{
 #main-home-div{
   
   position: relative;
-  height: 100%;
+  border: 1px solid white;
   display: flex;
   flex-direction: column;
-  
+
+
 
 
 
@@ -24,12 +25,13 @@ main{
   align-items: center;
 }
 #home-taskbox-container{
-
-  flex-grow: 1;
+  height: 240px;
+  /* flex-grow: 1; */
 
 }
 
 #taskbox-sub-container{
+  
 }
 
 .home-welcome{
@@ -90,9 +92,7 @@ main{
 /* containers for daily/weekly/montly */
 
 #home-taskbox-container{
-
-  overflow-x: hidden;
-  height: 80vh;
+ overflow: hidden;
 }
 #taskbox-sub-container{
   display: flex;
@@ -116,6 +116,7 @@ main{
 }
 .taskbox-div-weekly{
   left: 200%;
+  
 }
 .taskbox-div-monthly{
   left: 400%;
@@ -127,10 +128,9 @@ main{
 
 
 .disp-daily-taskdiv, .disp-weekly-taskdiv,.disp-monthly-taskdiv{
-
-
   color: white;
   z-index: 1;
+  
 }
 
 
@@ -153,8 +153,6 @@ main{
   z-index: 5;
   background-image: linear-gradient(120deg, #001a1c90 0%, #191b1a9a 100%);
   backdrop-filter: blur(20px);
-  position: sticky;
-  top: 0;
 }
 .taskbox-head p{
   color: rgb(239, 240, 239);

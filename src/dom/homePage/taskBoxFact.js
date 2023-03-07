@@ -21,9 +21,6 @@ export default function TaskBoxFact(type){
         const weeklyRowCal = OneRowCalFact(type, taskboxDiv);
     };
 
-    //task processing
-    const dispTasksDiv = elementCreator("div", ["class", `disp-${type}-taskdiv`], false, taskboxDiv )
-
 
     return { taskboxDiv  }
 }
@@ -52,21 +49,11 @@ function renderTaskRows(tasks){
 }
 //actually makes the task row in the dom
 function TaskrowFact(taskObj){
-    const taskDiv = elementCreator("div", ["class", "home-task-row"], false, document.querySelector(`.disp-${homeViewChoice}-taskdiv`));
+    const taskDiv = elementCreator("div", ["class", "home-task-row"], false, document.querySelector(".disp-taskdiv"));
     elementCreator("p", false, "jkfldsjfkldsfjdsklfjdskfjdsl", taskDiv)
 
     return {taskDiv}
 }
-
-
-
-
-
-
-
-
-
-
 
 //takes the selected range of time, and displays all the dates in an array
 function taskboxDateArray(dateDiv, type){

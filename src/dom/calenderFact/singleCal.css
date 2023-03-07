@@ -72,13 +72,13 @@
     display: grid;
     grid-template-columns: repeat(7, minmax(60px, 1fr));
     grid-template-rows: 1fr;
-    position: sticky;
-    top: 86px;
     z-index: 5;
+
+    
 }
 @media (max-width: 600px) {
     .onerow-cal-weekly{
-        top: 137px;
+        /* top: 137px; */
     }
 }
 
@@ -114,8 +114,7 @@
 .onerow-cal-monthly{
     display: flex;
     justify-content: space-around;
-    position: sticky;
-    top: 86px;
+
     z-index: 5;
 }
 

@@ -33,6 +33,7 @@ function createHomeHead(div){
     const dailyBox = TaskBoxFact("daily");
     const weeklyBox = TaskBoxFact("weekly");
     const monthlyBox = TaskBoxFact("monthly");
+    const tasksDisplay = elementCreator("div", ["class", "disp-taskdiv"], false, div);
     chooseTimeframeFunc(chooseTimeframeDiv);
 
 }

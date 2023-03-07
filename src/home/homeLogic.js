@@ -45,6 +45,7 @@ export function chooseTimeframeFunc(div){
                 elem.classList.remove("picked-timeframe-elem")
             }
         })
+        /////////
         homeTaskDisplay(taskArray)
     }
     //when window is resized, the "picked div" follows the button options as they change position
