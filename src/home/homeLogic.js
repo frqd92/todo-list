@@ -2,6 +2,7 @@ import { homeViewChoice, viewChoice, taskArray } from '/src/state';
 import { homeTaskDisplay } from '../dom/homePage/taskRowFact';
 import { groupArray } from '../state';
 import { resizeTaskDiv } from '../dom/homePage/homeCreate';
+import { clearTasksHome } from '../dom/homePage/taskRowFact';
 let userViewChoice;
 //selected timeframe effect thing
 let pickedDiv;
@@ -48,6 +49,7 @@ export function chooseTimeframeFunc(div){
         })
         homeTaskDisplay(taskArray)
         resizeTaskDiv();
+
     }
     //when window is resized, the "picked div" follows the button options as they change position
     window.addEventListener("resize", relocatePickedDiv);

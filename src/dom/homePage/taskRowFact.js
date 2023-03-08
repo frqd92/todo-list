@@ -28,7 +28,8 @@ export function TaskrowFact(taskObj){
 }
 
 function checkBtnFunc(parentDiv, obj){
-    const checkOuter = elementCreator("div", ["class", "tr-check-div"], false, parentDiv);
+    const checkDiv = elementCreator("div", ["class", "tr-check-div"], false, parentDiv)
+    const checkOuter = elementCreator("div", false, false, checkDiv);
     const checkInner = elementCreator("p", false, false, checkOuter);
     checkInner.innerHTML = "&#x2713";
     if(obj.isComplete){
@@ -52,29 +53,39 @@ function otherTaskElements(parentDiv, obj){
     //repeat
     const repeatImgDiv = elementCreator("div", ["class", "tr-repeat"], false, otherDiv);
     imageCreator(repeatPng, false, repeatImgDiv);
-    elementCreator("span",["class", "tr-x"], "X", repeatImgDiv);
-    trRepeatImgFunc(repeatImgDiv, obj.repeat);
-
+    repeatImgDiv.appendChild(trXCreate());
+    trFunc(repeatImgDiv, obj.repeat)
     //notes
     const notesDiv = elementCreator("div", ["class", "tr-notes"], false, otherDiv);
     imageCreator(notebookPng, false, notesDiv);
-    elementCreator("span", ["class", "tr-x"], "X", notesDiv);
+    notesDiv.appendChild(trXCreate());
+    trFunc(notesDiv, obj.notes)
+
 
     //groups
     const groupsDiv = elementCreator("div", ["class", "tr-groups"], false, otherDiv);
     imageCreator(layersPng, false, groupsDiv);
-    elementCreator("span", ["class", "tr-x"], "X", groupsDiv);
+    groupsDiv.appendChild(trXCreate());
+    trFunc(groupsDiv, obj.group)
+
+
+    function trXCreate(){
+        const div =document.createElement("div");
+        div.classList.add("tr-x");
+        elementCreator("div", false, false, div);
+        return div;
+    }
+
 
 }
 
-function trRepeatImgFunc(div, isRepeat){
-    console.log(isRepeat);
+function trFunc(div, isTrue){
     const [img, xImg] = div.childNodes;
-    if(isRepeat){
+    if(isTrue){
         xImg.style.display = "none";
     }
     else{
-        xImg.style.display = "block";
+        xImg.style.display = "flex";
     }
 }
 
@@ -97,12 +108,12 @@ export function clearTasksHome(){
 
 //due date format
 function taskRowDueDateFormat(date, parentDiv){
-    let fDate =  formatNumDate(`${date[0]}/${date[1]}/${date[2]}`).split("/");
+    let fDate =  formatNumDate(`${date[0]}/${date[1]+1}/${date[2]}`).split("/");
     const div = document.createElement("div");
     for(let i=0;i<3;i++){
         const p = elementCreator("p", false, fDate[i], div);
         if(i!==2){
-            elementCreator("span", false, "/", div)
+            elementCreator("span", false, false, div)
         }
     }
     parentDiv.appendChild(div);

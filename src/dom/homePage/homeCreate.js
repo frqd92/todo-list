@@ -37,7 +37,6 @@ export function resizeTaskDiv(){
 
 function createHomeHead(div){
     const headDiv = elementCreator("div", ["class", "home-head-div"], false, div);
-    elementCreator("div", ["class", "home-welcome"], `Welcome ${userN}`, headDiv);
     const chooseTimeframeDiv = elementCreator("div", ["class", "home-timeframe-div"], false, headDiv);
     elementCreator("div", ["class", "picked-timeframe"], false,chooseTimeframeDiv)
     const nameArr = ["Daily", "Weekly", "Monthly"];

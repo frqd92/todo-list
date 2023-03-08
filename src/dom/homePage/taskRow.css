@@ -1,26 +1,33 @@
 .home-task-row{
-    border-bottom: 1px solid rgba(255, 255, 255, 0.286);
-    display: flex;
-    align-items: center;
-
+    border-bottom: 1px solid rgba(255, 255, 255, 0.186);
     font-family:open;
+    display: grid;
+    grid-template-columns:  minmax(100px,1fr) minmax(150px,250px) minmax(130px,200px) minmax(30px, 50px);
+    grid-template-rows: 70px;
+    align-items: stretch;
+    justify-items: center;
+    padding-left:10px;
+    margin-left: 1px;
 }
-.home-task-row > div{
+.home-task-row > div:not(.tr-title){
+    width: 100%;
     border-right: 1px solid rgba(255, 255, 255, 0.286);
+    display: flex;
 
+    align-items: center;
+    padding: 12px 0px;
 }
 .home-task-row:first-child{
-    border-top: 1px solid rgba(255, 255, 255, 0.286);
+    border-top: 1px solid rgba(255, 255, 255, 0.186);
     
 }
 
 /* title--------------------------------------------------------- */
 .tr-title{
-    width: calc(10vw + 100px);
-    align-self: stretch;
+    width: 100%;
     display: flex;
     align-items: center;
-    /* padding: 0px 5px; */
+    border-right: 1px solid rgba(255, 255, 255, 0.286);
 
 }
 .tr-title p{
@@ -34,8 +41,8 @@
 
 /* due ----------------------------------------------------------------*/
 .tr-due-div{
-    display: flex;
-    align-items: center;
+    width: 100%;
+    justify-content: center;
     gap: 8px;
 }
 .tr-due-div img{
@@ -44,31 +51,37 @@
 .tr-due-div div{
     display: flex;
     align-items: center;
-    gap: 2px;
+    gap: 6px;
+    font-size: calc(0.8rem + 0.5vw);
+    color: rgba(255, 251, 251, 0.722);
 }
 
 .tr-due-div div span{
-    font-size: 1.6rem;
+    font-size: 2rem;
     font-family: playfair;
-    color: rgb(203, 203, 203);
-    text-shadow: 0px 0px 3px white;
+    color: rgb(119, 119, 119);
+    height: 28px;
+    transform: rotate(20deg);
+    border: 1.2px solid rgba(255, 255, 255, 0.655);
+    border-radius: 10px;
+    box-shadow: 0px 0px 2px rgb(97, 204, 168, 0.8);
 }
 /* other ----------------------------------------------------------------*/
 
 .tr-other-div{
-    display: flex;
-    align-self: stretch;
-    align-items: center;
-    gap: 10px;
+
+    justify-content: space-around;
 }
+
 .tr-priority{
     border-radius: 50px;
     border: 1px solid rgba(0, 0, 0, 0.885);
-    width: 20px;
+    width: 25px;
     aspect-ratio: 1 / 1;
 }
 
 .tr-repeat{
+
     position: relative;
     width: 25px;
     user-select: none;
@@ -78,48 +91,62 @@
 }
 
 .tr-repeat img{
-    width: 20px;
+    width: 25px;
     filter: hue-rotate(320deg) contrast(0.8);
 }
 
 .tr-x{
     position: absolute;
-    font-size: 1.1rem;
-    right: 0;
-    top: -7px;
-    color: rgba(228, 8, 8, 0.963);
-    text-shadow: 0px 0px 1px rgba(221, 215, 215, 0.9);
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    font-weight: 100;
-    
+    border-radius: 50px;
+    border: 2px solid rgb(217, 15, 15, 0.8);
+    box-sizing: content-box;
+    width: 30px;
+    height: 30px; 
+    display: flex;
+    align-items: center;
 }
-
+.tr-x > div{
+    width: 100%;
+    border: 2px solid rgb(217, 15, 15, 0.8);
+    transform: rotate(45deg);
+}
 .tr-notes{
+    display: flex;
+    justify-content: center;
+    align-items: center;
     position: relative;
 }
 
 .tr-notes img{
-    width: 20px;
+    width: 25px;
 }
 
 .tr-groups{
+    display: flex;
+    justify-content: center;
+    align-items: center;
     position: relative;
 }
 .tr-groups img{
-    width: 20px;
+    width: 25px;
     filter: hue-rotate(200deg);
 }
 
 /* checkbox */
 
 .tr-check-div{
+    justify-content: center;
+    user-select: none;
+
+}
+.tr-check-div div{
     display: flex;
     justify-content: center;
     align-items: center;
-    border: 1px solid white;
     width: 20px;
     aspect-ratio: 1 / 1;
-
+    justify-self: end;
+    align-self: center;
 }
 
 .tr-check-div p{

@@ -274,6 +274,7 @@ main{
 }
 .daily-date-range,.weekly-date-range,.monthly-date-range{
   padding: 20px 0px;
+  font-size: calc(1.5rem + 0.5vw);
 
 }
 
@@ -283,7 +284,7 @@ main{
   width: 100%;
   display: flex;
   justify-content: center;
-
+  white-space: nowrap;
 }
 
 /* week box */
