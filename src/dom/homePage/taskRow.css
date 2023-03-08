@@ -1,31 +1,127 @@
 .home-task-row{
-    border: 1px solid white;
-    padding:  10px 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.286);
     display: flex;
     align-items: center;
-    gap: 20px; 
+
+    font-family:open;
 }
+.home-task-row > div{
+    border-right: 1px solid rgba(255, 255, 255, 0.286);
+
+}
+.home-task-row:first-child{
+    border-top: 1px solid rgba(255, 255, 255, 0.286);
+    
+}
+
+/* title--------------------------------------------------------- */
 .tr-title{
     width: calc(10vw + 100px);
     align-self: stretch;
     display: flex;
     align-items: center;
-
+    /* padding: 0px 5px; */
 
 }
 .tr-title p{
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    width: 100%;
+    text-align: center;
 }
+
+
+/* due ----------------------------------------------------------------*/
 .tr-due-div{
     display: flex;
     align-items: center;
-    gap: 5px;
+    gap: 8px;
 }
 .tr-due-div img{
     width: 20px;
 }
-.tr-due-div p{
+.tr-due-div div{
+    display: flex;
+    align-items: center;
+    gap: 2px;
+}
+
+.tr-due-div div span{
+    font-size: 1.6rem;
+    font-family: playfair;
+    color: rgb(203, 203, 203);
+    text-shadow: 0px 0px 3px white;
+}
+/* other ----------------------------------------------------------------*/
+
+.tr-other-div{
+    display: flex;
+    align-self: stretch;
+    align-items: center;
+    gap: 10px;
+}
+.tr-priority{
+    border-radius: 50px;
+    border: 1px solid rgba(0, 0, 0, 0.885);
+    width: 20px;
+    aspect-ratio: 1 / 1;
+}
+
+.tr-repeat{
+    position: relative;
+    width: 25px;
+    user-select: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.tr-repeat img{
+    width: 20px;
+    filter: hue-rotate(320deg) contrast(0.8);
+}
+
+.tr-x{
+    position: absolute;
+    font-size: 1.1rem;
+    right: 0;
+    top: -7px;
+    color: rgba(228, 8, 8, 0.963);
+    text-shadow: 0px 0px 1px rgba(221, 215, 215, 0.9);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: 100;
+    
+}
+
+.tr-notes{
+    position: relative;
+}
+
+.tr-notes img{
+    width: 20px;
+}
+
+.tr-groups{
+    position: relative;
+}
+.tr-groups img{
+    width: 20px;
+    filter: hue-rotate(200deg);
+}
+
+/* checkbox */
+
+.tr-check-div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid white;
+    width: 20px;
+    aspect-ratio: 1 / 1;
+
+}
+
+.tr-check-div p{
 
 }

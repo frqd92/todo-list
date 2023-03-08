@@ -32,6 +32,7 @@ function formatForObj(){
     obj.repeat = processRepeat(values[5].innerText);;
     obj.notes = notes;
     obj.isPast = false;
+    obj.isComplete = false;
     taskArray.push(obj)
     loggedIn?pushToServer(taskArray):pushToLocal(taskArray);
     document.getElementById("form").remove()

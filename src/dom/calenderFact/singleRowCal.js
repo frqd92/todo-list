@@ -43,9 +43,10 @@ export function newDateSquaresMonth(){
 function createWeekCal(div){
     const dateStart = document.querySelector(".weekly-date-range p").innerText;
     const [todayDD, todayMM, todayYY] = getToday().split("/");
-
+    const week = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
     for(let i=0;i<7;i++){
         const square = elementCreator("div", ["class", "week-square"], false,div);
+        const weekDay = elementCreator("span",false, week[i], square);
         const num = findRelativeDate(dateStart, i, true).split("/");
         const month = returnMonth(num[1]).slice(0,3);
         if(num[0]==todayDD && num[1]===todayMM && num[2]===todayYY){
