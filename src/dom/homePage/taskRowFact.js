@@ -9,24 +9,89 @@ import './taskRow.css'
 //actually makes the task row in the dom
 export function TaskrowFact(taskObj){
     const taskDiv = elementCreator("div", ["class", "home-task-row"], false, document.querySelector(".disp-task-div"));
-    const titleDiv = elementCreator("div", ["class", "tr-title"], false, taskDiv);
+    const upperDiv = elementCreator("div", ["class", "tr-upper-part"], false, taskDiv);
+
+    const titleDiv = elementCreator("div", ["class", "tr-title"], false, upperDiv);
     elementCreator("p", false, taskObj.title, titleDiv)
 
-    const dueDateDiv = elementCreator("div", ["class", "tr-due-div"], false, taskDiv);
+    const dueDateDiv = elementCreator("div", ["class", "tr-due-div"], false, upperDiv);
     const dueCalIcon = imageCreator(smallCalPng, false, dueDateDiv);
-
     const dueTextDiv = elementCreator("div", false, false, dueDateDiv )
     const dueDate = taskRowDueDateFormat(taskObj.due, dueTextDiv);
+    otherTaskElements(upperDiv, taskObj);    
+    checkBtnFunc(upperDiv, taskObj, taskDiv);
 
-    otherTaskElements(taskDiv, taskObj);    
-
-
-    checkBtnFunc(taskDiv, taskObj);
+    lowerDivFunc(upperDiv, taskDiv, taskObj);
 
     return {taskDiv}
 }
+// lower Div---------------------------------------------------------------------------------------------
 
-function checkBtnFunc(parentDiv, obj){
+function createLowerDiv(mainDiv, obj){
+    const div = elementCreator("div", ["class", "tr-lower-part", "tr-lower-effect"], false, mainDiv);
+    setTimeout(()=>{div.classList.remove("tr-lower-effect")}, 1);
+
+    const btnsDiv = elementCreator("div", ["class", "lower-btns"], false, div);
+    const editBtn = elementCreator("div", false, "Edit", btnsDiv);
+    const deleteBtn = elementCreator("div", false, "Delete", btnsDiv);
+
+    const title = elementCreator("div", ["class", "lower-title"], false, div);
+    elementCreator("p", false, obj.title, title);
+
+    const description = elementCreator("div", ["class", "lower-description"], false, div);
+    const descriptionText = !obj.description?"No description":obj.description;
+    const descP = elementCreator("p", false, descriptionText, description);
+    if(!obj.description){
+        descP.classList.add("lower-no-desc");
+    }
+    
+
+
+
+
+}
+
+
+//logic to create/delete lowerdiv and apply the height effect.
+function lowerDivFunc(upperDiv, mainDiv, obj){
+    upperDiv.addEventListener("click", lowerFunc);
+    function lowerFunc(e){
+        if(e.target.closest(".tr-check-div")) return;
+        if(mainDiv.querySelector(".tr-lower-part")===null){
+            collapseAll()
+            createLowerDiv(mainDiv, obj);
+            mainDiv.classList.add("home-task-row-uncollapsed");
+            window.addEventListener("click", collapseFromWindow)
+        }
+        else{
+            mainDiv.classList.remove("home-task-row-uncollapsed");
+            mainDiv.querySelector(".tr-lower-part").classList.add("tr-lower-effect");
+            setTimeout(()=>{mainDiv.querySelector(".tr-lower-part").remove();}, 100)
+        }
+    }
+    function collapseFromWindow(e){
+        if(!e.target.closest(".disp-task-div")){
+            collapseAll();
+            window.removeEventListener("click", collapseFromWindow)
+        }
+    }
+    function collapseAll(){
+        if(document.querySelector(".tr-lower-part")!==null){
+            const otherOpened = document.querySelector(".tr-lower-part");
+            otherOpened.classList.add("tr-lower-effect");
+            const otherRow = otherOpened.parentElement;
+            const upperDiv = otherRow.querySelector(".tr-upper-part");
+            otherRow.classList.remove("home-task-row-uncollapsed");
+            setTimeout(()=>{otherOpened.remove()}, 100)
+        }
+    }
+}
+
+
+
+
+// check btn---------------------------------------------------------------------------------------------
+function checkBtnFunc(parentDiv, obj, taskDiv){
     const checkDiv = elementCreator("div", ["class", "tr-check-div"], false, parentDiv)
     const checkInner = elementCreator("p", ["class", "tr-inner-check"], false, checkDiv);
     checkInner.innerHTML = "&#x2713";
@@ -52,13 +117,15 @@ function checkBtnFunc(parentDiv, obj){
             checkInner.classList.add("tr-check-checked");
             obj.isComplete = true;
             document.querySelector(".tr-check-hov").innerText="Mark incomplete";
-            followMouse(e)
+            followMouse(e);
+            taskDiv.classList.add("task-completed");
         }
         else{
             checkInner.classList.remove("tr-check-checked");
             obj.isComplete = false;
             document.querySelector(".tr-check-hov").innerText="Mark complete";
-            followMouse(e)
+            followMouse(e);
+            taskDiv.classList.remove("task-completed");
         }
     }
 }

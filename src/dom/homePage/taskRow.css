@@ -1,33 +1,107 @@
 .home-task-row{
-    border-bottom: 1px solid rgba(255, 255, 255, 0.186);
     font-family:open;
+    margin-left: 1px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.186);
+
+}
+.home-task-row-uncollapsed{
+    display: flex;
+    flex-direction: column;
+    background-color: rgba(255, 255, 255, 0.08);
+
+}
+
+.home-task-row:first-child{
+    border-top: 1px solid rgba(255, 255, 255, 0.186) ;
+
+}
+/* lower Div--------------------------------------------------------- */
+.tr-lower-part{
+    
+    transition: background-color, height 0.1s linear;
+    height: 200px;
+    position: relative;
+    border-top: 1px solid rgba(255, 255, 255, 0.186) ;
+}
+.tr-lower-effect{
+    height: 0px;
+    overflow: hidden;
+}
+.lower-btns{
+    display: flex;
+    border: 1px solid rgba(255, 255, 255, 0.187);
+    border-top: none;
+    border-right: none;
+    position: absolute;
+    top: 0;
+    right: 0;
+    color: rgba(255, 255, 255, 0.592);
+    border-radius: 0px 0px 0px 10px;
+
+}
+
+.lower-btns div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 3px;
+    width: 80px;
+    cursor: pointer;
+}
+.lower-btns div:first-child{
+    background-color: rgba(85, 134, 218, 0.211);
+
+    border-right: 1px solid rgba(255, 255, 255, 0.187);
+    border-radius: 0px 0px 0px 9px;
+}
+.lower-btns div:last-child{
+    background-color: rgba(206, 47, 47, 0.211);
+}
+.lower-btns div:hover{
+    filter: contrast(1.5) brightness(2)
+}
+
+
+.lower-title{
+
+}
+.lower-title p{
+    font-family:roboto-medium;
+    font-size: 1.8rem;
+}
+.lower-no-desc{
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.673);
+    font-family: ptserif;
+    font-style: italic;
+}
+
+/* upper Div--------------------------------------------------------- */
+
+.tr-upper-part{
     display: grid;
     grid-template-columns:  minmax(100px,1fr) minmax(150px,0.4fr) minmax(130px,0.5fr) minmax(30px, 50px);
     grid-template-rows: 70px;
     align-items: stretch;
     justify-items: center;
-    padding-left:10px;
-    margin-left: 1px;
 }
-.home-task-row > div:not(.tr-title){
+.tr-upper-part > div:not(.tr-title){
     width: 100%;
-    border-right: 1px solid rgba(255, 255, 255, 0.286);
-    display: flex;
 
+    display: flex;
     align-items: center;
     padding: 12px 0px;
 }
-.home-task-row:first-child{
-    border-top: 1px solid rgba(255, 255, 255, 0.186);
-    
-}
+
+
+
 
 /* title--------------------------------------------------------- */
 .tr-title{
     width: 100%;
     display: flex;
     align-items: center;
-    border-right: 1px solid rgba(255, 255, 255, 0.286);
+    border-right: 1px solid rgba(255, 255, 255, 0.186);
 
 }
 .tr-title p{
@@ -44,6 +118,7 @@
     width: 100%;
     justify-content: center;
     gap: 8px;
+    border-right: 1px solid rgba(255, 255, 255, 0.186);
 }
 .tr-due-div img{
     width: 20px;
@@ -60,25 +135,27 @@
     font-size: 2rem;
     font-family: playfair;
     color: rgb(119, 119, 119);
-    height: calc(20px + 0.8vw);
+    height: calc(15px + 0.4vw);
     background-color: rgba(255, 255, 255, 0.74);
     transform: rotate(20deg);
     border: 1.2px solid rgba(255, 255, 255, 0.555);
     border-radius: 10px;
     box-shadow: 0px 0px 2px rgb(97, 204, 168, 0.5);
+   
 }
 /* other ----------------------------------------------------------------*/
 
 .tr-other-div{
-
+    border-right: 1px solid rgba(255, 255, 255, 0.186);
     justify-content: space-evenly;
 }
 
 .tr-priority{
     border-radius: 50px;
-    border: 1px solid rgba(0, 0, 0, 0.885);
+
     width: 25px;
     aspect-ratio: 1 / 1;
+    box-shadow: 0px 0px 3px white;
 }
 
 .tr-repeat{
@@ -141,7 +218,9 @@
     user-select: none;
     justify-content: center;
     align-items: center;
+
 }
+
 
 .tr-inner-check{
     opacity: 0.2;
@@ -167,4 +246,28 @@
     font-size: 1.8rem;
     color: rgba(255, 255, 255, 0.738);
     text-shadow: 0px 0px 2px rgb(56, 192, 96);
+}
+.task-completed{
+    animation: animateBG 0.14s linear;
+}
+
+@keyframes animateBG {
+    0%{
+        background: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(36, 202, 133, 0.25) 100%);   
+    }
+    25%{
+        background: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(36, 202, 133, 0.25) 75%);   
+
+    }
+    50%{
+        background: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(36, 202, 133, 0.22) 50%);   
+
+    }
+    75%{
+        background: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(36, 202, 133, 0.20) 25%);   
+
+    }
+    100%{
+        background: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(36, 202, 133, 0.28) 0%);   
+    }
 }
