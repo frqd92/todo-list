@@ -5,7 +5,7 @@
     border-bottom: 1px solid rgba(255, 255, 255, 0.01);
     background: linear-gradient(to right, #0c1f1bba, #112523cb, #0c1d18bf);
     backdrop-filter: blur(10px);
-    
+
 }
 
 
@@ -84,7 +84,7 @@
     transition: background-color 0.2s linear;
 }
 .week-square:hover{
-    background: rgba(0, 0, 0, 0.029);
+    background: rgba(244, 241, 241, 0.059);
 
 }
 .week-square:last-child{
@@ -109,13 +109,15 @@
     border:1px solid rgba(255, 255, 255, 0.068);
     border-left: none;
     border-top: none;
-    background-color: rgba(218, 37, 37, 0.085);
+    background-color: rgba(254, 251, 251, 0.052);
 
     font-size: 0.9rem;
 }
 .week-today{
     background: rgba(31, 65, 130, 0.193);
-    
+}
+.week-today:hover{
+    background: rgba(0, 0, 255, 0.058);
 }
 /* week cal-------------------------------------------------------------------------------- */
 .onerow-cal-monthly{

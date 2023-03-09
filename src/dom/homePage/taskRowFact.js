@@ -8,7 +8,6 @@ import layersPng from '/src/assets/images/layers.png';
 import './taskRow.css'
 //actually makes the task row in the dom
 export function TaskrowFact(taskObj){
-
     const taskDiv = elementCreator("div", ["class", "home-task-row"], false, document.querySelector(".disp-task-div"));
     const titleDiv = elementCreator("div", ["class", "tr-title"], false, taskDiv);
     elementCreator("p", false, taskObj.title, titleDiv)
@@ -29,14 +28,38 @@ export function TaskrowFact(taskObj){
 
 function checkBtnFunc(parentDiv, obj){
     const checkDiv = elementCreator("div", ["class", "tr-check-div"], false, parentDiv)
-    const checkOuter = elementCreator("div", false, false, checkDiv);
-    const checkInner = elementCreator("p", false, false, checkOuter);
+    const checkInner = elementCreator("p", ["class", "tr-inner-check"], false, checkDiv);
     checkInner.innerHTML = "&#x2713";
-    if(obj.isComplete){
-
+    checkDiv.addEventListener("click", isCompleteFunc);
+    checkDiv.addEventListener("mouseover", showCheckHov);
+    function showCheckHov(e){
+        let text = obj.isComplete?"Mark incomplete": "Mark complete";
+        elementCreator("div", ["class", "tr-check-hov"], text, document.body);
+        checkDiv.addEventListener("mouseleave", removeCheckHov);
+        checkDiv.addEventListener("mousemove", followMouse);
+        checkDiv.removeEventListener("mouseover", showCheckHov);
+        e.stopPropagation();
     }
-    else{
+    function removeCheckHov(){
+        document.querySelector(".tr-check-hov").remove()
+        checkDiv.removeEventListener("mousemove", followMouse);
+        checkDiv.addEventListener("mouseover", showCheckHov);
+        checkDiv.removeEventListener("mouseleave", removeCheckHov);
+    }
 
+    function isCompleteFunc(e){ 
+        if(!obj.isComplete){
+            checkInner.classList.add("tr-check-checked");
+            obj.isComplete = true;
+            document.querySelector(".tr-check-hov").innerText="Mark incomplete";
+            followMouse(e)
+        }
+        else{
+            checkInner.classList.remove("tr-check-checked");
+            obj.isComplete = false;
+            document.querySelector(".tr-check-hov").innerText="Mark complete";
+            followMouse(e)
+        }
     }
 }
 
@@ -63,11 +86,10 @@ function otherTaskElements(parentDiv, obj){
 
 
     //groups
-    const groupsDiv = elementCreator("div", ["class", "tr-groups"], false, otherDiv);
+    const groupsDiv = elementCreator("div", ["class", "tr-group"], false, otherDiv);
     imageCreator(layersPng, false, groupsDiv);
     groupsDiv.appendChild(trXCreate());
     trFunc(groupsDiv, obj.group)
-
 
     function trXCreate(){
         const div =document.createElement("div");
@@ -76,8 +98,60 @@ function otherTaskElements(parentDiv, obj){
         return div;
     }
 
+    otherHoverEffect([priorityImg, repeatImgDiv, notesDiv, groupsDiv]);
 
+    function otherHoverEffect(btns){
+        btns.forEach(btn=>{
+            btn.addEventListener("mouseover", createHov);
+        })
+
+        function createHov(){
+            if(!document.querySelector(".tr-hov")){
+                const currentHover = this.className.slice(3);
+                const objElement = obj[currentHover];
+                let text;
+                if(!objElement){
+                    text = "No " + currentHover;
+                }
+                else if(currentHover==="priority"){
+                    text = obj.priority + " priority";
+                }
+                else if(currentHover!=="repeat"){
+                    text = objElement;
+                }
+                else if(currentHover==="repeat"){
+                    text =  "Repeat " +  objElement.fullString;
+                }
+                const div = elementCreator("div", ["class", "tr-hov"], text, document.body);
+                this.addEventListener("mouseleave", removeHov);
+            }
+            this.addEventListener("mousemove", followMouse);
+
+        }
+        function removeHov(){
+            document.querySelector(".tr-hov").remove();
+            this.removeEventListener("mouseleave", removeHov);
+            this.addEventListener("mouseover", createHov);
+            this.removeEventListener("mousemove", followMouse);
+
+        }
+
+    }
 }
+
+function followMouse(e){
+    let box;
+    if(document.querySelector(".tr-hov")){
+        box = document.querySelector(".tr-hov");
+    }
+    else{
+        box = document.querySelector(".tr-check-hov");
+    }
+    const boxWidth = getComputedStyle(box).width;
+    box.style.left = `calc(${e.pageX}px - ${boxWidth} - 10px)`
+    box.style.top = e.pageY + 10 + "px";
+}
+
 
 function trFunc(div, isTrue){
     const [img, xImg] = div.childNodes;

@@ -2,7 +2,7 @@
     border-bottom: 1px solid rgba(255, 255, 255, 0.186);
     font-family:open;
     display: grid;
-    grid-template-columns:  minmax(100px,1fr) minmax(150px,250px) minmax(130px,200px) minmax(30px, 50px);
+    grid-template-columns:  minmax(100px,1fr) minmax(150px,0.4fr) minmax(130px,0.5fr) minmax(30px, 50px);
     grid-template-rows: 70px;
     align-items: stretch;
     justify-items: center;
@@ -60,17 +60,18 @@
     font-size: 2rem;
     font-family: playfair;
     color: rgb(119, 119, 119);
-    height: 28px;
+    height: calc(20px + 0.8vw);
+    background-color: rgba(255, 255, 255, 0.74);
     transform: rotate(20deg);
-    border: 1.2px solid rgba(255, 255, 255, 0.655);
+    border: 1.2px solid rgba(255, 255, 255, 0.555);
     border-radius: 10px;
-    box-shadow: 0px 0px 2px rgb(97, 204, 168, 0.8);
+    box-shadow: 0px 0px 2px rgb(97, 204, 168, 0.5);
 }
 /* other ----------------------------------------------------------------*/
 
 .tr-other-div{
 
-    justify-content: space-around;
+    justify-content: space-evenly;
 }
 
 .tr-priority{
@@ -98,16 +99,17 @@
 .tr-x{
     position: absolute;
     border-radius: 50px;
-    border: 2px solid rgb(217, 15, 15, 0.8);
+    border: 2px solid rgb(217, 15, 15, 0.4);
     box-sizing: content-box;
     width: 30px;
     height: 30px; 
     display: flex;
     align-items: center;
+    pointer-events: none;
 }
 .tr-x > div{
     width: 100%;
-    border: 2px solid rgb(217, 15, 15, 0.8);
+    border: 2px solid rgb(217, 15, 15, 0.5);
     transform: rotate(45deg);
 }
 .tr-notes{
@@ -121,13 +123,13 @@
     width: 25px;
 }
 
-.tr-groups{
+.tr-group{
     display: flex;
     justify-content: center;
     align-items: center;
     position: relative;
 }
-.tr-groups img{
+.tr-group img{
     width: 25px;
     filter: hue-rotate(200deg);
 }
@@ -135,20 +137,34 @@
 /* checkbox */
 
 .tr-check-div{
-    justify-content: center;
+    cursor: pointer;
     user-select: none;
-
-}
-.tr-check-div div{
-    display: flex;
     justify-content: center;
     align-items: center;
-    width: 20px;
-    aspect-ratio: 1 / 1;
-    justify-self: end;
-    align-self: center;
 }
 
-.tr-check-div p{
+.tr-inner-check{
+    opacity: 0.2;
+    font-size: 1rem;
+    transition: font-size 0.1s linear;
+}
 
+.tr-hov, .tr-check-hov{
+    position: fixed;
+    background-color: rgba(250, 250, 250);
+    max-width: 500px;
+    max-height: 400px;
+    z-index: 99;
+    overflow: hidden;
+    padding: 5px;
+    text-align:start;
+    font-family: ptserif;
+    font-size: 1.2rem;
+}
+
+.tr-check-checked{
+    opacity: 1;
+    font-size: 1.8rem;
+    color: rgba(255, 255, 255, 0.738);
+    text-shadow: 0px 0px 2px rgb(56, 192, 96);
 }

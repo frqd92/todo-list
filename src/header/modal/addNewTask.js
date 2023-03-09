@@ -29,7 +29,7 @@ function formatForObj(){
     obj.due=day;
     obj.group=group;
     obj.priority= values[4].innerText;
-    obj.repeat = processRepeat(values[5].innerText);;
+    obj.repeat = processRepeat(values[5].innerText);
     obj.notes = notes;
     obj.isPast = false;
     obj.isComplete = false;
@@ -49,6 +49,7 @@ function pushToServer(taskArray){
 function processRepeat(val){
     const obj = {};
     if (val==="No repeat") return false;
+    obj.fullString = val;
     const arr = val.split(" ");
     if((arr.includes("day") || arr.includes("days")) && (!arr.includes("month") && !arr.includes("months"))){
         obj.every = "day";
