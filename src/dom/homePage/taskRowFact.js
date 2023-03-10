@@ -1,4 +1,5 @@
 import { homeViewChoice } from "../../state";
+import { resizeTaskDiv } from "./homeCreate";
 import { returnMonth, findRelativeDate, textDateToNum, formatNumDate } from "../../utilities/dateUtils";
 import { elementCreator, imageCreator } from "../../utilities/elementCreator";
 import smallCalPng from '/src/assets/images/calendar-small.png'
@@ -23,6 +24,7 @@ export function TaskrowFact(taskObj){
 
     lowerDivFunc(upperDiv, taskDiv, taskObj);
 
+
     return {taskDiv}
 }
 // lower Div---------------------------------------------------------------------------------------------
@@ -37,14 +39,40 @@ function createLowerDiv(mainDiv, obj){
 
     const title = elementCreator("div", ["class", "lower-title"], false, div);
     elementCreator("p", false, obj.title, title);
+    const description = createLowerRow("description", obj.description, "No description");
 
-    const description = elementCreator("div", ["class", "lower-description"], false, div);
-    const descriptionText = !obj.description?"No description":obj.description;
-    const descP = elementCreator("p", false, descriptionText, description);
-    if(!obj.description){
-        descP.classList.add("lower-no-desc");
+
+    const group = createLowerRow("group", obj.group, "Task not grouped");
+    const groupStatic = elementCreator("div", false, false, group, true);
+    imageCreator(layersPng, false, groupStatic);
+    elementCreator("p", false, "Group: ", groupStatic);
+
+    const repeat = createLowerRow("repeat", obj.repeat, "Task not repeated");
+    const repeatStatic = elementCreator("div", false, false, repeat, true);
+    imageCreator(repeatPng, false, repeatStatic);
+    elementCreator("p", false, "Repeat: ", repeatStatic);
+
+    const notes = createLowerRow("notes",obj.notes, "No notes");
+    const notesStatic = elementCreator("div", false, false, notes, true);
+    imageCreator(notebookPng, false, notesStatic);
+    elementCreator("p",false, "Notes: ", notesStatic)
+    if(obj.notes){
+        notes.classList.add("lower-notes-true")
     }
-    
+
+
+    function createLowerRow(elem, val, str){
+        const element = elementCreator("div", ["class","lower-row",`lower-${elem}`], false, div);
+        const elementText = elem!=="repeat"?(!val?str:val):(!val?str:val.fullString);
+        const elementP = elementCreator("p", false, elementText, element);
+        if(!val){elementP.classList.add("lower-none")}
+        return element
+    }
+
+
+    const priority = elementCreator("div", ["class", "lower-priority"], false, div);
+    elementCreator("p", false, `${obj.priority} priority`, priority)
+    priority.style.backgroundColor =priorityColor(obj.priority);
 
 
 
@@ -222,12 +250,7 @@ function followMouse(e){
 
 function trFunc(div, isTrue){
     const [img, xImg] = div.childNodes;
-    if(isTrue){
-        xImg.style.display = "none";
-    }
-    else{
-        xImg.style.display = "flex";
-    }
+    xImg.style.display = isTrue?"none":"flex";
 }
 
 function priorityColor(priority){
@@ -277,6 +300,7 @@ export function homeTaskDisplay(taskObj){
         }
     });
     renderTaskRows(tasksToDisplay);
+    resizeTaskDiv()
 }
 function renderTaskRows(tasks){
     tasks.forEach(elem=>{

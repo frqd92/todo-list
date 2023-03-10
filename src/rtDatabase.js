@@ -4,6 +4,7 @@ import { firebaseConfig, auth } from "./login-page/authen";
 import { updateDataServer } from "./state";
 import { emptyDOM } from "./dom/mainPageCreate";
 import { homeTaskDisplay } from "./dom/homePage/taskRowFact";
+import { resizeTaskDiv } from "./dom/homePage/homeCreate";
 const app = initializeApp(firebaseConfig);
 
 
@@ -31,6 +32,7 @@ export function readUserTasks(){
       if (snapshot.exists()) {
             updateDataServer(snapshot.val(), false);
             homeTaskDisplay(snapshot.val());
+            resizeTaskDiv();
             emptyDOM();
       } else {
         console.log("No data available");

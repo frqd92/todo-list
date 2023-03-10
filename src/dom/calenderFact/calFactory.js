@@ -10,7 +10,6 @@ let typeCal, currentMonth, currentYear;
 let isInputValid = false;
 let getInputDate;
 
-
 const weekArr = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
 export function changeInputDate(value){

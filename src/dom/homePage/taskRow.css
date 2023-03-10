@@ -17,11 +17,18 @@
 }
 /* lower Div--------------------------------------------------------- */
 .tr-lower-part{
-    
-    transition: background-color, height 0.1s linear;
-    height: 200px;
+    transition: height 0.2s linear;
     position: relative;
+    height: 250px;
     border-top: 1px solid rgba(255, 255, 255, 0.186) ;
+    padding: 0px 15px;
+    overflow: scroll;
+    padding-top: 20px;
+    
+}
+.tr-lower-part:has(.lower-notes-true){
+    padding-top: 10px;
+
 }
 .tr-lower-effect{
     height: 0px;
@@ -37,7 +44,6 @@
     right: 0;
     color: rgba(255, 255, 255, 0.592);
     border-radius: 0px 0px 0px 10px;
-
 }
 
 .lower-btns div{
@@ -63,18 +69,83 @@
 
 
 .lower-title{
-
+    
 }
 .lower-title p{
     font-family:roboto-medium;
-    font-size: 1.8rem;
+    font-size: 1.9rem;
 }
-.lower-no-desc{
-    font-size: 0.8rem;
-    color: rgba(255, 255, 255, 0.673);
+
+.lower-none{
+
+    color: rgba(255, 255, 255, 0.33);
     font-family: ptserif;
     font-style: italic;
 }
+
+.lower-priority{
+    position: absolute;
+    white-space: nowrap;
+    top: 0;
+    right: 25%;
+    transform: translate(-25%);
+    padding: 5px 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: roboto-medium;
+    text-transform: uppercase;
+    opacity: 0.6;
+    user-select: none;
+    margin-right: 1px;
+    border-radius: 10px 0px 0px 0px;
+    
+}
+.lower-row:not(.lower-description){
+    display: flex;
+    align-items: end;
+    gap: 5px;
+    padding: 10px 0px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.117);
+    
+}
+.lower-description{
+    margin-bottom: 10px;
+
+}
+.lower-notes{
+    justify-self: start;
+  border-bottom: none !important;
+
+}
+.lower-row div{
+    display: flex;
+    gap: 5px;
+    font-family: korean;
+    color: rgba(255, 255, 255, 0.622);
+}
+.lower-row img{
+    width: 20px;
+}
+.lower-group img{
+    filter: hue-rotate(200deg)
+
+}
+.lower-repeat img{
+    filter: hue-rotate(320deg) contrast(0.8);
+}
+.lower-notes-true{
+    flex-direction: column;
+    align-items: start !important;
+
+}
+.lower-notes-true p{
+    width: 100%;
+    max-height: 120px;
+    overflow: hidden;
+    overflow-y: scroll;
+}
+
 
 /* upper Div--------------------------------------------------------- */
 

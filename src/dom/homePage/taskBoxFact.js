@@ -60,6 +60,7 @@ function createDropdown(type, div){
     lowerDiv.addEventListener("click", showHideDropdown);
     dropdownDiv.addEventListener("mouseover",showMain);
 
+    makeDraggable(dropdownDiv, lowerDiv);
     function showMain(){
         if(isAutoHide==="no-hide"){
             return
@@ -83,7 +84,6 @@ function createDropdown(type, div){
     function autoHideFunc(){
         autoHideCont.addEventListener("mouseover", ()=>{autoLabel.style.display = "block";});
         autoHideCont.addEventListener("mouseleave", ()=>{autoLabel.style.display = "none";});
-
         getHideState()
         autoHideCont.addEventListener("click", autohideState);
         function getHideState(){
@@ -110,13 +110,13 @@ function createDropdown(type, div){
             for(let i=0;i<3;i++){
                 checks[i].style.display="none";
                 labels[i].innerText = "Enable autohide";
-                labels[i].style.right = "-94px";
+                labels[i].style.right= "-94px";
             }
         }
         else{
             autohideCheck.style.display="none";
             autoLabel.innerText = "Enable autohide";
-            autoLabel.style.right = "-94px";
+            autoLabel.style.right= "-94px";
         }
         changeAutoHide("no-hide");
     }
@@ -160,7 +160,42 @@ function createDropdown(type, div){
 
 }
 
+function makeDraggable(dropDiv, btn){
+    const parentDiv = dropDiv.parentElement;
+    const tbHead = parentDiv.parentElement ;
+    let isDragging = false;
+    let currentX;
+    
 
+    btn.addEventListener("mousedown", mouseDownFunc);
+    function mouseDownFunc(e){
+        document.addEventListener("mouseup",dragFalse, {once:true});
+        isDragging = true;
+        currentX = e.clientX - parentDiv.offsetLeft;
+        btn.addEventListener("mousemove", mouseMoveFunc)
+    }
+
+    function mouseMoveFunc(e){
+        if(!isDragging) return
+        let left = e.clientX - currentX;
+        if(left < 0){left=0;} 
+        else if(left > (tbHead.offsetWidth-dropDiv.offsetWidth)) {return}
+          parentDiv.style.left = `${left}px`;   
+    }
+    function dragFalse(){
+        isDragging=false;
+        btn.removeEventListener("mousemove", mouseMoveFunc)
+    }
+
+    window.addEventListener("resize",()=>{
+        let left = getComputedStyle(dropDiv.parentElement).left;
+        left = Number(left.substring(0, left.length-2));
+        if(left > (tbHead.offsetWidth-dropDiv.offsetWidth)){
+            parentDiv.style.left = `${tbHead.offsetWidth-dropDiv.offsetWidth}px`  
+        }
+    })
+
+}
 
 
 
@@ -329,5 +364,6 @@ function arrowEffect(btns){
             setTimeout(()=>{elem.classList.remove("taskbox-animate");}, timer + 300)
         }
     }
+
 
 }

@@ -11,7 +11,6 @@ export function OneRowCalFact(type, parentDiv){
     if(type==="weekly") createWeekCal(mainDiv);
     if(type==="monthly") createMonthCal(mainDiv);
 
-
     return {mainDiv};
 }
 
@@ -70,6 +69,7 @@ export function newDateSquaresWeek(){
         const allSquares = document.querySelectorAll(".week-square");
         allSquares.forEach(square=>{square.remove();})
         createWeekCal(document.querySelector(".onerow-cal-weekly"));
+
 }
 
 
@@ -116,4 +116,6 @@ function hideBtnFunc(btn, div, type){
         const headHeight = getComputedStyle(tbHead).height;
         div.style.top = headHeight;
     }
+    //somehow this stupid shit fixes the most annoying bug where the disp-task-div wasn't positioning itself properly on page load unless the user clicks on anything first... 
+    setTimeout(()=>{hideShow(true);hideShow(false)},800)
 }

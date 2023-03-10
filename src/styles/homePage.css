@@ -27,7 +27,6 @@ main{
 }
 
 .home-welcome{
-
   font-family: roboto;
   font-size: 1.5rem;
   color: rgba(255, 255, 255, 0.672);
@@ -84,6 +83,7 @@ main{
 /* containers for daily/weekly/montly */
 
 #home-taskbox-container{
+  z-index: 1;
 }
 #taskbox-sub-container{
   display: flex;
@@ -122,19 +122,34 @@ main{
   color: white;
   height: 100%;
   overflow-y: auto;
-  margin-top: 5px;
+  box-sizing:content-box;
+
+}
+
+.disp-task-div::-webkit-scrollbar {
+  width: 10px;
+}
+
+.disp-task-div::-webkit-scrollbar-track {
+  padding-top: 2px;
+  background: #f1f1f1;
+}
+
+.disp-task-div::-webkit-scrollbar-thumb {
+  background: #00000094;
 }
 
 
 
 
 .taskbox-head{
+  position: relative;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   justify-items: center;
   align-items: center;
   gap: 15px;
-  padding: 5px 0px;
+  padding: 0px 0px;
   font-family: "korean";
   font-size: 1.5rem;
   color: rgb(239, 240, 239);
@@ -142,6 +157,7 @@ main{
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   background-image: linear-gradient(120deg, #001a1c90 0%, #191b1a9a 100%);
   backdrop-filter: blur(20px);
+  z-index: 1;
 }
 .taskbox-head p{
   color: rgb(239, 240, 239);
@@ -151,19 +167,19 @@ main{
 
 /* dropdown ------------------------------------------------*/
 .drop-master-cont{
-  position: absolute;
+  position: fixed;
   top: 0;
+  left: 38%;
+
 }
 .tb-dropdown{
   align-self: center;
-  width: clamp(160px, 20%, 300px);
+  width: clamp(250px, 20%, 300px);
   color: white;
   display: flex;
   flex-direction: column;
   transition: height 1s linear;
   bottom: 50px;
-  z-index: 10;
-
 }
 .tb-dropdown-upper{
   position: relative;
@@ -178,8 +194,7 @@ main{
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 3fr 1fr;
   align-items: center;
-
-
+  height: 60px;
 }
 .tb-dropdown-this, .tb-dropdown-go{
   
@@ -234,13 +249,17 @@ main{
   white-space: nowrap;
   font-family: roboto;
   top: 1px;
-  right: -98px;
+  right: 0px;
   font-size: 0.8rem;
   opacity: 0.5;
   display: none;
   transition: all 0.1s linear;
-}
 
+}
+.tb-check{
+
+  
+}
 
 .tb-dropdown-lower{
   border: 1px solid rgba(255, 255, 255, 0.2);
@@ -252,7 +271,11 @@ main{
   display: flex;
   justify-content: center;
   align-items: center;
-  cursor: pointer;
+  cursor:grab;
+}
+.tb-dropdown-lower:active{
+  cursor:grabbing;
+
 }
 .tb-dropdown-lower div{
   padding: 0px 10px;
@@ -410,7 +433,7 @@ main{
 /* if user has no stored tasks */
 
 .no-tasks-div{
-  z-index: 999;
+  z-index: 99;
   position: absolute;
   top: -23px;
   right: 140px;

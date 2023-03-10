@@ -1,10 +1,10 @@
 import { isHomeFunc, loggedIn, userN, displayUsername, homeViewChoice} from '/src/state';
 import '/src/styles/homePage.css';
 import { elementCreator, imageCreator } from '../../utilities/elementCreator';
-import { chooseTimeframeFunc } from '/src/home/homeLogic' 
+import { chooseTimeframeFunc } from '/src/home/homeLogic';
 import TaskBoxFact from './taskBoxFact';
-
-
+import { homeTaskDisplay } from './taskRowFact';
+import { taskArray } from '../../state';
 
 
 
@@ -13,26 +13,24 @@ export default function createHomePage(main){
     isHomeFunc(true); 
     const homeDiv = elementCreator("div", ["id", "main-home-div"], false, main)
     createHomeHead(homeDiv);
-    const displayedTasks = elementCreator("div", ["class", "disp-task-div"],false, homeDiv)
-    resizeTaskDiv();
+    const displayedTasks = elementCreator("div", ["class", "disp-task-div"],false, homeDiv);
+
 }
 export function resizeTaskDiv(){
     const taskDiv = document.querySelector(".disp-task-div");
-    const height = getComputedStyle(taskDiv).height;
-    if(homeViewChoice==="daily"){
-        taskDiv.style.maxHeight = "650px";
+    const taskDivPos = taskDiv.getBoundingClientRect().top;
+    const navBottom = document.querySelector("nav").getBoundingClientRect().bottom;
+    if(homeViewChoice!=="daily"){
+        const currentCal = homeViewChoice==="weekly"?".onerow-cal-weekly":".onerow-cal-monthly";
+        const calBottom = document.querySelector(currentCal).getBoundingClientRect().bottom;
+        taskDiv.style.height = (navBottom-calBottom) + "px";
     }
     else{
-        if(document.querySelector(`.hidden-onerow-${homeViewChoice}`)!==null){
-            taskDiv.style.maxHeight="700px";
-        }
-        else{
-            taskDiv.style.maxHeight="560px";
-        }
+         const taskboxHeadBottom = document.querySelector(".taskbox-head").getBoundingClientRect().bottom;
+         taskDiv.style.height = (navBottom-taskboxHeadBottom) +"px";
     }
 
 }
-
 
 
 function createHomeHead(div){
@@ -68,7 +66,6 @@ function resizableMainPage(){
 
 
 export function resizeAbs(){
-  
     let headHeight;
     let calHeight;
     switch(homeViewChoice){
@@ -86,5 +83,5 @@ export function resizeAbs(){
     }
     const heightH = getComputedStyle(headHeight).height;
     const heightC = calHeight?getComputedStyle(calHeight).height:"0px";
-    document.getElementById("home-taskbox-container").style.height = `calc(${heightH} + ${heightC} + 10px)`
+    document.getElementById("home-taskbox-container").style.height = `calc(${heightH} + ${heightC})`
 }

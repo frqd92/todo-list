@@ -47,15 +47,15 @@ export function chooseTimeframeFunc(div){
                 elem.classList.remove("picked-timeframe-elem")
             }
         })
-        homeTaskDisplay(taskArray)
+        homeTaskDisplay(taskArray);
         resizeTaskDiv();
-
     }
     //when window is resized, the "picked div" follows the button options as they change position
     window.addEventListener("resize", relocatePickedDiv);
     function relocatePickedDiv(){
         pickedDiv.style.width = `calc(${getWidth(timeframeUserChoice())} + 10px)` ;
         pickedDiv.style.left = (timeframeUserChoice().offsetLeft - 5) + "px";
+        resizeTaskDiv()
     }
     //when user/guest enters website, their last picked item is saved. "picked div" follows that item
     function userDefaultViewOptions(followDiv){
