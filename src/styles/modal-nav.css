@@ -6,7 +6,7 @@
     display: none;
     transition: width 0.2s ease-in;
     background-color: rgba(0, 0, 0, 0.857);
-    z-index: 99 !important;
+    z-index: 10 !important;
 
 }
 
@@ -112,7 +112,7 @@
     gap: 25px;
     top: 0;
     left: 0;
-    z-index: 999 !important;
+    z-index: 10;
 
 }
 

@@ -8,8 +8,8 @@ import notebookPng from '/src/assets/images/notebook.png';
 import layersPng from '/src/assets/images/layers.png';
 import './taskRow.css'
 //actually makes the task row in the dom
-function TaskrowFact(taskObj){
-    const taskDiv = elementCreator("div", ["class", "home-task-row"], false, document.querySelector(".disp-task-div"));
+function TaskrowFact(taskObj, parent){
+    const taskDiv = elementCreator("div", ["class", "home-task-row"], false, parent);
     const upperDiv = elementCreator("div", ["class", "tr-upper-part"], false, taskDiv);
 
     const titleDiv = elementCreator("div", ["class", "tr-title"], false, upperDiv);
@@ -43,16 +43,29 @@ export function homeTaskDisplay(taskObj){
     renderTaskRows(tasksToDisplay);
     resizeTaskDiv()
 }
+
 function renderTaskRows(tasks){
+    let taskDispDates = [];
+    let taskDivDates = [];
     tasks.forEach(elem=>{
-        const displayedDate = taskRowDisplayedDate(elem);
-        const taskRow = TaskrowFact(elem);
+        const displayedDate = `${elem.due[0]}/${elem.due[1]}/${elem.due[2]}`;
+        if(taskDispDates.length<1){
+            const div = elementCreator("div", ["class", "disp-group"], false, document.querySelector(".disp-task-div"))
+            taskDispDates.push(displayedDate);
+            taskDivDates.push(div);
+            const taskRow = TaskrowFact(elem, taskDivDates[0]);
+        }
+        else{
+            if(taskDispDates[taskDispDates.length-1]!==displayedDate){
+                const div = elementCreator("div", ["class", "disp-group"], false, document.querySelector(".disp-task-div"))
+                taskDispDates.push(displayedDate);
+                taskDivDates.push(div);
+            }
+            const taskRow = TaskrowFact(elem, taskDivDates[taskDivDates.length-1]);
+        }
     })
 }
-//groups the tasks rows by date, displays the date on top of each group
-function taskRowDisplayedDate(obj){
-   
-}
+
 
 
 //takes the selected range of time, and displays all the dates in an array

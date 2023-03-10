@@ -4,7 +4,7 @@
     height: clamp(80px, 12vw, 150px);
     border-bottom: 1px solid rgba(255, 255, 255, 0.01);
     background: linear-gradient(to right, #0c1f1bba, #112523cb, #0c1d18bf);
-    z-index: 1 !important;
+  
 }
 
 

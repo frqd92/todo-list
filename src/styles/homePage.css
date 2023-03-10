@@ -83,7 +83,7 @@ main{
 /* containers for daily/weekly/montly */
 
 #home-taskbox-container{
-  z-index: 1;
+  z-index: 0;
 }
 #taskbox-sub-container{
   display: flex;
@@ -126,17 +126,25 @@ main{
 
 }
 
+.disp-group{
+  margin-bottom: 15px;
+}
 .disp-task-div::-webkit-scrollbar {
   width: 10px;
+  
 }
 
 .disp-task-div::-webkit-scrollbar-track {
   padding-top: 2px;
-  background: #f1f1f1;
+  background: #fffefe97;
+  border-radius: 10px;
+
 }
 
 .disp-task-div::-webkit-scrollbar-thumb {
-  background: #00000094;
+  background: #000000b0;
+  border-radius: 10px;
+
 }
 
 
