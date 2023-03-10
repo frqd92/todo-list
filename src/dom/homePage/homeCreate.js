@@ -3,8 +3,6 @@ import '/src/styles/homePage.css';
 import { elementCreator, imageCreator } from '../../utilities/elementCreator';
 import { chooseTimeframeFunc } from '/src/home/homeLogic';
 import TaskBoxFact from './taskBoxFact';
-import { homeTaskDisplay } from './taskRowFact';
-import { taskArray } from '../../state';
 
 
 

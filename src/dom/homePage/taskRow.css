@@ -74,6 +74,7 @@
 .lower-title p{
     font-family:roboto-medium;
     font-size: 1.9rem;
+    text-align: center;
 }
 
 .lower-none{
@@ -87,8 +88,7 @@
     position: absolute;
     white-space: nowrap;
     top: 0;
-    right: 25%;
-    transform: translate(-25%);
+    left: 0;
     padding: 5px 10px;
     display: flex;
     justify-content: center;
@@ -98,7 +98,7 @@
     opacity: 0.6;
     user-select: none;
     margin-right: 1px;
-    border-radius: 10px 0px 0px 0px;
+    border-radius: 0px 0px 10px 0px;
     
 }
 .lower-row:not(.lower-description){
@@ -111,11 +111,11 @@
 }
 .lower-description{
     margin-bottom: 10px;
-
+    text-align: center;
 }
 .lower-notes{
     justify-self: start;
-  border-bottom: none !important;
+    border-bottom: none !important;
 
 }
 .lower-row div{
@@ -190,6 +190,7 @@
     justify-content: center;
     gap: 8px;
     border-right: 1px solid rgba(255, 255, 255, 0.186);
+    user-select: none;
 }
 .tr-due-div img{
     width: 20px;
