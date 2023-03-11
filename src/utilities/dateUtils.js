@@ -131,7 +131,8 @@ export function addOneToMonth(date, isSub){
 export function addSuffixToDay(num){
   num = Number(num);
   let day = Number(num)<9?("0"+num).split(""):num.toString().split("");
-  if(Number(day.join(""))===13){
+  let exc = [11,12,13]
+  if(exc.includes(Number(day.join("")))){
     return num+"th"
   }
   if(Number(day[1])===1){
@@ -232,4 +233,11 @@ export function textDateToNum(str){
   const year = arr[arr.length-1];
   return `${day}/${month}/${year}`
 
+}
+
+// str outputs 10th of March, 2023
+export function numDateToDispFormat(str){
+  const arr = str.split("/");
+
+  return `${addSuffixToDay(arr[0])} of ${returnMonth(arr[1])}, ${arr[2]}`;
 }

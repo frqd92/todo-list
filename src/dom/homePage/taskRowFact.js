@@ -1,6 +1,6 @@
 import { homeViewChoice } from "../../state";
 import { resizeTaskDiv } from "./homeCreate";
-import { returnMonth, findRelativeDate, textDateToNum, formatNumDate } from "../../utilities/dateUtils";
+import { returnMonth, findRelativeDate, textDateToNum, formatNumDate, numDateToDispFormat } from "../../utilities/dateUtils";
 import { elementCreator, imageCreator } from "../../utilities/elementCreator";
 import smallCalPng from '/src/assets/images/calendar-small.png'
 import repeatPng from '/src/assets/images/refresh.png';
@@ -53,20 +53,45 @@ function renderTaskRows(tasks){
             const div = elementCreator("div", ["class", "disp-group"], false, document.querySelector(".disp-task-div"))
             taskDispDates.push(displayedDate);
             taskDivDates.push(div);
+            const taskDateDiv = taskDateFunc(taskDivDates[0], taskDispDates[0], div);
             const taskRow = TaskrowFact(elem, taskDivDates[0]);
+            if(homeViewChoice==="daily")taskDateDiv.remove()
         }
         else{
             if(taskDispDates[taskDispDates.length-1]!==displayedDate){
                 const div = elementCreator("div", ["class", "disp-group"], false, document.querySelector(".disp-task-div"))
                 taskDispDates.push(displayedDate);
                 taskDivDates.push(div);
+                const taskDateDiv = taskDateFunc(taskDivDates[taskDivDates.length-1], taskDispDates[taskDispDates.length-1], div);
+
             }
             const taskRow = TaskrowFact(elem, taskDivDates[taskDivDates.length-1]);
         }
     })
 }
-
-
+//hides and shows the grouped by date tasks
+function taskDateFunc(div, date, group){
+    const formattedDate = numDateToDispFormat(date)
+    const dateDiv = elementCreator("div", ["class", "disp-date-div"], false, div);
+    elementCreator("p", ["class", "disp-date-text"], formattedDate, dateDiv);
+    const arrowDiv = elementCreator("div", ["class", "disp-arrow-div"], false, dateDiv);
+    const arrow = elementCreator("div", ["class", "disp-arrow"], "<", arrowDiv);
+    dateDiv.addEventListener("click", toggleArrow);
+    return dateDiv;
+    function toggleArrow(){
+        arrow.classList.toggle("disp-arrow-hide");
+        arrow.className.includes("disp-arrow-hide")?showHide(false):showHide(true);
+    }
+    function showHide(isHide){
+        const allRows = group.querySelectorAll(".home-task-row");
+        const action = isHide?"block":"none";
+        const border = !isHide?"1px solid rgba(255, 255, 255, 0.086)":"none";
+        allRows.forEach(row=>{
+            row.style.display=action;
+            group.style.borderBottom=border;
+        });
+    }
+}
 
 //takes the selected range of time, and displays all the dates in an array
 function taskboxDateArray(dateDiv, type){

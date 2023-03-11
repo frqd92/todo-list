@@ -4,6 +4,8 @@ import { isAutoHide, changeAutoHide, taskArray, groupArray, homeViewChoice } fro
 import rangeArrow from '/src/assets/images/neat-arrow.png'
 import { OneRowCalFact } from "/src/dom/calenderFact/singleRowCal";
 import { newDateSquaresWeek, newDateSquaresMonth } from "../calenderFact/singleRowCal";
+import { homeTaskDisplay } from "./taskRowFact";
+import { resizeTaskDiv } from "./homeCreate";
 
 
 export default function TaskBoxFact(type){
@@ -239,7 +241,10 @@ function arrowDailyFunc(left, right){
         }
         else{
             text.innerText = fullFormattedDate(findRelativeDate(date,1));
+            console.log(text.innerText);
         }
+        homeTaskDisplay(taskArray);
+        resizeTaskDiv();
     }
 }
 
@@ -265,6 +270,8 @@ function arrowWeeklyFunc(left,right){
         }
         //clicking on arrows to generate new squares from singleRowCal
         if(document.querySelector(".hidden-onerow-weekly")===null)newDateSquaresWeek()
+        homeTaskDisplay(taskArray);
+        resizeTaskDiv();
     }
 }
 function arrowMonthlyFunc(left,right){
@@ -274,12 +281,13 @@ function arrowMonthlyFunc(left,right){
        const dateText = text.innerText.split(" ");
        const date = new Date(`1 ${dateText[0]} ${dateText[1]}`);
        this.className.includes("taskbox-right-div")?calc(1, 11, "January"):calc(-1, 0, "December");
-
         function calc(num, month, str){
             date.getMonth()!==month?text.innerText = 
             `${returnMonth(date.getMonth() + num)} ${date.getFullYear()}`: text.innerText = `${str} ${Number(dateText[1])+num}`;
        }
        if(document.querySelector(".hidden-onerow-monthly")===null)newDateSquaresMonth()
+       homeTaskDisplay(taskArray);
+       resizeTaskDiv();
     }
 
 }
