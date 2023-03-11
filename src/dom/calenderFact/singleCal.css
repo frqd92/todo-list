@@ -10,7 +10,6 @@
 
 
 .hidden-onerow-weekly, .hidden-onerow-monthly{
-    color: rgba(255, 255, 255, 0.486);
     font-size: 0.7rem;
     height: 15px;
     position: absolute;
@@ -23,6 +22,7 @@
     margin-left: 1px;
     transition: font-size 0.2s linear;
     opacity: 0.6;
+    font-family: 'Courier New', Courier, monospace;
 }
 
 .hidden-onerow-weekly:hover, .hidden-onerow-monthly:hover{
@@ -37,35 +37,37 @@
     left: 0;
     right: 0;
     text-align: center;
-   
-    color: rgba(255, 255, 255, 0.472);
+
+    color: rgba(255, 255, 255, 0.672);
 }
 .onerow-allHide{
     display: none;
 }
 .onerow-hide-btn{
-    width: 40px;
-    height: 30px;
+
     position: absolute;
     border: 1px solid rgba(255, 255, 255, 0.08);
     border-left: none;
-    border-bottom: none;
-    border-radius: 0px 3px 0px 0px;
-    bottom: 0;
+    border-radius: 0px 3px 3px 0px;
+    bottom: 10px;
     left: 1px;
-    color: rgba(255, 255, 255, 0.714);
-    font-family: open;
-    font-size: 0.7rem;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.614);
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.75rem;
     cursor: pointer;
     z-index: 20;
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 3px 0px;
+    padding: 5px 10px;
     background-color: rgba(0, 0, 0, 0.386);
-    box-shadow: rgba(170, 167, 167, 0.15) 0px 0px 5px;
+    box-shadow: rgba(170, 167, 167, 0.15) 0px 0px 3px;
 }
-
+.onerow-hide-btn:hover{
+    background-color: rgba(255, 255, 255, 0.152);
+    font-weight: 900;
+}
 .onerow-hide-btn:active{
     box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
     font-size: 0.68rem;

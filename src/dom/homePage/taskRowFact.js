@@ -79,8 +79,9 @@ function createDispOptions(parent){
     const menuBtn = elementCreator("div", ["class", "task-options-menu-btn"], false, optionsAllDiv);
     for(let i=0;i<3;i++){elementCreator("div", ["class", `op-line-${i}`], false, menuBtn)};
 
-    //
-
+    //options menu
+    const optionsMenu = elementCreator("div", ["class", "task-options-menu"], false, optionsAllDiv);
+    
     return optionsAllDiv
 }
 //hides and shows the grouped by date tasks
