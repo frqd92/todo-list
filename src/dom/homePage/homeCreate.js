@@ -22,10 +22,12 @@ export function resizeTaskDiv(){
         const currentCal = homeViewChoice==="weekly"?".onerow-cal-weekly":".onerow-cal-monthly";
         const calBottom = document.querySelector(currentCal).getBoundingClientRect().bottom;
         taskDiv.style.height = (navBottom-calBottom) + "px";
+
     }
     else{
          const taskboxHeadBottom = document.querySelector(".taskbox-head").getBoundingClientRect().bottom;
          taskDiv.style.height = (navBottom-taskboxHeadBottom) +"px";
+    
     }
 
 }
@@ -51,15 +53,13 @@ function createHomeHead(div){
     //absolute positioned, so this adds a window event resize listener to adjust the divs height to window width
     resizableMainPage();
     resizeAbs();
-
 }
 
 function resizableMainPage(){
     window.addEventListener("resize", resizeAbs)
     document.querySelectorAll(".home-timeframe-btn").forEach(btn=>{
         btn.addEventListener("click",resizeAbs);
-    })
-
+    });
 }
 
 

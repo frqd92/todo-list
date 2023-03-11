@@ -45,12 +45,14 @@ export function homeTaskDisplay(taskObj){
 }
 
 function renderTaskRows(tasks){
+    const dispTaskDiv = document.querySelector(".disp-task-div");
     let taskDispDates = [];
     let taskDivDates = [];
+    const dispOptions = createDispOptions(dispTaskDiv);
     tasks.forEach(elem=>{
         const displayedDate = `${elem.due[0]}/${elem.due[1]}/${elem.due[2]}`;
         if(taskDispDates.length<1){
-            const div = elementCreator("div", ["class", "disp-group"], false, document.querySelector(".disp-task-div"))
+            const div = elementCreator("div", ["class", "disp-group"], false, dispTaskDiv)
             taskDispDates.push(displayedDate);
             taskDivDates.push(div);
             const taskDateDiv = taskDateFunc(taskDivDates[0], taskDispDates[0], div);
@@ -59,7 +61,7 @@ function renderTaskRows(tasks){
         }
         else{
             if(taskDispDates[taskDispDates.length-1]!==displayedDate){
-                const div = elementCreator("div", ["class", "disp-group"], false, document.querySelector(".disp-task-div"))
+                const div = elementCreator("div", ["class", "disp-group"], false, dispTaskDiv)
                 taskDispDates.push(displayedDate);
                 taskDivDates.push(div);
                 const taskDateDiv = taskDateFunc(taskDivDates[taskDivDates.length-1], taskDispDates[taskDispDates.length-1], div);
@@ -69,13 +71,27 @@ function renderTaskRows(tasks){
         }
     })
 }
+
+//creates the options menu in the home page disp
+function createDispOptions(parent){
+    const optionsAllDiv = elementCreator("div", ["class", "task-options-all-div"], false, parent)
+    //menu btn
+    const menuBtn = elementCreator("div", ["class", "task-options-menu-btn"], false, optionsAllDiv);
+    for(let i=0;i<3;i++){elementCreator("div", ["class", `op-line-${i}`], false, menuBtn)};
+
+    //
+
+    return optionsAllDiv
+}
 //hides and shows the grouped by date tasks
 function taskDateFunc(div, date, group){
     const formattedDate = numDateToDispFormat(date)
     const dateDiv = elementCreator("div", ["class", "disp-date-div"], false, div);
+
     elementCreator("p", ["class", "disp-date-text"], formattedDate, dateDiv);
     const arrowDiv = elementCreator("div", ["class", "disp-arrow-div"], false, dateDiv);
     const arrow = elementCreator("div", ["class", "disp-arrow"], "<", arrowDiv);
+
     dateDiv.addEventListener("click", toggleArrow);
     return dateDiv;
     function toggleArrow(){

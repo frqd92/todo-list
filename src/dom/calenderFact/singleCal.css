@@ -10,62 +10,66 @@
 
 
 .hidden-onerow-weekly, .hidden-onerow-monthly{
-    width: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     color: rgba(255, 255, 255, 0.486);
-    font-size: 0.8rem;
-    height: 30px;
-    border: 1px solid white;
+    font-size: 0.7rem;
+    height: 15px;
     position: absolute;
     cursor: pointer;
-    border-radius: 0px 0px 10px 0px;
-    font-family: open;
     border: 1px solid rgba(255, 255, 255, 0.08);
     border-top: none;
     border-left: none;
-    white-space: nowrap;
-    box-shadow: rgba(182, 185, 184, 0.2) 0px 1px 2px 0px, rgba(182, 182, 182, 0.05) 0px 1px 3px 1px;
-    padding-left: 2px;
     overflow: hidden;
-    background: rgba(6, 182, 192, 0.139);
+    box-shadow: rgba(170, 167, 167, 0.15) 0px 0px 7px;
+    margin-left: 1px;
+    transition: font-size 0.2s linear;
+    opacity: 0.6;
+}
 
+.hidden-onerow-weekly:hover, .hidden-onerow-monthly:hover{
+    opacity: 1;
+    font-size: 0.75rem;
 }
 
 .hidden-onerow-weekly p, .hidden-onerow-monthly p{
-    font-size: 0.7rem;
     position: absolute;
-    margin-left: 5px;
-    color: rgba(255, 255, 255, 0.572);
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+    text-align: center;
+   
+    color: rgba(255, 255, 255, 0.472);
 }
-
 .onerow-allHide{
     display: none;
 }
 .onerow-hide-btn{
-    background: rgba(6, 182, 192, 0.639);
+    width: 40px;
+    height: 30px;
     position: absolute;
     border: 1px solid rgba(255, 255, 255, 0.08);
     border-left: none;
-    border-top: none;
-    border-radius: 0px 10px 0px 0px;
+    border-bottom: none;
+    border-radius: 0px 3px 0px 0px;
     bottom: 0;
-    left: 0;
-    padding: 3px 10px;
-    color: rgba(1, 1, 1, 0.714);
+    left: 1px;
+    color: rgba(255, 255, 255, 0.714);
     font-family: open;
     font-size: 0.7rem;
-    box-shadow: rgba(100, 204, 182, 0.2) 0px 1px 2px 0px, rgba(70, 179, 148, 0.05) 0px 1px 3px 1px;
     cursor: pointer;
     z-index: 20;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 3px 0px;
+    background-color: rgba(0, 0, 0, 0.386);
+    box-shadow: rgba(170, 167, 167, 0.15) 0px 0px 5px;
 }
 
 .onerow-hide-btn:active{
     box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
     font-size: 0.68rem;
 }
-
 
 /* week cal-------------------------------------------------------------------------------- */
 .onerow-cal-weekly{

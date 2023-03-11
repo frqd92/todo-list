@@ -141,7 +141,9 @@ main{
   text-shadow: 0px 0px 2px rgba(24, 162, 172, 0.855);
   white-space: nowrap;
 }
-
+.taskbox-head-daily{
+ 
+}
 /* dropdown ------------------------------------------------*/
 .drop-master-cont{
   position: fixed;
@@ -382,11 +384,49 @@ main{
 
 
 
+/* options menu------------------------------------------------------ */
 
+.task-options-all-div{
+  position: sticky;
+  top: 0;
+  left: 1px;
+  margin-bottom: -40px;
+  width: 42px;
 
+}
+.task-options-menu-btn{
+  width: 40px;
+  aspect-ratio: 1 / 1;
+  display: flex;
+  border: 1px solid rgba(255, 255, 255, 0.083);
+  border-left: none;
+  border-top: none;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  border-radius: 0px 0px 3px 0px;
+  padding: 3px 0px;
+  background: linear-gradient(to right, #0f2822a7, #132c299c, #112b2398);
+  box-shadow: rgba(170, 167, 167, 0.15) 0px 0px 5px;
+  backdrop-filter: blur(10px);
 
+}
+.task-options-menu-btn div{
+  height: 0px;
+  border-radius: 20px;
+  width: 65%;
+  border: 1.5px solid rgba(227, 227, 227, 0.259);
+  box-shadow: 0px 0px 5px rgb(174, 183, 182, 0.3);
+}
+.op-line-0{
 
+}
+.op-line-1{
 
+}
+.op-line-2{
+
+}
 
 
 

@@ -1,4 +1,4 @@
-import { elementCreator } from "../../utilities/elementCreator";
+import { elementCreator, imageCreator } from "../../utilities/elementCreator";
 import { findRelativeDate, getToday, returnMonth, daysInMonth} from "../../utilities/dateUtils";
 import { resizeAbs,resizeTaskDiv } from "../homePage/homeCreate";
 import './singleCal.css'
@@ -93,14 +93,13 @@ function hideBtnFunc(btn, div, type){
         hideShow(false)
     }
     function hideShow(isHide){
-        const all = div.querySelectorAll("div")
-
+        const all = div.querySelectorAll("div");
         if(isHide){
             all.forEach(elem=>{elem.style.display = "none"})
             div.classList.add(`hidden-onerow-${type}`);
-            elementCreator("p", ["class", `hidden-onerow-text`], "Show", div);
-            resizeAbs()
+            elementCreator("p", ["class", `hidden-onerow-text`], "Show Calendar", div);
             resizeTaskDiv()
+            resizeAbs()
         }
         else{
             all.forEach(elem=>{elem.style.display = "flex"})
