@@ -2,6 +2,7 @@ import { homeViewChoice } from "../../state";
 import { resizeTaskDiv } from "./homeCreate";
 import { returnMonth, findRelativeDate, textDateToNum, formatNumDate, numDateToDispFormat } from "../../utilities/dateUtils";
 import { elementCreator, imageCreator } from "../../utilities/elementCreator";
+import { sortByDate } from "../../utilities/sortTasks";
 import smallCalPng from '/src/assets/images/calendar-small.png'
 import repeatPng from '/src/assets/images/refresh.png';
 import notebookPng from '/src/assets/images/notebook.png';
@@ -48,8 +49,9 @@ function renderTaskRows(tasks){
     const dispTaskDiv = document.querySelector(".disp-task-div");
     let taskDispDates = [];
     let taskDivDates = [];
-    const dispOptions = createDispOptions(dispTaskDiv);
-    tasks.forEach(elem=>{
+    const dispOptions = createDispOptions(dispTaskDiv);    
+    const taskByDate = sortByDate(tasks, true);
+    taskByDate.forEach(elem=>{
         const displayedDate = `${elem.due[0]}/${elem.due[1]}/${elem.due[2]}`;
         if(taskDispDates.length<1){
             const div = elementCreator("div", ["class", "disp-group"], false, dispTaskDiv)
@@ -65,7 +67,6 @@ function renderTaskRows(tasks){
                 taskDispDates.push(displayedDate);
                 taskDivDates.push(div);
                 const taskDateDiv = taskDateFunc(taskDivDates[taskDivDates.length-1], taskDispDates[taskDispDates.length-1], div);
-
             }
             const taskRow = TaskrowFact(elem, taskDivDates[taskDivDates.length-1]);
         }
