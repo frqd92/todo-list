@@ -7,6 +7,10 @@ import smallCalPng from '/src/assets/images/calendar-small.png'
 import repeatPng from '/src/assets/images/refresh.png';
 import notebookPng from '/src/assets/images/notebook.png';
 import layersPng from '/src/assets/images/layers.png';
+import collapsePng from "/src/assets/images/collapse-arrows.png";
+import expandPng from '/src/assets/images/expand-arrows.png';
+import hidePng from '/src/assets/images/hide.png';
+import binPng from '/src/assets/images/bin.png';
 import './taskRow.css'
 //actually makes the task row in the dom
 function TaskrowFact(taskObj, parent){
@@ -75,17 +79,58 @@ function renderTaskRows(tasks){
 
 //creates the options menu in the home page disp
 function createDispOptions(parent){
-    const optionsAllDiv = elementCreator("div", ["class", "task-options-all-div"], false, parent)
+    const optionsAllDiv = elementCreator("div", ["class", "to-all-div"], false, parent)
     //menu btn
-    const menuBtn = elementCreator("div", ["class", "task-options-menu-btn"], false, optionsAllDiv);
-    for(let i=0;i<3;i++){elementCreator("div", ["class", `op-line-${i}`], false, menuBtn)};
-
+    const menuBtn = elementCreator("div", ["class", "to-menu-btn-div"], false, optionsAllDiv);
+    const actualBtn = elementCreator("div", ["class", "to-menu-btn"], false, menuBtn)
+    for(let i=0;i<3;i++){elementCreator("div", ["class", `op-line-${i}`], false, actualBtn)};
     //options menu
-    const optionsMenu = elementCreator("div", ["class", "task-options-menu"], false, optionsAllDiv);
-    
+    const optionsMenu = elementCreator("div", ["class", "to-menu"], false, menuBtn);
+    const xClose = elementCreator("span", ["class", "to-close"], "Close", optionsMenu);
+    const collExpDiv = elementCreator("div", ["class", "to-collExp-div"],false, optionsMenu);
+    const collapseDiv = elementCreator("div", ["class", "to-collapse"], false, collExpDiv);
+    imageCreator(collapsePng, ["class", "to-collapse-img"], collapseDiv);
+    elementCreator("p", false, "Collapse Tasks", collapseDiv);
+    const expandDiv = elementCreator("div", ["class", "to-expand"], false, collExpDiv);
+    imageCreator(expandPng, ["class", "to-collapse-img"], expandDiv);
+    elementCreator("p", false, "Expand Tasks", expandDiv);
+
+
+/*
+hidePng
+binPng
+*/
+    menuBtnEffect(actualBtn, optionsMenu);
     return optionsAllDiv
 }
-//hides and shows the grouped by date tasks
+//stupid effect on menu click
+function menuBtnEffect(btn, optionsMenu){
+    const lineArr = btn.childNodes;
+    const cList = ["op-line-0-show", "op-line-1-show", "op-line-2-show"];
+    btn.addEventListener("click", eff);
+    
+    function eff(){
+        if(!this.className.includes("to-menu-on")){
+            this.classList.add("to-menu-on");
+            triggerEffect(true);
+            optionsMenu.style.display="flex";
+        }
+        else{
+            this.classList.remove("to-menu-on");
+            triggerEffect(false);
+            optionsMenu.style.display="none";
+        }
+    };
+    function triggerEffect(isAdd){
+        for(let i=0;i<3;i++){
+            isAdd?lineArr[i].classList.add(cList[i]):lineArr[i].classList.remove(cList[i]);
+        }
+    }
+
+}
+
+
+//hides and shows the grouped by date tasks------------------------------------------------------------
 function taskDateFunc(div, date, group){
     const formattedDate = numDateToDispFormat(date)
     const dateDiv = elementCreator("div", ["class", "disp-date-div"], false, div);

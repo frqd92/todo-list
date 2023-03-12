@@ -19,7 +19,7 @@ function zeroAdder(num){return num<10?"0"+num:num;}
 
 function makeDeepCopy(arr){
     let copiedArr, value, key;
-    if(typeof arr !== "object" || arr === null) return arr;
+    if(typeof arr !=="object" || arr ===null) return arr;
     copiedArr = Array.isArray(arr) ? [] : {};
     for(key in arr){
       value = arr[key];
