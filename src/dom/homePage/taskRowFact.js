@@ -9,7 +9,6 @@ import notebookPng from '/src/assets/images/notebook.png';
 import layersPng from '/src/assets/images/layers.png';
 import collapsePng from "/src/assets/images/collapse-arrows.png";
 import expandPng from '/src/assets/images/expand-arrows.png';
-import hidePng from '/src/assets/images/hide.png';
 import binPng from '/src/assets/images/bin.png';
 import './taskRow.css'
 //actually makes the task row in the dom
@@ -86,47 +85,183 @@ function createDispOptions(parent){
     for(let i=0;i<3;i++){elementCreator("div", ["class", `op-line-${i}`], false, actualBtn)};
     //options menu
     const optionsMenu = elementCreator("div", ["class", "to-menu"], false, menuBtn);
-    const xClose = elementCreator("span", ["class", "to-close"], "Close", optionsMenu);
+    const detachBtn = detachFunc(optionsMenu);
+    const title = elementCreator("div", ["class", "to-title"], "Task options", optionsMenu);
+    const xClose = elementCreator("span", ["class", "to-close"], "X", optionsMenu);
+    //collapse/expand Div
     const collExpDiv = elementCreator("div", ["class", "to-collExp-div"],false, optionsMenu);
     const collapseDiv = elementCreator("div", ["class", "to-collapse"], false, collExpDiv);
+    elementCreator("p", false, "Collapse All", collapseDiv);
     imageCreator(collapsePng, ["class", "to-collapse-img"], collapseDiv);
-    elementCreator("p", false, "Collapse Tasks", collapseDiv);
+    elementCreator("span", false, false, collExpDiv);
     const expandDiv = elementCreator("div", ["class", "to-expand"], false, collExpDiv);
+    elementCreator("p", false, "Expand All", expandDiv);
     imageCreator(expandPng, ["class", "to-collapse-img"], expandDiv);
-    elementCreator("p", false, "Expand Tasks", expandDiv);
+    //hide div
+    const hideDiv = elementCreator("div", ["class", "to-hide-div"], false, optionsMenu);
+    const hideLeft = elementCreator("div", ["class", "to-hide-left"], false, hideDiv);
+    elementCreator("p", false, "Hide", hideLeft);
 
+    const hideRight = elementCreator("div", ["class", "to-hide-right"], false, hideDiv);
+    const completedTasks = giveMeAnEye(hideRight, "Completed");
+    const incompleteTasks = giveMeAnEye(hideRight, "Incomplete");
+    const repeatedTasks = giveMeAnEye(hideRight, "Repeated");
+    const past = giveMeAnEye(hideRight, "Past");
+
+    const priorities = elementCreator("div", ["class", "to-check-prio"], false, hideRight);
+    const normal = giveMeAnEye(priorities, "Normal Priority", "rgba(182, 137, 53, 0.9)");
+    const high = giveMeAnEye(priorities, "High Priority", "rgba(225, 85, 46, 0.9)");
+    const highest = giveMeAnEye(priorities, "Highest Priority", "rgba(202, 42, 42, 0.9)");
 
 /*
-hidePng
 binPng
 */
-    menuBtnEffect(actualBtn, optionsMenu);
+    menuBtnEffect(actualBtn, optionsMenu, xClose);
     return optionsAllDiv
 }
+
+function detachFunc(menu){
+    const detachDiv = elementCreator("div", ["class", "to-detach-div"], false, menu);
+    const innerDiv = elementCreator("div", false, false, detachDiv);
+    const lowerSquare = elementCreator("div", ["class", "to-detach-lower"],false, innerDiv);
+    const upperSquare = elementCreator("div", ["class", "to-detach-upper"], false, innerDiv)
+    upperSquare.innerHTML ='&#8599';
+    const text = elementCreator("p", false, "Detach window", innerDiv);
+    let isDrag=false;
+    makeDrag(menu);
+    detachDiv.addEventListener("click", detach);
+    function detach(){
+        if(!menu.className.includes("to-detached")){
+            menu.classList.add("to-detached");
+            upperSquare.style.transform = 'rotate(180deg)';
+            menu.style.left = "50px";
+            menu.style.top = "10px";
+            text.innerText = "Reattach window";
+            isDrag=true;
+        }
+        else{
+            menu.classList.remove("to-detached");
+            text.innerText = "Detach window";
+            isDrag=false;
+            menu.style.left = "42px";
+            menu.style.top = "0px";
+            upperSquare.style.transform = 'rotate(0deg)';
+
+        }
+    }
+    function makeDrag(object){
+        let initX, initY, firstX, firstY;
+        const taskDiv = document.querySelector(".disp-task-div");
+        object.addEventListener('mousedown',move, false);
+        function move(e){
+            e.preventDefault();
+            initX = this.offsetLeft;
+            initY = this.offsetTop;
+            firstX = e.pageX;
+            firstY = e.pageY;
+            this.addEventListener('mousemove', dragIt, false);
+            window.addEventListener('mouseup', function() {
+                object.removeEventListener('mousemove', dragIt, false);
+            }, false);
+
+        }
+        function dragIt(e){
+            if(!isDrag) return;
+            if(this.offsetLeft < 0){
+                this.style.left = "0px";
+            }
+            else if (this.getBoundingClientRect().right  > (taskDiv.getBoundingClientRect().right + 10)) {
+                this.style.left = taskDiv.getBoundingClientRect().right - this.offsetLeft + "px";
+              
+            }
+            else{
+                this.style.left = initX+e.pageX-firstX + 'px';
+            }
+            console.log(this.offsetLeft);
+            console.log(taskDiv.getBoundingClientRect().right- this.offsetLeft-10)
+     
+            this.style.top = initY+e.pageY-firstY + 'px';
+
+        }
+    }
+
+    
+
+
+
+    detachDiv.addEventListener("mouseover", showDetachText);
+    function showDetachText(){
+        text.style.display = "block";
+        detachDiv.removeEventListener("mouseover", showDetachText);
+        detachDiv.addEventListener("mouseleave", hideDetachText);
+    }
+    function hideDetachText(){
+        text.style.display = "none";
+        detachDiv.addEventListener("mouseover", showDetachText);
+        detachDiv.removeEventListener("mouseleave", hideDetachText);
+    }
+}
+
+
+
+
+function giveMeAnEye(div, text, isPrio){
+    const field = elementCreator("div", ["class", "to-check-field"], false, div);
+    const eyeDiv = elementCreator("div", ["class", "eye-div"], false, field);
+    const iris = elementCreator("div", ["class", "eye-iris"], false, eyeDiv);
+    if(isPrio){
+        field.classList.add("prio-check-field");
+        iris.style.background = isPrio;
+    }
+    const slash = elementCreator("div", ["class", "eye-slash"], false, eyeDiv);
+    const textPart = elementCreator("p", false, text, field);
+    field.addEventListener("click", eyeCheck);
+    function eyeCheck(){
+        if(!eyeDiv.className.includes("eye-div-on")){
+            eyeDiv.classList.add("eye-div-on");
+            slash.style.display="block";
+            textPart.classList.add("to-hidden-text");
+        }
+        else{
+            eyeDiv.classList.remove("eye-div-on");
+            slash.style.display="none";
+            textPart.classList.remove("to-hidden-text");
+        }
+    }
+    return field;
+}
+
+
+
 //stupid effect on menu click
-function menuBtnEffect(btn, optionsMenu){
+function menuBtnEffect(btn, optionsMenu, closeBtn){
     const lineArr = btn.childNodes;
     const cList = ["op-line-0-show", "op-line-1-show", "op-line-2-show"];
     btn.addEventListener("click", eff);
-    
+    closeBtn.addEventListener("click", eff, {once:true})
     function eff(){
-        if(!this.className.includes("to-menu-on")){
-            this.classList.add("to-menu-on");
+        if(!btn.className.includes("to-menu-on")){
+            btn.classList.add("to-menu-on");
             triggerEffect(true);
             optionsMenu.style.display="flex";
+
         }
         else{
-            this.classList.remove("to-menu-on");
+            btn.classList.remove("to-menu-on");
             triggerEffect(false);
             optionsMenu.style.display="none";
+            if(this.className==="to-close"){closeBtn.addEventListener("click", eff, {once:true})}
         }
     };
+
+
+
+
     function triggerEffect(isAdd){
         for(let i=0;i<3;i++){
             isAdd?lineArr[i].classList.add(cList[i]):lineArr[i].classList.remove(cList[i]);
         }
     }
-
 }
 
 
