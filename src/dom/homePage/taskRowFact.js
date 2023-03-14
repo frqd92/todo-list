@@ -45,7 +45,7 @@ export function homeTaskDisplay(taskObj){
         }
     });
     renderTaskRows(tasksToDisplay);
-    resizeTaskDiv()
+    resizeTaskDiv();
 }
 
 function renderTaskRows(tasks){
@@ -62,7 +62,7 @@ function renderTaskRows(tasks){
             taskDivDates.push(div);
             const taskDateDiv = taskDateFunc(taskDivDates[0], taskDispDates[0], div);
             const taskRow = TaskrowFact(elem, taskDivDates[0]);
-            if(homeViewChoice==="daily")taskDateDiv.remove()
+            if(homeViewChoice==="daily")taskDateDiv.remove();
         }
         else{
             if(taskDispDates[taskDispDates.length-1]!==displayedDate){
@@ -120,6 +120,7 @@ binPng
     return optionsAllDiv
 }
 
+
 function detachFunc(menu){
     const detachDiv = elementCreator("div", ["class", "to-detach-div"], false, menu);
     const innerDiv = elementCreator("div", false, false, detachDiv);
@@ -138,6 +139,7 @@ function detachFunc(menu){
             menu.style.top = "10px";
             text.innerText = "Reattach window";
             isDrag=true;
+            window.addEventListener("resize", posWhenResize);
         }
         else{
             menu.classList.remove("to-detached");
@@ -145,8 +147,26 @@ function detachFunc(menu){
             isDrag=false;
             menu.style.left = "42px";
             menu.style.top = "0px";
+            menu.classList.add("flying-menu")
+            setTimeout(()=>{menu.classList.remove("flying-menu")},300)
             upperSquare.style.transform = 'rotate(0deg)';
+            window.removeEventListener("resize", posWhenResize);
 
+        }
+    }
+
+    function posWhenResize(){
+        const taskDiv = document.querySelector(".disp-task-div");
+        console.log("hsdhs");
+        if (menu.getBoundingClientRect().right  > (taskDiv.getBoundingClientRect().right + 10)) {
+            menu.style.left = "0px"
+        }
+        if(menu.offsetTop < -5){
+           
+        }
+        else if(menu.getBoundingClientRect().bottom > taskDiv.getBoundingClientRect().bottom){
+            const height = menu.getBoundingClientRect().height/2;
+            menu.style.top = taskDiv.getBoundingClientRect().bottom - menu.offsetTop - 70 + "px";
         }
     }
     function makeDrag(object){
@@ -167,20 +187,26 @@ function detachFunc(menu){
         }
         function dragIt(e){
             if(!isDrag) return;
-            if(this.offsetLeft < 0){
-                this.style.left = "0px";
+            if(this.offsetLeft < 1){
+                this.style.left = "1px";
             }
             else if (this.getBoundingClientRect().right  > (taskDiv.getBoundingClientRect().right + 10)) {
                 this.style.left = taskDiv.getBoundingClientRect().right - this.offsetLeft + "px";
-              
             }
             else{
                 this.style.left = initX+e.pageX-firstX + 'px';
             }
-            console.log(this.offsetLeft);
-            console.log(taskDiv.getBoundingClientRect().right- this.offsetLeft-10)
-     
-            this.style.top = initY+e.pageY-firstY + 'px';
+            if(this.offsetTop < -5){
+                this.style.top = "0px";
+            }
+            else if(this.getBoundingClientRect().bottom > taskDiv.getBoundingClientRect().bottom){
+                const height = this.getBoundingClientRect().height/2;
+                this.style.top = taskDiv.getBoundingClientRect().bottom - this.offsetTop - 70 + "px";
+            }
+            else{
+                // console.log(taskDiv.getBoundingClientRect().right- this.offsetLeft-10)
+                this.style.top = initY+e.pageY-firstY + 'px';
+            }
 
         }
     }

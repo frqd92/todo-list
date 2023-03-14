@@ -422,8 +422,8 @@ main{
 /* detach icon */
 .to-detach-div{
   position: absolute;
-  left: 2px;
-  top: 2px;
+  left: 3px;
+  top: 4px;
   width: 25px;
   height: 25px;
   cursor: pointer;
@@ -488,8 +488,11 @@ main{
   box-shadow: rgba(0, 94, 69, 0.19) 5px 2px 15px, rgba(7, 62, 64, 0.23) 0px 3px 6px;
   gap: 10px;
 }
-
+.flying-menu{
+  transition: all 0.3s linear;
+}
 .to-detached{
+  border-radius: 5px
 
 }
 .to-title{
