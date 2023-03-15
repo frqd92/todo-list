@@ -470,7 +470,7 @@ main{
 
 /* actual menu  and close button*/
 .to-menu{
-  position: absolute;
+  position: fixed;
   left: 42px;
   top: 0;
   padding: 3px 10px;
@@ -487,9 +487,12 @@ main{
   border: 1px solid rgba(255, 255, 255, 0.083);
   box-shadow: rgba(0, 94, 69, 0.19) 5px 2px 15px, rgba(7, 62, 64, 0.23) 0px 3px 6px;
   gap: 10px;
+
+  transform: tr;
 }
 .flying-menu{
-  transition: all 0.3s linear;
+  transition: all 0.2s ease;
+  transform: skew(10deg, 10deg);
 }
 .to-detached{
   border-radius: 5px
@@ -615,11 +618,11 @@ main{
   padding: 5px 0px;
 
 }
-.to-hide-left{
-
+.to-hide-left, .to-group-title{
+letter-spacing: 0.05rem;
   align-self: center;
   font-family: ptserif;
-  font-size: 1.1rem;
+  font-size: 1rem;
   color: rgba(255, 255, 255, 0.67);
 }
 
@@ -701,10 +704,128 @@ main{
   margin-top: 5px;
 }
 
+/* filter by group */
+
+.to-group-div{
+border-bottom: 1px solid rgba(255, 255, 255, 0.175);
+width: 100%;
+display: flex;
+flex-direction: column;
+gap: 10px;
+align-items: center;
+padding-bottom: 5px;
+
+}
+
+.to-group-title-div{
+  display: flex;
+  gap: 5px;
+}
 
 
+.to-group-list{
+  width: 250px;
+  height: 25px;
+  background-color: rgba(255, 255, 255, 0.658);
+  border-radius: 3px;
+  position: relative;
+}
+.to-group-drop-top{
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  color: rgba(0, 0, 0, 0.841);
+  background-color: rgba(255, 255, 255, 0.518);
+}
+.to-group-dropdown{
+  position: absolute;
+  width: 100%;
+  border-top: 1px solid rgba(0, 0, 0, 0.885);
+  border-radius: 0px 0px 3px 3px;
+  background-color: rgba(0, 0, 0, 0.791);
+}
+.to-drop-groups{
+  background-image: linear-gradient(120deg, rgba(0, 38, 41, 0.825) 0%, rgba(0, 34, 17, 0.845) 100%);
+  max-height: 160px;
+  overflow: auto;
+
+}
+.to-drop-groups::-webkit-scrollbar {
+
+  width: 10px;
+}
+.to-drop-groups::-webkit-scrollbar-track {
+  border-radius: 10px;
+  
+  background: #f1f1f1;
+}
+.to-drop-groups::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background: #14835ecc;
+}
+
+.to-input{
+  width: 100%;
+  height: 30px;
+  padding: 5px 5px;
+  text-align: center;
+  outline: none;
+  border: none;
+
+}
+/* group row in options menu */
+.to-group-row{
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 15px;
+  height: 40px;
+  background-color: rgba(81, 81, 81, 0.208);
+  cursor: pointer;
+  color: rgba(255, 255, 255, 0.779);
+}
+.to-group-row:nth-child(even){
+  background-color: rgba(75, 81, 120, 0.278)
+}
+.to-group-row:hover{
+  background-color: rgba(255, 255, 255, 0.125)
+}
+.to-group-row p{
+  padding-right: 20px;
+  white-space:nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.group-check{
+  border: 1px solid rgba(147, 84, 84, 0.418);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 20px;
+  aspect-ratio: 1 / 1;
+  box-shadow: 0px 0px 3px white;
+}
+.group-check span{
+  text-shadow: 0px 0px 3px rgba(195, 158, 234, 0.449);
+}
+
+.to-group-select{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  margin-top: 1p0;
 
 
+}
+.to-group-select-all, .to-group-deselect-all{
+  width: 100%;
+  text-align: center;
+  background-color: rgba(0, 116, 165, 0.827);
+  color: rgba(255, 255, 255, 0.884);
+  cursor: pointer;
+  padding: 2px 0px;
+}
+.to-group-deselect-all{
+  border-left: 2px solid rgba(255, 255, 255, 0.388);
+}
 /* if user has no stored tasks -------------------------------------------------------*/
 
 .no-tasks-div{

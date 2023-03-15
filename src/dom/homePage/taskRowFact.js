@@ -1,4 +1,4 @@
-import { homeViewChoice } from "../../state";
+import { homeViewChoice, groupArray } from "../../state";
 import { resizeTaskDiv } from "./homeCreate";
 import { returnMonth, findRelativeDate, textDateToNum, formatNumDate, numDateToDispFormat } from "../../utilities/dateUtils";
 import { elementCreator, imageCreator } from "../../utilities/elementCreator";
@@ -11,6 +11,9 @@ import collapsePng from "/src/assets/images/collapse-arrows.png";
 import expandPng from '/src/assets/images/expand-arrows.png';
 import binPng from '/src/assets/images/bin.png';
 import './taskRow.css'
+
+let currentDispTasks = [];
+
 //actually makes the task row in the dom
 function TaskrowFact(taskObj, parent){
     const taskDiv = elementCreator("div", ["class", "home-task-row"], false, parent);
@@ -52,9 +55,11 @@ function renderTaskRows(tasks){
     const dispTaskDiv = document.querySelector(".disp-task-div");
     let taskDispDates = [];
     let taskDivDates = [];
+    currentDispTasks = [];
     const dispOptions = createDispOptions(dispTaskDiv);    
     const taskByDate = sortByDate(tasks, true);
     taskByDate.forEach(elem=>{
+        currentDispTasks.push(elem);
         const displayedDate = `${elem.due[0]}/${elem.due[1]}/${elem.due[2]}`;
         if(taskDispDates.length<1){
             const div = elementCreator("div", ["class", "disp-group"], false, dispTaskDiv)
@@ -97,21 +102,68 @@ function createDispOptions(parent){
     const expandDiv = elementCreator("div", ["class", "to-expand"], false, collExpDiv);
     elementCreator("p", false, "Expand All", expandDiv);
     imageCreator(expandPng, ["class", "to-collapse-img"], expandDiv);
+
+
     //hide div
     const hideDiv = elementCreator("div", ["class", "to-hide-div"], false, optionsMenu);
     const hideLeft = elementCreator("div", ["class", "to-hide-left"], false, hideDiv);
     elementCreator("p", false, "Hide", hideLeft);
-
     const hideRight = elementCreator("div", ["class", "to-hide-right"], false, hideDiv);
     const completedTasks = giveMeAnEye(hideRight, "Completed");
     const incompleteTasks = giveMeAnEye(hideRight, "Incomplete");
     const repeatedTasks = giveMeAnEye(hideRight, "Repeated");
     const past = giveMeAnEye(hideRight, "Past");
-
     const priorities = elementCreator("div", ["class", "to-check-prio"], false, hideRight);
     const normal = giveMeAnEye(priorities, "Normal Priority", "rgba(182, 137, 53, 0.9)");
     const high = giveMeAnEye(priorities, "High Priority", "rgba(225, 85, 46, 0.9)");
     const highest = giveMeAnEye(priorities, "Highest Priority", "rgba(202, 42, 42, 0.9)");
+
+    //group div
+    const groupFilterDiv = elementCreator("div",["class", "to-group-div"], false, optionsMenu);
+    const groupTitle = elementCreator("p", ["class", "to-group-title-div"], false, groupFilterDiv);
+    elementCreator("p", ["class", "to-group-title"], "Filter by Group", groupTitle);
+    const groupListDiv = elementCreator("div", ["class","to-group-list"], false, groupFilterDiv);
+    const groupListTop = elementCreator("div", ["class", "to-group-drop-top"], false, groupListDiv);
+    const groupDropdown = elementCreator("div", ["class", "to-group-dropdown"], false, groupListDiv);
+    const input = elementCreator("input", ["class", "to-input"], "Search groups", groupDropdown, false, true)
+    const innerGroupDiv = elementCreator("div", ["class", "to-drop-groups"], false, groupDropdown)
+    setTimeout(()=>{
+        const groupArr = getNumOfGroups();
+        if(groupArr.length<1){
+            groupListTop.innerText="No groups in current date range"
+        }
+        else{
+            const isPlural = groupArr.length===1?"group":"groups";
+            groupListTop.innerText=`Pick from ${groupArr.length} ${isPlural}`;
+      
+            groupArr.forEach(elem=>{
+                const row = GroupFact(innerGroupDiv, elem)
+            })
+        }
+    }, 1000);
+    const selectDiv = elementCreator("div", ["class", "to-group-select"], false, groupDropdown);
+    const allSelect = elementCreator("div", ["class", "to-group-select-all"], "Select all", selectDiv);
+    const deselectAll = elementCreator("div", ["class", "to-group-deselect-all"], "Deselect all", selectDiv);
+    groupSearchFunc(input, innerGroupDiv);
+    function GroupFact(dropDiv, task){
+        const groupRow = elementCreator("div", ["class", "to-group-row"], false, dropDiv);
+        elementCreator("p", false, task, groupRow);
+        const checkBox = elementCreator("div", ["class","group-check"], false, groupRow);
+        const inner = elementCreator("span", false, "✓", checkBox);
+        inner.style.display="none";
+        groupRow.addEventListener("click", groupClick);
+        function groupClick(){
+            const disp = getComputedStyle(inner).display;
+            if(disp==="none"){
+            inner.style.display="block";
+            }
+            else{
+             inner.style.display="none";
+            }
+        }
+        return groupRow;
+    }
+
 
 /*
 binPng
@@ -120,6 +172,33 @@ binPng
     return optionsAllDiv
 }
 
+function groupSearchFunc(input, div){
+    input.addEventListener("input", searchGroup);
+
+    function searchGroup(e){
+        const allGroups = div.querySelectorAll(".to-group-row");
+        allGroups.forEach(group=>{
+            const groupText = group.querySelector("p").innerText.toLowerCase();
+            group.style.display=groupText.includes(input.value.toLowerCase())?"flex":"none";
+
+        })
+    }
+}
+
+
+
+
+function getNumOfGroups(){
+    let arr = [];
+    currentDispTasks.forEach(task=>{
+        if(task.group){
+            if(!arr.includes(task.group)){
+                arr.push(task.group);
+            }
+        }
+    })
+    return arr;
+}
 
 function detachFunc(menu){
     const detachDiv = elementCreator("div", ["class", "to-detach-div"], false, menu);
@@ -129,7 +208,7 @@ function detachFunc(menu){
     upperSquare.innerHTML ='&#8599';
     const text = elementCreator("p", false, "Detach window", innerDiv);
     let isDrag=false;
-    makeDrag(menu);
+    //  makeDrag(menu);
     detachDiv.addEventListener("click", detach);
     function detach(){
         if(!menu.className.includes("to-detached")){
@@ -148,16 +227,15 @@ function detachFunc(menu){
             menu.style.left = "42px";
             menu.style.top = "0px";
             menu.classList.add("flying-menu")
-            setTimeout(()=>{menu.classList.remove("flying-menu")},300)
+            setTimeout(()=>{menu.classList.remove("flying-menu")},210)
             upperSquare.style.transform = 'rotate(0deg)';
             window.removeEventListener("resize", posWhenResize);
-
         }
     }
 
     function posWhenResize(){
         const taskDiv = document.querySelector(".disp-task-div");
-        console.log("hsdhs");
+    
         if (menu.getBoundingClientRect().right  > (taskDiv.getBoundingClientRect().right + 10)) {
             menu.style.left = "0px"
         }
@@ -190,8 +268,10 @@ function detachFunc(menu){
             if(this.offsetLeft < 1){
                 this.style.left = "1px";
             }
-            else if (this.getBoundingClientRect().right  > (taskDiv.getBoundingClientRect().right + 10)) {
-                this.style.left = taskDiv.getBoundingClientRect().right - this.offsetLeft + "px";
+            else if (this.getBoundingClientRect().right  > (taskDiv.getBoundingClientRect().right)){
+                console.log(taskDiv.getBoundingClientRect().right-this.getBoundingClientRect().width);
+                this.style.left = taskDiv.getBoundingClientRect().right - (taskDiv.getBoundingClientRect().right-this.getBoundingClientRect().width) + "px"
+                // this.style.left = (taskDiv.getBoundingClientRect().right - this.offsetLeft) + "px";
             }
             else{
                 this.style.left = initX+e.pageX-firstX + 'px';
@@ -200,8 +280,7 @@ function detachFunc(menu){
                 this.style.top = "0px";
             }
             else if(this.getBoundingClientRect().bottom > taskDiv.getBoundingClientRect().bottom){
-                const height = this.getBoundingClientRect().height/2;
-                this.style.top = taskDiv.getBoundingClientRect().bottom - this.offsetTop - 70 + "px";
+                this.style.top = taskDiv.getBoundingClientRect().top - this.offsetTop - 70 + "px";
             }
             else{
                 // console.log(taskDiv.getBoundingClientRect().right- this.offsetLeft-10)
@@ -212,8 +291,6 @@ function detachFunc(menu){
     }
 
     
-
-
 
     detachDiv.addEventListener("mouseover", showDetachText);
     function showDetachText(){
@@ -227,8 +304,6 @@ function detachFunc(menu){
         detachDiv.removeEventListener("mouseleave", hideDetachText);
     }
 }
-
-
 
 
 function giveMeAnEye(div, text, isPrio){
@@ -256,8 +331,6 @@ function giveMeAnEye(div, text, isPrio){
     }
     return field;
 }
-
-
 
 //stupid effect on menu click
 function menuBtnEffect(btn, optionsMenu, closeBtn){
@@ -289,7 +362,6 @@ function menuBtnEffect(btn, optionsMenu, closeBtn){
         }
     }
 }
-
 
 //hides and shows the grouped by date tasks------------------------------------------------------------
 function taskDateFunc(div, date, group){
